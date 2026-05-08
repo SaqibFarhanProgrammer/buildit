@@ -1,54 +1,54 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 const plans = [
   {
     id: 1,
-    name: "Starter",
-    price: "Free",
-    period: "forever",
-    description: "Perfect for students and hobbyists exploring the platform.",
+    name: 'Starter',
+    price: 'Free',
+    period: 'forever',
+    description: 'Perfect for students and hobbyists exploring the platform.',
     features: [
-      "AI Code Editor",
-      "Basic Debugging",
-      "5 Challenges/day",
-      "Personal Dashboard",
-      "Community Support",
+      'AI Code Editor',
+      'Basic Debugging',
+      '5 Challenges/day',
+      'Personal Dashboard',
+      'Community Support',
     ],
-    cta: "Get Started",
+    cta: 'Get Started',
     popular: false,
   },
   {
     id: 2,
-    name: "Pro",
-    price: "$12",
-    period: "/month",
-    description: "For serious developers who ship code every day.",
+    name: 'Pro',
+    price: '$12',
+    period: '/month',
+    description: 'For serious developers who ship code every day.',
     features: [
-      "Everything in Starter",
-      "Advanced AI Assistant",
-      "Unlimited Challenges",
-      "Team Collaboration",
-      "Priority Support",
-      "Analytics & Insights",
+      'Everything in Starter',
+      'Advanced AI Assistant',
+      'Unlimited Challenges',
+      'Team Collaboration',
+      'Priority Support',
+      'Analytics & Insights',
     ],
-    cta: "Start Pro Trial",
+    cta: 'Start Pro Trial',
     popular: true,
   },
   {
     id: 3,
-    name: "Team",
-    price: "$39",
-    period: "/month",
-    description: "Built for engineering teams scaling their workflow.",
+    name: 'Team',
+    price: '$39',
+    period: '/month',
+    description: 'Built for engineering teams scaling their workflow.',
     features: [
-      "Everything in Pro",
-      "Unlimited Team Members",
-      "Shared Workspaces",
-      "Admin Controls",
-      "SSO & Security",
-      "Dedicated Support",
+      'Everything in Pro',
+      'Unlimited Team Members',
+      'Shared Workspaces',
+      'Admin Controls',
+      'SSO & Security',
+      'Dedicated Support',
     ],
-    cta: "Contact Sales",
+    cta: 'Contact Sales',
     popular: false,
   },
 ];
@@ -67,11 +67,12 @@ export default function Pricing() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0a0a0a] leading-tight tracking-tight max-w-xl">
-              Simple pricing for{" "}
+              Simple pricing for{' '}
               <span className="text-[#000]">every developer</span>.
             </h2>
             <p className="mt-4 text-base text-[#0a0a0a]/50 max-w-md leading-relaxed">
-              Start free, upgrade when you need more power. No hidden fees, cancel anytime.
+              Start free, upgrade when you need more power. No hidden fees,
+              cancel anytime.
             </p>
           </div>
           <p className="text-sm text-[#0a0a0a]/30 font-medium">
@@ -88,8 +89,8 @@ export default function Pricing() {
               key={plan.id}
               className={`group relative p-7 md:p-8 rounded-2xl border transition-all duration-300 ${
                 plan.popular
-                  ? "border-[#0a0a0a]/10 bg-[#0a0a0a] text-white"
-                  : "border-[#0a0a0a]/5 bg-white hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03]"
+                  ? 'border-[#0a0a0a]/10 bg-[#0a0a0a] text-white'
+                  : 'border-[#0a0a0a]/5 bg-white hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03]'
               }`}
             >
               {/* Popular Badge */}
@@ -104,7 +105,7 @@ export default function Pricing() {
               {/* Plan Name */}
               <h3
                 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${
-                  plan.popular ? "text-white/50" : "text-[#0a0a0a]/40"
+                  plan.popular ? 'text-white/50' : 'text-[#0a0a0a]/40'
                 }`}
               >
                 {plan.name}
@@ -114,14 +115,14 @@ export default function Pricing() {
               <div className="flex items-baseline gap-1 mb-3">
                 <span
                   className={`text-4xl md:text-5xl font-bold tracking-tight ${
-                    plan.popular ? "text-white" : "text-[#0a0a0a]"
+                    plan.popular ? 'text-white' : 'text-[#0a0a0a]'
                   }`}
                 >
                   {plan.price}
                 </span>
                 <span
                   className={`text-sm font-medium ${
-                    plan.popular ? "text-white/40" : "text-[#0a0a0a]/40"
+                    plan.popular ? 'text-white/40' : 'text-[#0a0a0a]/40'
                   }`}
                 >
                   {plan.period}
@@ -131,7 +132,7 @@ export default function Pricing() {
               {/* Description */}
               <p
                 className={`text-sm leading-relaxed mb-6 ${
-                  plan.popular ? "text-white/50" : "text-[#0a0a0a]/50"
+                  plan.popular ? 'text-white/50' : 'text-[#0a0a0a]/50'
                 }`}
               >
                 {plan.description}
@@ -140,7 +141,7 @@ export default function Pricing() {
               {/* Divider */}
               <div
                 className={`w-full h-[1px] mb-6 ${
-                  plan.popular ? "bg-white/10" : "bg-[#0a0a0a]/5"
+                  plan.popular ? 'bg-white/10' : 'bg-[#0a0a0a]/5'
                 }`}
               />
 
@@ -150,7 +151,7 @@ export default function Pricing() {
                   <li key={idx} className="flex items-start gap-3">
                     <svg
                       className={`w-4 h-4 mt-0.5 shrink-0 ${
-                        plan.popular ? "text-[#000]" : "text-[#0a0a0a]/30"
+                        plan.popular ? 'text-[#000]' : 'text-[#0a0a0a]/30'
                       }`}
                       fill="none"
                       stroke="currentColor"
@@ -165,7 +166,7 @@ export default function Pricing() {
                     </svg>
                     <span
                       className={`text-sm ${
-                        plan.popular ? "text-white/70" : "text-[#0a0a0a]/60"
+                        plan.popular ? 'text-white/70' : 'text-[#0a0a0a]/60'
                       }`}
                     >
                       {feature}
@@ -179,8 +180,8 @@ export default function Pricing() {
                 href="/signup"
                 className={`block w-full text-center py-3 rounded-full text-sm font-bold transition-all duration-200 ${
                   plan.popular
-                    ? "bg-white text-[#0a0a0a] hover:bg-white/90"
-                    : "bg-[#0a0a0a] text-white hover:bg-[#0a0a0a]/90"
+                    ? 'bg-white text-[#0a0a0a] hover:bg-white/90'
+                    : 'bg-[#0a0a0a] text-white hover:bg-[#0a0a0a]/90'
                 }`}
               >
                 {plan.cta}
@@ -194,20 +195,50 @@ export default function Pricing() {
       <div className="max-w-5xl mx-auto px-6 lg:px-8 mt-16 md:mt-20">
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 py-8 border-t border-[#0a0a0a]/5">
           <div className="flex items-center gap-2 text-[#0a0a0a]/30 text-sm">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              />
             </svg>
             <span>SSL Secured</span>
           </div>
           <div className="flex items-center gap-2 text-[#0a0a0a]/30 text-sm">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+              />
             </svg>
             <span>Cancel Anytime</span>
           </div>
           <div className="flex items-center gap-2 text-[#0a0a0a]/30 text-sm">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             <span>24/7 Support</span>
           </div>

@@ -1,11 +1,11 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 const features = [
   {
     id: 1,
-    title: "AI Code Editor",
+    title: 'AI Code Editor',
     description:
-      "Write, debug, and optimize code with real-time AI assistance. Syntax highlighting, auto-completion, and intelligent suggestions built-in.",
+      'Write, debug, and optimize code with real-time AI assistance. Syntax highlighting, auto-completion, and intelligent suggestions built-in.',
     icon: (
       <svg
         className="w-5 h-5"
@@ -21,13 +21,13 @@ const features = [
         />
       </svg>
     ),
-    tag: "Editor",
+    tag: 'Editor',
   },
   {
     id: 2,
-    title: "Smart Debugging",
+    title: 'Smart Debugging',
     description:
-      "AI-powered error detection and contextual fix suggestions. Catch bugs before they ship with intelligent code analysis.",
+      'AI-powered error detection and contextual fix suggestions. Catch bugs before they ship with intelligent code analysis.',
     icon: (
       <svg
         className="w-5 h-5"
@@ -43,13 +43,13 @@ const features = [
         />
       </svg>
     ),
-    tag: "Debug",
+    tag: 'Debug',
   },
   {
     id: 3,
-    title: "Coding Challenges",
+    title: 'Coding Challenges',
     description:
-      "Practice with competitive programming problems. Automated test cases, global rankings, and performance tracking included.",
+      'Practice with competitive programming problems. Automated test cases, global rankings, and performance tracking included.',
     icon: (
       <svg
         className="w-5 h-5"
@@ -65,13 +65,13 @@ const features = [
         />
       </svg>
     ),
-    tag: "Practice",
+    tag: 'Practice',
   },
   {
     id: 4,
-    title: "Project Dashboard",
+    title: 'Project Dashboard',
     description:
-      "Kanban boards, task tracking, and productivity analytics. Monitor coding hours, daily streaks, and team performance.",
+      'Kanban boards, task tracking, and productivity analytics. Monitor coding hours, daily streaks, and team performance.',
     icon: (
       <svg
         className="w-5 h-5"
@@ -87,13 +87,13 @@ const features = [
         />
       </svg>
     ),
-    tag: "Manage",
+    tag: 'Manage',
   },
   {
     id: 5,
-    title: "Learning Paths",
+    title: 'Learning Paths',
     description:
-      "Structured tutorials and blogs for every skill level. From beginner fundamentals to advanced system design concepts.",
+      'Structured tutorials and blogs for every skill level. From beginner fundamentals to advanced system design concepts.',
     icon: (
       <svg
         className="w-5 h-5"
@@ -109,13 +109,13 @@ const features = [
         />
       </svg>
     ),
-    tag: "Learn",
+    tag: 'Learn',
   },
   {
     id: 6,
-    title: "Team Collaboration",
+    title: 'Team Collaboration',
     description:
-      "Real-time code sharing, pair programming, and integrated comments. Work together seamlessly in shared workspaces.",
+      'Real-time code sharing, pair programming, and integrated comments. Work together seamlessly in shared workspaces.',
     icon: (
       <svg
         className="w-5 h-5"
@@ -131,7 +131,7 @@ const features = [
         />
       </svg>
     ),
-    tag: "Collaborate",
+    tag: 'Collaborate',
   },
 ];
 
@@ -146,7 +146,7 @@ export default function Features() {
           </span>
         </div>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0a0a0a] leading-tight tracking-tight max-w-2xl">
-          Everything you need to{" "}
+          Everything you need to{' '}
           <span className="text-[#000]">build and ship</span> faster.
         </h2>
         <p className="mt-4 text-base text-[#0a0a0a]/50 max-w-lg leading-relaxed">

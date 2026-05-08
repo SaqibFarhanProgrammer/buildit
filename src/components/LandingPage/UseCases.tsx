@@ -19,7 +19,6 @@ export default function UseCases() {
 
         <div className="w-[90%] md:w-[80%] mx-auto mb-12 md:mb-16">
           <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-2xl shadow-[#0a0a0a]/10">
-
             <div className="relative aspect-[16/9] bg-[#0a0a0a]">
               <Image
                 src="/mnt/agents/upload/image(1).png"
@@ -56,7 +55,6 @@ export default function UseCases() {
 
         <div className="w-[90%] md:w-[80%] mx-auto mb-12 md:mb-16">
           <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-2xl shadow-[#0a0a0a]/10">
-
             <div className="relative aspect-[16/9] bg-[#0a0a0a]">
               <img
                 src="https://design4users.com/wp-content/uploads/2025/05/dashboard-financial-product.jpg"
@@ -91,7 +89,6 @@ export default function UseCases() {
 
         <div className="w-[90%] md:w-[80%] mx-auto mb-12 md:mb-16">
           <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-2xl shadow-[#0a0a0a]/10">
-
             <div className="relative aspect-[16/9] bg-[#0a0a0a]">
               <img
                 src="https://community.atlassian.com/forums/image/serverpage/image-id/72166i659DC4F29880DC84?v=v2"
@@ -330,7 +327,6 @@ export default function UseCases() {
 
             <div className="w-full lg:w-[55%] shrink-0">
               <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-xl shadow-[#0a0a0a]/5 bg-[#0a0a0a]">
-
                 <div className="relative aspect-[16/10]">
                   <img
                     src="https://cdn.dribbble.com/userupload/16612909/file/original-657583e1aaf77903f05f141d3de41b56.png?format=webp&resize=400x300&vertical=center"
@@ -350,10 +346,8 @@ export default function UseCases() {
       >
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16">
-
             <div className="w-full lg:w-[55%] shrink-0">
               <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-xl shadow-[#0a0a0a]/5 bg-[#0a0a0a]">
-
                 <div className="relative aspect-[16/10]">
                   <img
                     src="https://framerusercontent.com/images/5zQRt35Mjj4AdNmGwNuPUf791pU.png?width=2400&height=1128"

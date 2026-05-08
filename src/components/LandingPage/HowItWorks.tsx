@@ -1,12 +1,12 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 const steps = [
   {
     id: 1,
-    number: "01",
-    title: "Write Code",
+    number: '01',
+    title: 'Write Code',
     description:
-      "Open the AI-powered Monaco editor. Syntax highlighting, auto-completion, and intelligent suggestions work out of the box. Write in any language you prefer.",
+      'Open the AI-powered Monaco editor. Syntax highlighting, auto-completion, and intelligent suggestions work out of the box. Write in any language you prefer.',
     icon: (
       <svg
         className="w-5 h-5"
@@ -25,10 +25,10 @@ const steps = [
   },
   {
     id: 2,
-    number: "02",
-    title: "AI Assists",
+    number: '02',
+    title: 'AI Assists',
     description:
-      "Get real-time debugging, code explanation, and optimization suggestions. The AI understands your context and helps you write better code faster.",
+      'Get real-time debugging, code explanation, and optimization suggestions. The AI understands your context and helps you write better code faster.',
     icon: (
       <svg
         className="w-5 h-5"
@@ -47,10 +47,10 @@ const steps = [
   },
   {
     id: 3,
-    number: "03",
-    title: "Practice & Compete",
+    number: '03',
+    title: 'Practice & Compete',
     description:
-      "Solve coding challenges across difficulty levels. Track your progress, climb global rankings, and prepare for technical interviews with confidence.",
+      'Solve coding challenges across difficulty levels. Track your progress, climb global rankings, and prepare for technical interviews with confidence.',
     icon: (
       <svg
         className="w-5 h-5"
@@ -69,10 +69,10 @@ const steps = [
   },
   {
     id: 4,
-    number: "04",
-    title: "Ship & Track",
+    number: '04',
+    title: 'Ship & Track',
     description:
-      "Manage projects with Kanban boards, monitor productivity metrics, and maintain your coding streak. Deploy faster with everything in one place.",
+      'Manage projects with Kanban boards, monitor productivity metrics, and maintain your coding streak. Deploy faster with everything in one place.',
     icon: (
       <svg
         className="w-5 h-5"
@@ -102,11 +102,11 @@ export default function HowItWorks() {
           </span>
         </div>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0a0a0a] leading-tight tracking-tight max-w-2xl">
-          Four steps to{" "}
-          <span className="text-[#000]">ship faster</span>.
+          Four steps to <span className="text-[#000]">ship faster</span>.
         </h2>
         <p className="mt-4 text-base text-[#0a0a0a]/50 max-w-lg leading-relaxed">
-          From your first line of code to production deployment. A streamlined workflow built for modern developers.
+          From your first line of code to production deployment. A streamlined
+          workflow built for modern developers.
         </p>
       </div>
 
@@ -116,8 +116,8 @@ export default function HowItWorks() {
             <div
               key={step.id}
               className={`group relative p-8 md:p-10 border-[#0a0a0a]/5 ${
-                index % 2 === 0 ? "md:border-r" : ""
-              } ${index < 2 ? "md:border-b" : ""} border-b last:border-b-0 md:last:border-b-0`}
+                index % 2 === 0 ? 'md:border-r' : ''
+              } ${index < 2 ? 'md:border-b' : ''} border-b last:border-b-0 md:last:border-b-0`}
             >
               <div className="flex items-start justify-between mb-6">
                 <span className="text-5xl md:text-6xl font-bold text-[#0a0a0a]/[0.06] leading-none tracking-tighter group-hover:text-[#000]/10 transition-colors duration-300">

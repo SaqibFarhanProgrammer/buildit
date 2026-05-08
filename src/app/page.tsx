@@ -8,14 +8,14 @@ import UseCases from '@/components/LandingPage/UseCases';
 
 export default function Home() {
   return (
-   <main>
-    <Navbar/>
-    <Hero/>
-    <UseCases/>
-    <Features/>
-    <HowItWorks/>
-    <Pricing/>
-    <Footer/>
-   </main>
+    <main>
+      <Navbar />
+      <Hero />
+      <UseCases />
+      <Features />
+      <HowItWorks />
+      <Pricing />
+      <Footer />
+    </main>
   );
 }
