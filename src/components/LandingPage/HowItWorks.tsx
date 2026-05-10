@@ -101,10 +101,10 @@ export default function HowItWorks() {
             How It Works
           </span>
         </div>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0a0a0a] leading-tight tracking-tight max-w-2xl">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] max-w-2xl">
           Four steps to <span className="text-[#000]">ship faster</span>.
         </h2>
-        <p className="mt-4 text-base text-[#0a0a0a]/50 max-w-lg leading-relaxed">
+        <p className="mt-4 font-[inter4-medium] text-[#0a0a0a]/80 max-w-lg leading-tight">
           From your first line of code to production deployment. A streamlined
           workflow built for modern developers.
         </p>
@@ -120,7 +120,7 @@ export default function HowItWorks() {
               } ${index < 2 ? 'md:border-b' : ''} border-b last:border-b-0 md:last:border-b-0`}
             >
               <div className="flex items-start justify-between mb-6">
-                <span className="text-5xl md:text-6xl font-bold text-[#0a0a0a]/[0.06] leading-none tracking-tighter group-hover:text-[#000]/10 transition-colors duration-300">
+                <span className="text-5xl md:text-6xl font-[inter] text-[#0a0a0a]/[0.06] leading-none -tracking-[3px] group-hover:text-[#000]/10 transition-colors duration-300">
                   {step.number}
                 </span>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/[0.03] text-[#0a0a0a]/60 group-hover:bg-[#000] group-hover:text-white transition-colors duration-300">
@@ -128,10 +128,10 @@ export default function HowItWorks() {
                 </div>
               </div>
 
-              <h3 className="text-xl font-bold text-[#0a0a0a] mb-3 tracking-tight">
+              <h3 className="text-xl font-[inter] text-[#0a0a0a] mb-3 tracking-tight">
                 {step.title}
               </h3>
-              <p className="text-sm text-[#0a0a0a]/50 leading-relaxed max-w-sm">
+              <p className="text-sm text-[#0a0a0a]/60 leading-tight max-w-sm">
                 {step.description}
               </p>
 
@@ -143,7 +143,7 @@ export default function HowItWorks() {
 
       <div className="max-w-5xl mx-auto px-6 lg:px-8 mt-16 md:mt-20">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 md:p-8 rounded-2xl border border-[#0a0a0a]/5 bg-white">
-          <p className="text-sm text-[#0a0a0a]/50">
+          <p className="text-sm text-[#0a0a0a]/80">
             Start shipping in under 2 minutes. No setup required.
           </p>
           <Link

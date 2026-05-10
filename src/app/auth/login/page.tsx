@@ -36,7 +36,7 @@ export default function LoginPage() {
             </div>
             <span className="text-[#0a0a0a] font-bold text-lg">BuildIt</span>
           </Link>
-          <h1 className="text-xl font-[inter4-semi] text-[#0a0a0a]">
+          <h1 className="text-xl font-[inter4-medium] text-[#0a0a0a]">
             Welcome back
           </h1>
           <p className="text-sm font-[inter4-medium] text-[#0a0a0a]/40 mt-1">
@@ -46,7 +46,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-xs font-[inter4-semi] text-[#0a0a0a]/60 mb-1.5">
+            <label className="block text-xs font-[inter4-medium] text-[#0a0a0a]/60 mb-1.5">
               Email
             </label>
             <input
@@ -69,7 +69,7 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-[inter4-semi]   text-[#0a0a0a]/60 mb-1.5">
+            <label className="block text-xs font-[inter4-medium]   text-[#0a0a0a]/60 mb-1.5">
               Password
             </label>
             <div className="relative">
@@ -100,7 +100,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-[#000] text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-[#000]/90 transition-all disabled:opacity-50"
+            className="w-full bg-[#000] text-white py-2.5 rounded-lg text-sm font-mediumbold hover:bg-[#000]/90 transition-all disabled:opacity-50"
           >
             {isSubmitting ? 'Signing in...' : 'Sign in'}
           </button>
@@ -125,8 +125,8 @@ export default function LoginPage() {
         <p className="text-center text-xs text-[#0a0a0a]/40 mt-6">
           Don't have an account?{' '}
           <Link
-            href="/signup"
-            className="text-[#000] font-[inter4-semi] hover:underline"
+            href="/auth/signup"
+            className="text-[#000] font-[inter4-medium] hover:underline"
           >
             Sign up
           </Link>

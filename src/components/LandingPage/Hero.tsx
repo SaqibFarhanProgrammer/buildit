@@ -23,15 +23,13 @@ export default function Hero() {
           </span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#0a0a0a] leading-[1.05] tracking-tight mb-5">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-[inter4-medium] text-[#0a0a0a] leading-[1.05] tracking-tight mb-5">
           Build Better.
           <br />
           <span className="text-[#000]">Ship Faster.</span>
         </h1>
 
-        <div className="w-16 h-[2px] bg-[#000] mx-auto mb-6" />
-
-        <p className="text-base md:text-lg text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
+        <p className="text-base md:text-lg text-black/60 max-w-xl mx-auto mb-8 leading-relaxed">
           Code, debug, learn, and ship with AI — all in one unified developer
           workspace.
         </p>
@@ -39,13 +37,13 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/signup"
-            className="bg-[#000] text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#000]/90 transition-all duration-200 hover:shadow-md hover:shadow-[#000]/15"
+            className="bg-[#000] text-white px-6 py-2.5 rounded-full text-sm font-[inter4-medium] hover:bg-[#000]/90 transition-all duration-200 hover:shadow-md hover:shadow-[#000]/15"
           >
             Start Building Free
           </Link>
           <Link
             href="#how-it-works"
-            className="border border-[#0a0a0a]/10 text-[#0a0a0a] px-6 py-2.5 rounded-full text-sm font-semibold hover:border-[#000] hover:text-[#000] transition-all duration-200"
+            className="border border-[#0a0a0a]/10 text-[#0a0a0a] px-6 py-2.5 rounded-full text-sm font-[inter4-medium] hover:border-[#000] hover:text-[#000] transition-all duration-200"
           >
             How It Works
           </Link>

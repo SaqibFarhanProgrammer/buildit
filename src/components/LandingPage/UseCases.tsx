@@ -8,10 +8,10 @@ export default function UseCases() {
         className="relative py-20 md:py-28 bg-white overflow-hidden"
       >
         <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0a0a0a] leading-tight tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
             The AI-native code editor
           </h2>
-          <p className="text-base md:text-lg text-[#0a0a0a]/50 leading-relaxed max-w-xl mx-auto">
+          <p className="text-[inter4-medium] font-[inter4-medium] md:text-lg text-[#0a0a0a] leading-relaxed max-w-xl mx-auto">
             Built to make you extraordinarily productive, BuildIt is the best
             way to code with AI.
           </p>
@@ -32,7 +32,7 @@ export default function UseCases() {
         </div>
 
         <div className="text-center">
-          <p className="text-sm md:text-base text-[#0a0a0a]/40 font-medium">
+          <p className="text-sm md:text-[inter4-medium] text-[#0a0a0a]/40 font-medium">
             Trusted every day by teams that build world-class software
           </p>
         </div>
@@ -43,11 +43,10 @@ export default function UseCases() {
         className="relative py-20 md:py-28 bg-white overflow-hidden"
       >
         <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0a0a0a] leading-tight tracking-tight mb-4">
-            Your productivity{' '}
-            <span className="text-[#000]">command center</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
+            Your productivity command center
           </h2>
-          <p className="text-base md:text-lg text-[#0a0a0a]/50 leading-relaxed max-w-xl mx-auto">
+          <p className="text-[inter4-medium] md:text-lg font-[inter4-medium] text-black/80 leading-tight max-w-xl mx-auto">
             Track projects, monitor coding streaks, and manage your entire
             developer workflow from one unified dashboard.
           </p>
@@ -66,7 +65,7 @@ export default function UseCases() {
         </div>
 
         <div className="text-center">
-          <p className="text-sm md:text-base text-[#0a0a0a]/40 font-medium">
+          <p className="text-sm md:text-[inter4-medium] text-[#0a0a0a]/40 font-medium">
             Trusted every day by developers shipping world-class products
           </p>
         </div>
@@ -77,10 +76,10 @@ export default function UseCases() {
         className="relative py-20 md:py-28 bg-white overflow-hidden"
       >
         <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0a0a0a] leading-tight tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
             Ship projects with <span className="text-[#000]">confidancee</span>
           </h2>
-          <p className="text-base md:text-lg text-[#0a0a0a]/50 leading-relaxed max-w-xl mx-auto">
+          <p className="text-[inter4-medium] md:text-lg text-[#000]/80 leading-tight max-w-xl mx-auto">
             Kanban boards, sprint planning, and real-time progress tracking.
             Manage tasks, hit deadlines, and keep your team aligned — all
             without leaving your editor.
@@ -100,7 +99,7 @@ export default function UseCases() {
         </div>
 
         <div className="text-center">
-          <p className="text-sm md:text-base text-[#0a0a0a]/40 font-medium">
+          <p className="text-sm md:text-[inter4-medium] text-[#0a0a0a]/40 font-medium">
             From sprint planning to shipping — everything in one place
           </p>
         </div>
@@ -114,16 +113,16 @@ export default function UseCases() {
             <div className="w-full lg:w-[45%] shrink-0">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#000]/5 border border-[#000]/10 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#000]" />
-                <span className="text-[#000] text-[10px] font-bold uppercase tracking-wider">
+                <span className="text-[#000] text-[10px] font-[inter] uppercase -tracking-[2px]">
                   AI Explainer
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#0a0a0a] leading-tight tracking-tight mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
                 Understand code <span className="text-[#000]">instantly</span>
               </h2>
 
-              <p className="text-base text-[#0a0a0a]/50 leading-relaxed mb-6 max-w-md">
+              <p className="text-[inter4-medium] text-black/80 leading-relaxed mb-6 max-w-md">
                 Select any code block and get AI-generated explanations in plain
                 English. Complex algorithms, legacy code, or new frameworks —
                 understand everything with one click.
@@ -231,17 +230,17 @@ export default function UseCases() {
             <div className="w-full lg:w-[45%] shrink-0">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#000]/5 border border-[#000]/10 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#000]" />
-                <span className="text-[#000] text-[10px] font-bold uppercase tracking-wider">
+                <span className="text-[#000] text-[10px] font-[inter] uppercase -tracking-[2px]">
                   Coding Challenges
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#0a0a0a] leading-tight tracking-tight mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
                 Level up your{' '}
                 <span className="text-[#000]">problem solving</span>
               </h2>
 
-              <p className="text-base text-[#0a0a0a]/50 leading-relaxed mb-6 max-w-md">
+              <p className="text-[inter4-medium] text-black/80 leading-relaxed mb-6 max-w-md">
                 Practice with competitive programming problems, track your
                 progress, and climb global rankings. From easy warmups to hard
                 system design — master every concept.
@@ -360,16 +359,16 @@ export default function UseCases() {
             <div className="w-full lg:w-[45%] shrink-0">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#000]/5 border border-[#000]/10 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#000]" />
-                <span className="text-[#000] text-[10px] font-bold uppercase tracking-wider">
+                <span className="text-[#000] text-[10px] font-[inter] uppercase -tracking-[2px]">
                   Learning Platform
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#0a0a0a] leading-tight tracking-tight mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
                 Master skills <span className="text-[#000]">step by step</span>
               </h2>
 
-              <p className="text-base text-[#0a0a0a]/50 leading-relaxed mb-6 max-w-md">
+              <p className="text-[inter4-medium] text-black/80 leading-relaxed mb-6 max-w-md">
                 Structured tutorials, interactive lessons, and hands-on
                 projects. From beginner fundamentals to advanced system design —
                 learn at your own pace.

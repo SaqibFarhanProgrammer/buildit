@@ -37,7 +37,6 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Compact Nav */}
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <Link
@@ -50,7 +49,6 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Compact CTA */}
           <div className="hidden md:flex items-center gap-4">
             <Link
               href="/login"
@@ -66,7 +64,6 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden p-2 text-[#0a0a0a]"
@@ -97,7 +94,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden bg-white border-t border-gray-50">
           <div className="px-6 py-4 space-y-1">
@@ -113,13 +109,13 @@ export default function Navbar() {
             ))}
             <div className="pt-3 border-t border-gray-50 space-y-2">
               <Link
-                href="/login"
+                href="/auth/login"
                 className="block text-[#0a0a0a]/60 text-sm font-medium py-2"
               >
                 Log in
               </Link>
               <Link
-                href="/signup"
+                href="/auth/signup"
                 className="block bg-[#000] text-white px-4 py-2.5 rounded-full text-sm font-semibold text-center"
               >
                 Get Started

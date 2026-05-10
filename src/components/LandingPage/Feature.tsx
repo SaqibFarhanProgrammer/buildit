@@ -145,11 +145,11 @@ export default function Features() {
             Features
           </span>
         </div>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0a0a0a] leading-tight tracking-tight max-w-2xl">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] max-w-2xl">
           Everything you need to{' '}
           <span className="text-[#000]">build and ship</span> faster.
         </h2>
-        <p className="mt-4 text-base text-[#0a0a0a]/50 max-w-lg leading-relaxed">
+        <p className="mt-4 text-base text-black/60 max-w-lg leading-tight">
           A complete toolkit for modern developers. From writing your first line
           to deploying production code.
         </p>
@@ -171,10 +171,10 @@ export default function Features() {
                 </span>
               </div>
 
-              <h3 className="text-lg font-bold text-[#0a0a0a] mb-2 tracking-tight">
+              <h3 className="text-lg font-[inter] text-[#0a0a0a] mb-2 -tracking-[2px]">
                 {feature.title}
               </h3>
-              <p className="text-sm text-[#0a0a0a]/50 leading-relaxed">
+              <p className="text-sm text-black/60 leading-tight">
                 {feature.description}
               </p>
 
@@ -206,7 +206,7 @@ export default function Features() {
       <div className="max-w-5xl mx-auto px-6 lg:px-8 mt-16 md:mt-20">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-8 md:p-10 rounded-2xl bg-[#0a0a0a]">
           <div>
-            <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+            <h3 className="text-xl md:text-2xl font-[inter] text-white -tracking-[1px]">
               Ready to start building?
             </h3>
             <p className="mt-1 text-sm text-white/50">
@@ -215,7 +215,7 @@ export default function Features() {
           </div>
           <Link
             href="/signup"
-            className="shrink-0 bg-white text-[#0a0a0a] px-7 py-3 rounded-full text-sm font-bold hover:bg-white/90 transition-all duration-200"
+            className="shrink-0 bg-white text-[#0a0a0a] px-7 py-3 rounded-full text-sm font-[inter] hover:bg-white/90 transition-all duration-200"
           >
             Get Started Free →
           </Link>

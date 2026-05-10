@@ -60,17 +60,17 @@ export default function Pricing() {
       <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-16 md:mb-24">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-8 h-[1px] bg-[#0a0a0a]" />
-          <span className="text-xs font-semibold text-[#0a0a0a]/40 uppercase tracking-[0.2em]">
+          <span className="text-xs font-[inter] text-[#0a0a0a]/40 uppercase tracking-[0.2em]">
             Pricing
           </span>
         </div>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0a0a0a] leading-tight tracking-tight max-w-xl">
+            <h2 className="text-3xl font-[inter] md:text-4xl lg:text-5xl f[inter] text-[#0a0a0a] leading-tight -tracking-[2px] max-w-xl">
               Simple pricing for{' '}
               <span className="text-[#000]">every developer</span>.
             </h2>
-            <p className="mt-4 text-base text-[#0a0a0a]/50 max-w-md leading-relaxed">
+            <p className="mt-4 text-base text-[#0a0a0a]/80 max-w-md leading-tight">
               Start free, upgrade when you need more power. No hidden fees,
               cancel anytime.
             </p>
@@ -96,7 +96,7 @@ export default function Pricing() {
               {/* Popular Badge */}
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-[#000] text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                  <span className="bg-[#000] text-white text-[10px] f[inter] uppercase tracking-wider px-3 py-1 rounded-full">
                     Most Popular
                   </span>
                 </div>
@@ -104,7 +104,7 @@ export default function Pricing() {
 
               {/* Plan Name */}
               <h3
-                className={`text-sm font-semibold uppercase tracking-wider mb-4 ${
+                className={`text-sm font-[inter] uppercase tracking-wider mb-4 ${
                   plan.popular ? 'text-white/50' : 'text-[#0a0a0a]/40'
                 }`}
               >
@@ -114,7 +114,7 @@ export default function Pricing() {
               {/* Price */}
               <div className="flex items-baseline gap-1 mb-3">
                 <span
-                  className={`text-4xl md:text-5xl font-bold tracking-tight ${
+                  className={`text-4xl md:text-5xl f[inter] tracking-tight ${
                     plan.popular ? 'text-white' : 'text-[#0a0a0a]'
                   }`}
                 >
@@ -178,7 +178,7 @@ export default function Pricing() {
               {/* CTA Button */}
               <Link
                 href="/signup"
-                className={`block w-full text-center py-3 rounded-full text-sm font-bold transition-all duration-200 ${
+                className={`block w-full text-center py-3 rounded-full text-sm f[inter] transition-all duration-200 ${
                   plan.popular
                     ? 'bg-white text-[#0a0a0a] hover:bg-white/90'
                     : 'bg-[#0a0a0a] text-white hover:bg-[#0a0a0a]/90'

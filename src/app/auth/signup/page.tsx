@@ -36,7 +36,7 @@ export default function SignupPage() {
             </div>
             <span className="text-[#0a0a0a] font-bold text-lg">BuildIt</span>
           </Link>
-          <h1 className="text-xl font-[inter4-semi] text-[#0a0a0a]">
+          <h1 className="text-xl font-[inter4-medium] text-[#0a0a0a]">
             Create account
           </h1>
           <p className="text-sm font-[inter4-medium] text-[#0a0a0a]/40 mt-1">
@@ -46,7 +46,7 @@ export default function SignupPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-xs font-[inter4-semi] text-[#0a0a0a]/60 mb-1.5">
+            <label className="block text-xs font-[inter4-medium] text-[#0a0a0a]/60 mb-1.5">
               Full Name
             </label>
             <input
@@ -64,7 +64,7 @@ export default function SignupPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-[inter4-semi] text-[#0a0a0a]/60 mb-1.5">
+            <label className="block text-xs font-[inter4-medium] text-[#0a0a0a]/60 mb-1.5">
               Email
             </label>
             <input
@@ -87,7 +87,7 @@ export default function SignupPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-[inter4-semi] text-[#0a0a0a]/60 mb-1.5">
+            <label className="block text-xs font-[inter4-medium] text-[#0a0a0a]/60 mb-1.5">
               Password
             </label>
             <div className="relative">
@@ -116,7 +116,7 @@ export default function SignupPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-[inter4-semi] text-[#0a0a0a]/60 mb-1.5">
+            <label className="block text-xs font-[inter4-medium] text-[#0a0a0a]/60 mb-1.5">
               Confirm Password
             </label>
             <input
@@ -138,7 +138,7 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-[#000] text-white py-2.5 rounded-lg text-sm font-[inter4-semi] hover:bg-[#000]/90 transition-all disabled:opacity-50"
+            className="w-full bg-[#000] text-white py-2.5 rounded-lg text-sm font-[inter4-medium] hover:bg-[#000]/90 transition-all disabled:opacity-50"
           >
             {isSubmitting ? 'Creating...' : 'Create account'}
           </button>
@@ -164,8 +164,8 @@ export default function SignupPage() {
         <p className="text-center font-[inter4-medium] text-xs text-[#0a0a0a]/40 mt-6">
           Already have an account?{' '}
           <Link
-            href="/login"
-            className="text-[#000] font-[inter4-semi] hover:underline"
+            href="/auth/login"
+            className="text-[#000] font-[inter4-medium] hover:underline"
           >
             Sign in
           </Link>
