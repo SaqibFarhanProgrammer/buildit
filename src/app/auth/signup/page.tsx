@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { SiGithub } from 'react-icons/si';
 import { FcGoogle } from 'react-icons/fc';
+import ProfileCreateOptions from '@/components/auth/ProfileCreateOptions';
 
 type SignupForm = {
   name: string;
@@ -15,6 +16,8 @@ type SignupForm = {
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [ShowProfileComleteScreen, setShowProfileComleteScreen] =
+    useState(false);
 
   const {
     register,
@@ -24,8 +27,17 @@ export default function SignupPage() {
 
   const onSubmit = async (data: SignupForm) => {
     console.log(data);
+    setShowProfileComleteScreen(true);
+    console.log("chala");
+    
   };
+    
 
+    if(ShowProfileComleteScreen) {
+      return (
+          <ProfileCreateOptions />
+      );
+    }
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
@@ -122,7 +134,6 @@ export default function SignupPage() {
             <input
               {...register('confirmPassword', {
                 required: 'Confirm password',
-                validate: (val) => val === password || "Passwords don't match",
               })}
               type="password"
               placeholder="••••••••"
@@ -148,7 +159,7 @@ export default function SignupPage() {
           <div className="flex-1 h-[1px] bg-[#0a0a0a]/5" />
           <span className="text-xs text-[#0a0a0a]/30">or</span>
           <div className="flex-1 h-[1px] bg-[#0a0a0a]/5" />
-        </div>
+        </div>s
 
         <div className=" flex flex-col gap-2">
           <button className="w-full flex items-center bg-black text-white justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/10 text-sm font-[inter4-medium] text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
