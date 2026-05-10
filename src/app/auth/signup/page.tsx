@@ -28,16 +28,12 @@ export default function SignupPage() {
   const onSubmit = async (data: SignupForm) => {
     console.log(data);
     setShowProfileComleteScreen(true);
-    console.log("chala");
-    
+    console.log('chala');
   };
-    
 
-    if(ShowProfileComleteScreen) {
-      return (
-          <ProfileCreateOptions />
-      );
-    }
+  if (ShowProfileComleteScreen) {
+    return <ProfileCreateOptions />;
+  }
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
@@ -55,7 +51,6 @@ export default function SignupPage() {
             Start building for free
           </p>
         </div>
-
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block text-xs font-[inter4-medium] text-[#0a0a0a]/60 mb-1.5">
@@ -154,13 +149,12 @@ export default function SignupPage() {
             {isSubmitting ? 'Creating...' : 'Create account'}
           </button>
         </form>
-
         <div className="flex items-center gap-3 my-6">
           <div className="flex-1 h-[1px] bg-[#0a0a0a]/5" />
           <span className="text-xs text-[#0a0a0a]/30">or</span>
           <div className="flex-1 h-[1px] bg-[#0a0a0a]/5" />
-        </div>s
-
+        </div>
+        s
         <div className=" flex flex-col gap-2">
           <button className="w-full flex items-center bg-black text-white justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/10 text-sm font-[inter4-medium] text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
             <SiGithub className="text-xl" />
@@ -171,7 +165,6 @@ export default function SignupPage() {
             Continue with Google
           </button>
         </div>
-
         <p className="text-center font-[inter4-medium] text-xs text-[#0a0a0a]/40 mt-6">
           Already have an account?{' '}
           <Link

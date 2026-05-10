@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const programmingLanguages = [
   'JavaScript',
@@ -207,12 +208,14 @@ export default function OnboardingPage() {
           )}
 
           {step === steps.length - 1 ? (
-            <button
-              onClick={handleSubmit}
-              className="font-['inter-semi'] bg-[#0a0a0a] text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-sm hover:bg-[#0a0a0a]/90 transition-all hover:shadow-lg hover:shadow-[#0a0a0a]/20 active:scale-95"
-            >
-              Get Started →
-            </button>
+            <Link href="/">
+              <button
+                onClick={handleSubmit}
+                className="font-['inter-semi'] bg-[#0a0a0a] text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-sm hover:bg-[#0a0a0a]/90 transition-all hover:shadow-lg hover:shadow-[#0a0a0a]/20 active:scale-95"
+              >
+                Get Started →
+              </button>
+            </Link>
           ) : (
             <span className="font-['inter-light'] text-xs text-[#0a0a0a]/25">
               Select an option to continue

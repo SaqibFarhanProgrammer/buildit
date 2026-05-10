@@ -10,8 +10,6 @@ export type LoginType = {
   Password: string;
 };
 
-
-
 export type ProfileCreationType = {
   ProgrammingLanguage: string;
   Role: 'FrontEnd' | 'Backend' | 'Both';
