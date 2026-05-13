@@ -17,7 +17,7 @@ export default function SettingsContent() {
   const [activeTab, setActiveTab] = useState('profile');
 
   return (
-    <div className="max-w-6xl mx-auto px-6 lg:px-8 -mt-8 relative z-10 pb-12">
+    <div className="max-w-6xl mx-auto px-6 lg:px-8  relative z-10 pb-12">
       <div className="flex items-center gap-1 p-1 rounded-xl bg-[#f9fafb] border border-[#0a0a0a]/5 w-fit mb-8 sm:mb-10 overflow-x-auto">
         {tabs.map((tab) => (
           <button

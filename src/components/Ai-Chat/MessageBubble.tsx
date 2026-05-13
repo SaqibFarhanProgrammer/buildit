@@ -1,3 +1,5 @@
+import { RiFileCopyLine, RiRefreshLine, RiThumbUpLine } from 'react-icons/ri';
+
 interface Message {
   id: number;
   role: 'user' | 'assistant';
@@ -56,7 +58,7 @@ export default function MessageBubble({ message }: { message: Message }) {
         className={`max-w-[85%] sm:max-w-[75%] p-4 sm:p-5 rounded-2xl ${
           isUser
             ? 'bg-[#0a0a0a] text-white rounded-tr-sm'
-            : 'bg-[#f9fafb] text-[#0a0a0a] border border-[#0a0a0a]/5 rounded-tl-sm'
+            : 'bg-[#0004ff]/[0.04] text-[#0a0a0a] border border-[#0004ff]/10 rounded-tl-sm'
         }`}
       >
         <div
@@ -68,53 +70,17 @@ export default function MessageBubble({ message }: { message: Message }) {
         </div>
       </div>
 
-      {/* Action Buttons (only for AI) */}
+      {/* Action Buttons (only for AI) — React Icons */}
       {!isUser && (
         <div className="flex items-center gap-1 mt-2 ml-1">
-          <button className="w-7 h-7 rounded-lg hover:bg-[#0a0a0a]/5 flex items-center justify-center text-[#0a0a0a]/20 hover:text-[#0a0a0a]/40 transition-all">
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-              />
-            </svg>
+          <button className="w-7 h-7 rounded-lg hover:bg-[#0004ff]/5 flex items-center justify-center text-[#0a0a0a]/20 hover:text-[#0004ff] transition-all">
+            <RiFileCopyLine className="w-3.5 h-3.5" />
           </button>
-          <button className="w-7 h-7 rounded-lg hover:bg-[#0a0a0a]/5 flex items-center justify-center text-[#0a0a0a]/20 hover:text-[#0a0a0a]/40 transition-all">
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              />
-            </svg>
+          <button className="w-7 h-7 rounded-lg hover:bg-[#0004ff]/5 flex items-center justify-center text-[#0a0a0a]/20 hover:text-[#0004ff] transition-all">
+            <RiRefreshLine className="w-3.5 h-3.5" />
           </button>
-          <button className="w-7 h-7 rounded-lg hover:bg-[#0a0a0a]/5 flex items-center justify-center text-[#0a0a0a]/20 hover:text-[#0a0a0a]/40 transition-all">
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-              />
-            </svg>
+          <button className="w-7 h-7 rounded-lg hover:bg-[#0004ff]/5 flex items-center justify-center text-[#0a0a0a]/20 hover:text-[#0004ff] transition-all">
+            <RiThumbUpLine className="w-3.5 h-3.5" />
           </button>
         </div>
       )}

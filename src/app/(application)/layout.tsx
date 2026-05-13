@@ -1,3 +1,4 @@
+import EditorToolbar from '@/components/code/EditorToolbar';
 import Sidebar from '@/components/global/SideBar';
 
 export default function ApplicationLayout({
@@ -7,7 +8,7 @@ export default function ApplicationLayout({
 }) {
   return (
     <div>
-      {children}
+      <EditorToolbar>{children}</EditorToolbar>
       <Sidebar />
     </div>
   );

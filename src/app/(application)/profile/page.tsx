@@ -3,8 +3,6 @@ import StatsBar from '@/components/profile/StateBar';
 import WorkflowCard from '@/components/profile/WorkflowList';
 import TaskList from '@/components/profile/TaskList';
 
-// ============ DUMMY DATA ============
-
 const user = {
   name: 'Alex Chen',
   username: '@alexchen',

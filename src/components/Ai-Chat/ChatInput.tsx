@@ -26,7 +26,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
 
   return (
     <div className="relative">
-      <div className="flex items-end gap-3 p-4 sm:p-5 rounded-2xl bg-[#0A0A0A] border border-white/10 focus-within:border-[#0004ff] focus-within:ring-1 focus-within:ring-[#0004ff]/20 transition-all shadow-xl shadow-black/20">
+      <div className="flex fixed  bottom-2 left-100 w-[50vw] items-end gap-3 p-4 sm:p-5 rounded-2xl bg-[#0A0A0A] border border-white/10 focus-within:border-[#0004ff] focus-within:ring-1 focus-within:ring-[#0004ff]/20 transition-all shadow-xl shadow-black/20">
         <button
           type="button"
           className="w-9 h-9 rounded-lg flex items-center justify-center text-white/20 hover:text-white/40 hover:bg-white/5 transition-all shrink-0"
