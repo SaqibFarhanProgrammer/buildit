@@ -1,18 +1,15 @@
 'use client';
 
 import { useEffect } from 'react';
-import EditorProvider, {
-  useEditor,
-} from '../../context/EditorProvider.context';
 import FileTree from './FileTree';
 import CodeEditor from './CodeEditor';
 import EditorToolbar from './EditorToolbar';
 import Terminal from './Terminal';
+import EditorProvider, { useEditor } from '@/context/EditorProvider.context';
 
 function EditorContent() {
   const { terminalOpen, setTerminalOpen } = useEditor();
 
-  // Ctrl+J to toggle terminal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.key === 'j') {

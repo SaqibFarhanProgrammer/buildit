@@ -2,26 +2,27 @@
 
 import { useState } from 'react';
 import { useEditor } from '../../context/EditorProvider.context';
+import { FaArrowDown } from 'react-icons/fa6';
+import { MdArrowDropDown } from 'react-icons/md';
+
 import {
   RiFolderOpenLine,
   RiFolderLine,
   RiFileCodeLine,
   RiFileTextLine,
-  RiChevronRight,
-  RiChevronDown,
 } from 'react-icons/ri';
 
-interface File {
+interface FileType {
   id: string;
   name: string;
-  language: string;
+  language: string | undefined;
   content: string;
   isFolder?: boolean;
-  children?: File[];
+  children?: FileType[];
   isOpen?: boolean;
 }
 
-function FileItem({ file, depth = 0 }: { file: File; depth?: number }) {
+function FileItem({ file, depth = 0 }: { file: FileType; depth?: number }) {
   const [isOpen, setIsOpen] = useState(file.isOpen || false);
   const { activeFile, setActiveFile } = useEditor();
 
@@ -50,9 +51,9 @@ function FileItem({ file, depth = 0 }: { file: File; depth?: number }) {
           style={{ paddingLeft: `${12 + depth * 16}px` }}
         >
           {isOpen ? (
-            <RiChevronDown className="w-3 h-3 text-white/40" />
+            <FaArrowDown className="w-3 h-3 text-white/40" />
           ) : (
-            <RiChevronRight className="w-3 h-3 text-white/40" />
+            <MdArrowDropDown className="w-3 h-3 text-white/40" />
           )}
           {getFileIcon()}
           <span className="font-['inter4-medium'] text-xs text-white/70 group-hover:text-white truncate">

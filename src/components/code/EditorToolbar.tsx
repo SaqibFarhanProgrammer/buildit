@@ -29,15 +29,7 @@ export default function EditorToolbar() {
     // Save logic
     console.log('Saving:', activeFile?.name);
   };
-  const handleDownload = () => {
-    if (!activeFile) return;
-    const blob = new Blob([activeFile.content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = activeFile.name;
-    a.click();
-  };
+
   const handleRun = () => {
     console.log('Running:', activeFile?.name);
   };
@@ -50,7 +42,6 @@ export default function EditorToolbar() {
 
   return (
     <div className="h-12 bg-[#0A0A0A] border-b border-white/10 flex items-center justify-between px-4">
-      {/* Left: File Info */}
       <div className="flex items-center gap-3">
         {activeFile && (
           <>
@@ -64,9 +55,7 @@ export default function EditorToolbar() {
         )}
       </div>
 
-      {/* Center: Actions */}
       <div className="flex items-center gap-1">
-        {/* Explain Code */}
         <button
           onClick={handleExplain}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0004ff]/10 text-[#0004ff] hover:bg-[#0004ff]/20 transition-all"
@@ -75,7 +64,6 @@ export default function EditorToolbar() {
           <span className="font-['inter-semi'] text-[10px]">Explain</span>
         </button>
 
-        {/* Zoom */}
         <div className="flex items-center gap-1 ml-2">
           <button
             onClick={handleZoomOut}
@@ -95,9 +83,7 @@ export default function EditorToolbar() {
         </div>
       </div>
 
-      {/* Right: Tools */}
       <div className="flex items-center gap-1">
-        {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
           className="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all"
@@ -109,7 +95,6 @@ export default function EditorToolbar() {
           )}
         </button>
 
-        {/* Save */}
         <button
           onClick={handleSave}
           className="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all"
@@ -117,15 +102,6 @@ export default function EditorToolbar() {
           <RiSaveLine className="w-4 h-4" />
         </button>
 
-        {/* Download */}
-        <button
-          onClick={handleDownload}
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all"
-        >
-          <RiDownloadLine className="w-4 h-4" />
-        </button>
-
-        {/* Terminal Toggle */}
         <button
           onClick={() => setTerminalOpen(!terminalOpen)}
           className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
@@ -137,7 +113,6 @@ export default function EditorToolbar() {
           <span className="font-['inter-semi'] text-[10px]">⌘J</span>
         </button>
 
-        {/* Run */}
         <button
           onClick={handleRun}
           className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#0004ff] text-white hover:bg-[#0004ff]/90 transition-all ml-2"

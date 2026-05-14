@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Sidebar from '@/components/global/SideBar';
+import EditorToolbar from '@/components/code/EditorToolbar';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`h-full antialiased`} cz-shortcut-listen="true">
       <body className="min-h-full flex flex-col" cz-shortcut-listen="true">
-        {children}
+        <>{children}</>
       </body>
     </html>
   );

@@ -63,7 +63,7 @@ export default function Sidebar() {
         className={`fixed top-0 left-0 h-full bg-[#0a0a0a] text-white z-50 transition-all duration-300 ease-in-out flex flex-col ${
           isOpen
             ? 'w-64 translate-x-0'
-            : 'w-64 -translate-x-full lg:-translate-x-full lg:w-20'
+            : 'w-64 -translate-x-full lg:-translate-x-[150%] lg:w-20'
         }`}
       >
         {/* Toggle Button (Desktop only) */}

@@ -26,12 +26,6 @@ interface EditorContextType {
 
 const EditorContext = createContext<EditorContextType | null>(null);
 
-export function useEditor() {
-  const context = useContext(EditorContext);
-  if (!context) throw new Error('useEditor must be used within EditorProvider');
-  return context;
-}
-
 const initialFiles: File[] = [
   {
     id: '1',
@@ -140,4 +134,10 @@ export default function EditorProvider({ children }: { children: ReactNode }) {
       {children}
     </EditorContext.Provider>
   );
+}
+
+export function useEditor() {
+  const context = useContext(EditorContext);
+  if (!context) throw new Error('useEditor must be used within EditorProvider');
+  return context;
 }

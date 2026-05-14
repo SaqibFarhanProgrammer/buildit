@@ -8,7 +8,7 @@ export default function ApplicationLayout({
 }) {
   return (
     <div>
-      <EditorToolbar>{children}</EditorToolbar>
+      {children}
       <Sidebar />
     </div>
   );
