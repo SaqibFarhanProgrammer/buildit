@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import SearchBar from './SearchBar';
 import ProjectCard from './ProjectCard';
 import EmptyState from './EmptyState';
@@ -17,29 +17,38 @@ export default function ProjectList({
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState<Status>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [projects, setProjects] = useState(initialProjects);
+
+  const FilterProjects = initialProjects.filter((p) => {
+    const matchesFilter = filter === 'All' || p.status === filter;
+
+    const matchesSearch = p.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
+    return matchesFilter && matchesSearch;
+  });
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-8">
-      {/* Header */}
       <div className="mb-8">
         <h1 className="font-['inter-bold'] text-3xl sm:text-4xl text-white mb-2">
           Your Projects
         </h1>
         <p className="font-['inter-rag'] text-sm text-white/40">
-          {projects.length} projects — manage your code
+          {FilterProjects.length} projects — manage your code
         </p>
       </div>
 
-      {/* Search + Filter + New */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
         <SearchBar value={searchQuery} onChange={setSearchQuery} />
 
         <div className="flex items-center gap-2">
-          {(['all', 'active', 'archived'] as const).map((f) => (
+          {(['All', 'Active', 'Finished'] as const).map((f) => (
             <button
               key={f}
-              onClick={() => setFilter(f)}
+              onClick={() => {
+                setFilter(f);
+              }}
               className={`px-3 py-1.5 rounded-full text-xs font-['inter-semi'] transition-all ${
                 filter === f
                   ? 'bg-[#0004ff] text-white'
@@ -60,38 +69,36 @@ export default function ProjectList({
         </button>
       </div>
 
-      {/* Projects Grid */}
-      {filteredProjects.length === 0 ? (
+      {FilterProjects.length === 0 ? (
         <EmptyState
           searchQuery={searchQuery}
           onCreate={() => setIsModalOpen(true)}
         />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredProjects.map((project) => (
+          {FilterProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       )}
 
-      {/* Stats */}
       <div className="mt-12 pt-6 border-t border-white/5 flex items-center justify-between">
         <p className="font-['inter-rag'] text-xs text-white/20">
-          Showing {filteredProjects.length} of {projects.length} projects
+          Showing {FilterProjects.length} of {FilterProjects.length} projects
         </p>
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1.5 text-xs text-white/20 font-['inter-rag']">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-            {projects.filter((p) => p.status === 'active').length} active
+            {FilterProjects.filter((p) => p.status === 'Active').length} active
           </span>
           <span className="flex items-center gap-1.5 text-xs text-white/20 font-['inter-rag']">
             <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
-            {projects.filter((p) => p.status === 'archived').length} archived
+            {FilterProjects.filter((p) => p.status === 'Finished').length}{' '}
+            Finshed
           </span>
         </div>
       </div>
 
-      {/* New Project Modal */}
       {isModalOpen && (
         <NewProjectModal
           onClose={() => setIsModalOpen(false)}
