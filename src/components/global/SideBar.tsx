@@ -20,8 +20,8 @@ import { CgProfile } from 'react-icons/cg';
 
 const menuItems = [
   { name: 'Profile', href: '/profile', icon: CgProfile },
-  { name: 'AI Chat', href: '/ai-chat', icon: RiMessage3Line },
-  { name: 'Code Editor', href: '/editor', icon: RiCodeBoxLine },
+  { name: 'AI Chat', href: '/ai', icon: RiMessage3Line },
+  { name: 'Code Editor', href: '/code', icon: RiCodeBoxLine },
   { name: 'Project Tracking', href: '/projects', icon: RiKanbanView2 },
   { name: 'Problems', href: '/problems', icon: RiTrophyLine },
   { name: 'Dashboard', href: '/dashboard', icon: RiDashboardLine },
@@ -39,8 +39,6 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* ========== HAMBURGER BUTTON (Fixed) ========== */}
-      {/* Hide when sidebar is open */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
@@ -50,7 +48,6 @@ export default function Sidebar() {
         </button>
       )}
 
-      {/* ========== OVERLAY ========== */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/30 z-[45] lg:hidden"
@@ -58,7 +55,6 @@ export default function Sidebar() {
         />
       )}
 
-      {/* ========== SIDEBAR ========== */}
       <aside
         className={`fixed top-0 left-0 h-full bg-[#0a0a0a] text-white z-50 transition-all duration-300 ease-in-out flex flex-col ${
           isOpen
@@ -66,7 +62,6 @@ export default function Sidebar() {
             : 'w-64 -translate-x-full lg:-translate-x-[150%] lg:w-20'
         }`}
       >
-        {/* Toggle Button (Desktop only) */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="absolute -right-3 top-8 w-6 h-6 bg-[#0004ff] rounded-full flex items-center justify-center text-white hidden lg:flex hover:bg-[#0004ff]/90 transition-colors z-50"
@@ -76,7 +71,6 @@ export default function Sidebar() {
           />
         </button>
 
-        {/* ========== CLOSE BUTTON (Inside Sidebar) ========== */}
         {isOpen && (
           <button
             onClick={() => setIsOpen(false)}
@@ -86,7 +80,6 @@ export default function Sidebar() {
           </button>
         )}
 
-        {/* User Profile */}
         <div
           className={`p-6 border-b border-white/10 ${isOpen ? '' : 'lg:flex lg:justify-center'}`}
         >
@@ -105,7 +98,6 @@ export default function Sidebar() {
           </div>
         </div>
 
-        {/* Main Menu */}
         <nav className="flex-1 py-6 px-3 overflow-y-auto">
           <ul className="space-y-1">
             {menuItems.map((item) => {
@@ -140,7 +132,6 @@ export default function Sidebar() {
           </ul>
         </nav>
 
-        {/* Bottom Section */}
         <div className="p-3 border-t border-white/10">
           <ul className="space-y-1">
             {bottomItems.map((item) => (
@@ -164,7 +155,6 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* Content Spacer */}
       <div
         className={`transition-all duration-300 ${isOpen ? 'lg:ml-64' : 'lg:ml-20'}`}
       />
