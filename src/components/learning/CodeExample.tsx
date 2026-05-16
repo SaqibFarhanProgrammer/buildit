@@ -18,7 +18,7 @@ export default function CodeBlock({ title, code, language }: CodeBlockProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const lines = code.split('\n');
+  const lines = code.split('\\n');
 
   return (
     <div className="rounded-[20px] border border-black/[0.08] overflow-hidden bg-[#0a0a0a]">
