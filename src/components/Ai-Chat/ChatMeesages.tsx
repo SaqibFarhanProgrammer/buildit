@@ -1,13 +1,7 @@
 import MessageBubble from './MessageBubble';
+import type { ChatMessage } from '@/types/ai/chat.types';
 
-interface Message {
-  id: number;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: string;
-}
-
-export default function ChatMessages({ messages }: { messages: Message[] }) {
+export default function ChatMessages({ messages }: { messages: ChatMessage[] }) {
   return (
     <div className="space-y-6">
       {messages.map((message) => (

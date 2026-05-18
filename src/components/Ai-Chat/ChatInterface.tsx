@@ -4,14 +4,9 @@ import { useState, useRef, useEffect } from 'react';
 import ChatMessages from './ChatMeesages';
 import ChatInput from './ChatInput';
 
-interface Message {
-  id: number;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: string;
-}
+import type { ChatMessage } from '@/types/ai/chat.types';
 
-const initialMessages: Message[] = [
+const initialMessages: ChatMessage[] = [
   {
     id: 1,
     role: 'assistant',
@@ -22,7 +17,7 @@ const initialMessages: Message[] = [
 ];
 
 export default function ChatInterface() {
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +30,7 @@ export default function ChatInterface() {
   }, [messages, isTyping]);
 
   const handleSend = async (content: string) => {
-    const userMsg: Message = {
+    const userMsg: ChatMessage = {
       id: Date.now(),
       role: 'user',
       content,
@@ -45,7 +40,7 @@ export default function ChatInterface() {
     setIsTyping(true);
 
     setTimeout(() => {
-      const aiMsg: Message = {
+      const aiMsg: ChatMessage = {
         id: Date.now() + 1,
         role: 'assistant',
         content: `I understand you're asking about "${content}". Let me help you with that.\n\nHere's what I found:\n\n1. First, let's break down the problem\n2. Then identify the key components\n3. Finally, implement the solution\n\nWould you like me to show you the code implementation?`,

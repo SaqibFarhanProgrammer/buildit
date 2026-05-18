@@ -18,7 +18,7 @@ export default function CodeBlock({ title, code, language }: CodeBlockProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const lines = code.split('\n');
+  const lines = code?.split('\n');
 
   return (
     <div className="rounded-[20px] border border-black/[0.08] overflow-hidden bg-[#0a0a0a]">
@@ -39,7 +39,7 @@ export default function CodeBlock({ title, code, language }: CodeBlockProps) {
 
       <div className="p-5 overflow-x-auto">
         <pre className="text-sm font-mono leading-relaxed">
-          {lines.map((line, i) => (
+          {lines?.map((line, i) => (
             <div key={i} className="flex">
               <span className="text-[#6b7280] select-none w-8 text-right mr-4 flex-shrink-0">
                 {i + 1}

@@ -1,15 +1,4 @@
-interface Challenge {
-  id: number;
-  title: string;
-  difficulty: string;
-  category: string;
-  description: string;
-  completedCount: number;
-  totalAttempts: number;
-  successRate: number;
-  status: string;
-  points: number;
-}
+import type { Challenge } from '@/types/problems/problem.types';
 
 const difficultyStyles: Record<string, string> = {
   Easy: 'text-emerald-400 border-emerald-400/20 bg-emerald-400/10',

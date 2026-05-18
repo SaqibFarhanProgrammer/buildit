@@ -1,9 +1,4 @@
-interface Task {
-  id: number;
-  title: string;
-  status: string;
-  priority: string;
-}
+import type { TaskItem } from '@/types/profile/profile.types';
 
 const priorityColors: Record<string, string> = {
   high: 'bg-red-50 text-red-600 border-red-100',
@@ -11,7 +6,7 @@ const priorityColors: Record<string, string> = {
   low: 'bg-blue-50 text-blue-600 border-blue-100',
 };
 
-export default function TaskList({ tasks }: { tasks: Task[] }) {
+export default function TaskList({ tasks }: { tasks: TaskItem[] }) {
   const pending = tasks.filter((t) => t.status === 'pending');
   const completed = tasks.filter((t) => t.status === 'completed');
 

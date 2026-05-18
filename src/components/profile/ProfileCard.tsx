@@ -1,15 +1,6 @@
-interface User {
-  name: string;
-  username: string;
-  email: string;
-  role: string;
-  bio: string;
-  avatar: string;
-  joinDate: string;
-  location: string;
-}
+import type { ProfileUser } from '@/types/profile/profile.types';
 
-export default function ProfileCard({ user }: { user: User }) {
+export default function ProfileCard({ user }: { user: ProfileUser }) {
   return (
     <div className="p-6 sm:p-7 rounded-2xl border border-[#0a0a0a]/5 bg-[#f9fafb]">
       {/* Avatar */}

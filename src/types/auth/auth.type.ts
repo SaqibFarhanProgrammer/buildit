@@ -1,23 +1,23 @@
 export type SignupType = {
-  FullName: string;
-  Email: string;
-  Password: string;
-  ConfirmPassword: string;
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 };
 
 export type LoginType = {
-  Email: string;
-  Password: string;
+  email: string;
+  password: string;
 };
 
 export type ProfileCreationType = {
-  ProgrammingLanguage: string;
-  Role: 'FrontEnd' | 'Backend' | 'Both';
-  Experince: number;
-  Theme: 'Dark' | 'Light';
-  CodingLevel: 'Beginner' | 'Intermediate' | 'Export';
+  programmingLanguage: string;
+  role: 'FrontEnd' | 'Backend' | 'Both';
+  experience: number;
+  theme: 'Dark' | 'Light';
+  codingLevel: 'Beginner' | 'Intermediate' | 'Expert';
 };
 
 export type UserStatesType = {
-  CodingHours: number;
+  codingHours: number;
 };

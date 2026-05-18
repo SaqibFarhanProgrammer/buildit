@@ -1,11 +1,4 @@
-interface Workflow {
-  id: number;
-  title: string;
-  desc: string;
-  type: string;
-  time: string;
-  status: string;
-}
+import type { WorkflowItem } from '@/types/profile/profile.types';
 
 const typeColors: Record<string, string> = {
   ai: 'bg-[#0004ff]/5 text-[#0004ff] border-[#0004ff]/10',
@@ -21,7 +14,7 @@ const typeLabels: Record<string, string> = {
   feature: 'Feature',
 };
 
-export default function WorkflowCard({ workflows }: { workflows: Workflow[] }) {
+export default function WorkflowCard({ workflows }: { workflows: WorkflowItem[] }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-5 sm:mb-6">

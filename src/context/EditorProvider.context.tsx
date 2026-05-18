@@ -1,28 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode } from 'react';
-
-interface File {
-  id: string;
-  name: string;
-  language?: string;
-  content?: string;
-  isFolder?: boolean;
-  children?: File[];
-  isOpen?: boolean;
-}
-
-interface EditorContextType {
-  activeFile: File | null;
-  setActiveFile: (file: File) => void;
-  files: File[];
-  terminalOpen: boolean;
-  setTerminalOpen: (open: boolean) => void;
-  zoom: number;
-  setZoom: (zoom: number) => void;
-  theme: string;
-  setTheme: (theme: string) => void;
-}
+import type { EditorContextType, EditorFile } from '@/types/editor.types';
 
 const EditorContext = createContext<EditorContextType | null>(null);
 

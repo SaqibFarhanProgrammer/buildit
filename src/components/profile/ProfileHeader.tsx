@@ -1,15 +1,6 @@
-interface User {
-  name: string;
-  username: string;
-  email: string;
-  role: string;
-  bio: string;
-  avatar: string;
-  location: string;
-  joinDate: string;
-}
+import type { ProfileUser } from '@/types/profile/profile.types';
 
-export default function ProfileHeader({ user }: { user: User }) {
+export default function ProfileHeader({ user }: { user: ProfileUser }) {
   return (
     <div className="relative bg-[#0a0a0a] text-white">
       {/* Top bar */}

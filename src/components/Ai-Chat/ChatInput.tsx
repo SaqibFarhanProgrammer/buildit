@@ -2,11 +2,7 @@
 
 import { useState, KeyboardEvent } from 'react';
 import { RiSendPlaneFill, RiAttachment2, RiCommandLine } from 'react-icons/ri';
-
-interface ChatInputProps {
-  onSend: (message: string) => void;
-  disabled: boolean;
-}
+import type { ChatInputProps } from '@/types/ai/chat.types';
 
 export default function ChatInput({ onSend, disabled }: ChatInputProps) {
   const [input, setInput] = useState('');

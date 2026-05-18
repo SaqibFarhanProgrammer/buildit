@@ -1,13 +1,7 @@
 import { RiFileCopyLine, RiRefreshLine, RiThumbUpLine } from 'react-icons/ri';
+import type { ChatMessage } from '@/types/ai/chat.types';
 
-interface Message {
-  id: number;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: string;
-}
-
-export default function MessageBubble({ message }: { message: Message }) {
+export default function MessageBubble({ message }: { message: ChatMessage }) {
   const isUser = message.role === 'user';
 
   return (

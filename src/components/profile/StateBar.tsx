@@ -1,11 +1,6 @@
-interface Stat {
-  label: string;
-  value: string;
-  unit: string;
-  trend: string;
-}
+import type { StatItem } from '@/types/profile/profile.types';
 
-export default function StatsBar({ stats }: { stats: Stat[] }) {
+export default function StatsBar({ stats }: { stats: StatItem[] }) {
   return (
     <div className="max-w-6xl mx-auto px-6 lg:px-8 - relative z-10">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">

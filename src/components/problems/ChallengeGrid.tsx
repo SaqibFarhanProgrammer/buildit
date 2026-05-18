@@ -1,17 +1,5 @@
 import ChallengeCard from './ChallengeCard';
-
-interface Challenge {
-  id: number;
-  title: string;
-  difficulty: string;
-  category: string;
-  description: string;
-  completedCount: number;
-  totalAttempts: number;
-  successRate: number;
-  status: string;
-  points: number;
-}
+import type { Challenge } from '@/types/problems/problem.types';
 
 export default function ChallengeGrid({
   challenges,
