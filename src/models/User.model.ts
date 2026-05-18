@@ -1,6 +1,27 @@
 import mongoose from 'mongoose';
 
-const UserSchema = new mongoose.Schema(
+export type UserRole = 'FrontEnd' | 'Backend' | 'Both';
+export type ThemeType = 'Dark' | 'Light';
+export type CodingLevel = 'Beginner' | 'Intermediate' | 'Expert';
+
+export interface UserProfile {
+  programmingLanguage: string;
+  role: UserRole;
+  experience: number;
+  theme: ThemeType;
+  codingLevel: CodingLevel;
+}
+
+export interface IUser {
+  name: string;
+  email: string;
+  password: string;
+  profile: UserProfile;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+const UserSchema = new mongoose.Schema<IUser>(
   {
     name: {
       type: String,
@@ -44,3 +65,6 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+
+export const User =  mongoose.models.User || mongoose.model("User" , UserSchema)

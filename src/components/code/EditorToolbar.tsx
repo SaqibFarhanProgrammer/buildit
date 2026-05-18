@@ -11,6 +11,7 @@ import {
   RiMoonLine,
   RiSunLine,
 } from 'react-icons/ri';
+import { FaLaptopCode } from 'react-icons/fa';
 
 export default function EditorToolbar() {
   const {
@@ -43,16 +44,7 @@ export default function EditorToolbar() {
   return (
     <div className="h-12 bg-[#0A0A0A] border-b border-white/10 flex items-center justify-between px-4">
       <div className="flex items-center gap-3">
-        {activeFile && (
-          <>
-            <span className="font-['inter-semi'] text-xs text-white/70">
-              {activeFile.name}
-            </span>
-            <span className="font-['inter-light'] text-[10px] text-white/20 uppercase">
-              {activeFile.language}
-            </span>
-          </>
-        )}
+        <h1>{activeFile?.language}</h1>
       </div>
 
       <div className="flex items-center gap-1">
@@ -62,6 +54,15 @@ export default function EditorToolbar() {
         >
           <RiSparklingLine className="w-3.5 h-3.5" />
           <span className="font-['inter-semi'] text-[10px]">Explain</span>
+        </button>
+        <button
+          onClick={handleExplain}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0004ff]/10 text-[#0004ff] hover:bg-[#0004ff]/20 transition-all"
+        >
+          <FaLaptopCode className="w-3.5 h-3.5" />
+          <span className="font-['inter-semi'] text-[10px]">
+            Start a Coding Sesstion
+          </span>
         </button>
 
         <div className="flex items-center gap-1 ml-2">

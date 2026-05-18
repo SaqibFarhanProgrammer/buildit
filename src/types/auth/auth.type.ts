@@ -21,3 +21,24 @@ export type ProfileCreationType = {
 export type UserStatesType = {
   codingHours: number;
 };
+
+export type UserRole = 'FrontEnd' | 'Backend' | 'Both';
+export type ThemeType = 'Dark' | 'Light';
+export type CodingLevel = 'Beginner' | 'Intermediate' | 'Expert';
+
+export interface UserProfile {
+  programmingLanguage: string;
+  role: UserRole;
+  experience: number;
+  theme: ThemeType;
+  codingLevel: CodingLevel;
+}
+
+export interface IUser {
+  name: string;
+  email: string;
+  password: string;
+  profile: UserProfile;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
