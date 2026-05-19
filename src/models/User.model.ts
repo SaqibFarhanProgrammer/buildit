@@ -18,7 +18,10 @@ export interface IUser {
   password: string;
   profile: UserProfile;
   createdAt?: Date;
+  isVerified: boolean;
   updatedAt?: Date;
+  emailVerificationCode: string;
+  emailVerificationCodeExpire: Date;
 }
 
 const UserSchema = new mongoose.Schema<IUser>(
@@ -36,6 +39,14 @@ const UserSchema = new mongoose.Schema<IUser>(
       type: String,
       required: true,
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    emailVerificationCode: {
+      type: String,
+    },
+
     profile: {
       programmingLanguage: {
         type: String,
@@ -66,5 +77,4 @@ const UserSchema = new mongoose.Schema<IUser>(
   { timestamps: true }
 );
 
-
-export const User =  mongoose.models.User || mongoose.model("User" , UserSchema)
+export const User = mongoose.models.User || mongoose.model('User', UserSchema);
