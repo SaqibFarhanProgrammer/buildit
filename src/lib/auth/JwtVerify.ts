@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 
 export async function verifyJwtFromRequest(req: NextRequest) {
   const token = req.cookies.get('Token')?.value;
-  
+
   if (!token) {
     return {
       valid: false,

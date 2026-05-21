@@ -16,7 +16,9 @@ export default function LearningPage() {
               Learn smarter with a clean, professional interface.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-[#6b7280]">
-              Explore curated learning paths built for developers who want a polished and professional study flow with clean design and calm whitespace.
+              Explore curated learning paths built for developers who want a
+              polished and professional study flow with clean design and calm
+              whitespace.
             </p>
           </div>
 
@@ -26,7 +28,8 @@ export default function LearningPage() {
                 Ready in minutes
               </p>
               <p className="mt-3 text-sm leading-6 text-[#6b7280]">
-                Jump into lessons for JavaScript, TypeScript, Python, and Rust with clear overview cards.
+                Jump into lessons for JavaScript, TypeScript, Python, and Rust
+                with clear overview cards.
               </p>
             </div>
             <div className="rounded-[28px] border border-black/[0.06] bg-[#f9fafb] px-6 py-5">
@@ -34,7 +37,8 @@ export default function LearningPage() {
                 Clean layout
               </p>
               <p className="mt-3 text-sm leading-6 text-[#6b7280]">
-                A calm interface that guides your focus to course content, videos, and code examples.
+                A calm interface that guides your focus to course content,
+                videos, and code examples.
               </p>
             </div>
             <div className="rounded-[28px] border border-black/[0.06] bg-[#f9fafb] px-6 py-5">
@@ -42,7 +46,8 @@ export default function LearningPage() {
                 Blue accent
               </p>
               <p className="mt-3 text-sm leading-6 text-[#6b7280]">
-                Subtle blue highlights and clean typography create a professional look.
+                Subtle blue highlights and clean typography create a
+                professional look.
               </p>
             </div>
             <div className="rounded-[28px] border border-black/[0.06] bg-[#f9fafb] px-6 py-5">
@@ -50,7 +55,8 @@ export default function LearningPage() {
                 Focused learning
               </p>
               <p className="mt-3 text-sm leading-6 text-[#6b7280]">
-                Designed for quick discovery of lessons and code examples in a polished study workflow.
+                Designed for quick discovery of lessons and code examples in a
+                polished study workflow.
               </p>
             </div>
           </div>
@@ -69,12 +75,13 @@ export default function LearningPage() {
               </h2>
             </div>
             <p className="max-w-xl text-sm leading-6 text-[#6b7280]">
-              Browse beginner-friendly and advanced courses with clear descriptions, difficulty badges, and video counts.
+              Browse beginner-friendly and advanced courses with clear
+              descriptions, difficulty badges, and video counts.
             </p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {languages.map((lang:Language) => (
+            {languages.map((lang: Language) => (
               <LanguageCard
                 key={lang.slug}
                 language={{

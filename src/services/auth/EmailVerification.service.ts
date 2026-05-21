@@ -11,10 +11,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendVerificationEmail(
-  to: string,
-  verificationCode: string
-) {
+export async function SendEmail(to: string, verificationCode: string) {
   const info = await transporter.sendMail({
     from: `"Buildit Team" <${process.env.SMTP_USER}>`,
     to,

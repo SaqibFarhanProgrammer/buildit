@@ -5,35 +5,45 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { SiGithub } from 'react-icons/si';
 import { FcGoogle } from 'react-icons/fc';
-import ProfileCreateOptions from '@/components/auth/ProfileCreateOptions';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 
-type SignupForm = {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+const signupSchema = z
+  .object({
+    name: z.string().min(2, 'Min 2 chars'),
+    email: z.string().email('Invalid email'),
+    password: z.string().min(6, 'Min 6 chars'),
+    confirmPassword: z.string().min(6, 'Min 6 chars'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
+
+type SignupForm = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [ShowProfileComleteScreen, setShowProfileComleteScreen] =
-    useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignupForm>();
+  } = useForm<SignupForm>({
+    resolver: zodResolver(signupSchema),
+  });
 
   const onSubmit = async (data: SignupForm) => {
     console.log(data);
-    setShowProfileComleteScreen(true);
-    console.log('chala');
+    try {
+      const RegisterResponse = await axios.post('/api/auth/register', data);
+      console.log(RegisterResponse);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  if (ShowProfileComleteScreen) {
-    return <ProfileCreateOptions />;
-  }
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
@@ -44,6 +54,7 @@ export default function SignupPage() {
             </div>
             <span className="text-[#0a0a0a] font-bold text-lg">BuildIt</span>
           </Link>
+
           <h1 className="text-xl font-[inter4-medium] text-[#0a0a0a]">
             Create account
           </h1>
@@ -51,16 +62,14 @@ export default function SignupPage() {
             Start building for free
           </p>
         </div>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block text-xs font-[inter4-medium] text-[#0a0a0a]/60 mb-1.5">
               Full Name
             </label>
             <input
-              {...register('name', {
-                required: 'Name required',
-                minLength: { value: 2, message: 'Min 2 chars' },
-              })}
+              {...register('name')}
               type="text"
               placeholder="John Doe"
               className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#000] transition-all"
@@ -75,13 +84,7 @@ export default function SignupPage() {
               Email
             </label>
             <input
-              {...register('email', {
-                required: 'Email required',
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: 'Invalid email',
-                },
-              })}
+              {...register('email')}
               type="email"
               placeholder="you@example.com"
               className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#000] transition-all"
@@ -99,10 +102,7 @@ export default function SignupPage() {
             </label>
             <div className="relative">
               <input
-                {...register('password', {
-                  required: 'Password required',
-                  minLength: { value: 6, message: 'Min 6 chars' },
-                })}
+                {...register('password')}
                 type={showPassword ? 'text' : 'password'}
                 placeholder="••••••••"
                 className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#000] transition-all"
@@ -127,9 +127,7 @@ export default function SignupPage() {
               Confirm Password
             </label>
             <input
-              {...register('confirmPassword', {
-                required: 'Confirm password',
-              })}
+              {...register('confirmPassword')}
               type="password"
               placeholder="••••••••"
               className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#000] transition-all"
@@ -149,22 +147,25 @@ export default function SignupPage() {
             {isSubmitting ? 'Creating...' : 'Create account'}
           </button>
         </form>
+
         <div className="flex items-center gap-3 my-6">
           <div className="flex-1 h-[1px] bg-[#0a0a0a]/5" />
           <span className="text-xs text-[#0a0a0a]/30">or</span>
           <div className="flex-1 h-[1px] bg-[#0a0a0a]/5" />
         </div>
-        s
-        <div className=" flex flex-col gap-2">
+
+        <div className="flex flex-col gap-2">
           <button className="w-full flex items-center bg-black text-white justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/10 text-sm font-[inter4-medium] text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
             <SiGithub className="text-xl" />
             Continue with Github
           </button>
+
           <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded border border-[#0a0a0a]/10 text-sm font-[inter4-medium] text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
             <FcGoogle className="text-xl" />
             Continue with Google
           </button>
         </div>
+
         <p className="text-center font-[inter4-medium] text-xs text-[#0a0a0a]/40 mt-6">
           Already have an account?{' '}
           <Link

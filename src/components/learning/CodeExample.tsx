@@ -24,7 +24,9 @@ export default function CodeBlock({ title, code, language }: CodeBlockProps) {
     <div className="overflow-hidden rounded-3xl border border-[#f3de8f] shadow-[0_18px_40px_-24px_rgba(149,118,27,0.35)] bg-[#0f172a]">
       <div className="flex items-center justify-between gap-4 border-b border-white/8 bg-[#fff8d1] px-5 py-4">
         <div>
-          <span className="block text-sm font-['inter-semi'] text-[#7a5800]">{title}</span>
+          <span className="block text-sm font-['inter-semi'] text-[#7a5800]">
+            {title}
+          </span>
           <span className="text-xs text-[#5c5343]">{language}</span>
         </div>
         <button

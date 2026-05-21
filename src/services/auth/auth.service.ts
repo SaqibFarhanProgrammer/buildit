@@ -1,11 +1,21 @@
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { User } from '@/models/User.model';
-import { IUser } from '@/types';
+import { GenerateVerificationCOde } from '@/utils/GenerateVerificationCode..utils';
+import { SendEmail } from './EmailVerification.service';
+import { AppError } from '@/lib/AppError';
+import bcrypt from 'bcryptjs';
 
 type LoginBody = {
   email: string;
   password: string;
+};
+
+type UserType = {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 };
 
 // 7 days in milliseconds
@@ -74,89 +84,68 @@ async function LogoutUser() {
   };
 }
 
-async function RegisterUser(body: IUser) {
-  const { name, email, password, profile } = body;
+async function RegisterUser(body: UserType) {
+  const { name, email, password, confirmPassword } = body;
+  console.log('registe rcheck 1 ');
 
   // Validate name
   if (!name || name.trim().length === 0) {
-    throw new Error('Name is required');
+    throw new AppError('Name is required', 400);
   }
 
   // Validate email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
-    throw new Error('Invalid email address');
+    throw new AppError('Invalid email address', 400);
   }
+  console.log('registe rcheck 2 ');
 
   // Validate password
   if (!password || password.length < 8) {
-    throw new Error('Password must be at least 8 characters long');
+    throw new AppError('Password must be at least 8 characters long', 400);
   }
 
-  // Validate profile data
-  if (!profile) {
-    throw new Error('Profile information is required');
+  // Confirm password check
+  if (password !== confirmPassword) {
+    throw new AppError('Passwords do not match', 400);
   }
 
-  if (
-    !profile.programmingLanguage ||
-    profile.programmingLanguage.trim().length === 0
-  ) {
-    throw new Error('Programming language is required');
-  }
+  console.log('registe rcheck 3 ');
 
-  if (
-    !profile.role ||
-    !['FrontEnd', 'Backend', 'Both'].includes(profile.role)
-  ) {
-    throw new Error('Role must be one of: FrontEnd, Backend, Both');
-  }
-
-  if (
-    profile.experience === undefined ||
-    profile.experience === null ||
-    profile.experience < 0
-  ) {
-    throw new Error('Experience must be a non-negative number');
-  }
-
-  if (!profile.theme || !['Dark', 'Light'].includes(profile.theme)) {
-    throw new Error('Theme must be one of: Dark, Light');
-  }
-
-  if (
-    !profile.codingLevel ||
-    !['Beginner', 'Intermediate', 'Expert'].includes(profile.codingLevel)
-  ) {
-    throw new Error(
-      'Coding level must be one of: Beginner, Intermediate, Expert'
-    );
-  }
-
-  // Check if email already exists
+  // Check existing user
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    throw new Error('Email already registered');
+    throw new AppError('Email already registered', 409);
   }
 
-  // Create new user
-  const newUser = new User({
+  // Hash password (CRITICAL FIX)
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  const verificationCode = GenerateVerificationCOde();
+
+  const EMAIL_VERIFICATION_EXPIRY_MINUTES = 10;
+  const emailVerificationCodeExpire = new Date(
+    Date.now() + EMAIL_VERIFICATION_EXPIRY_MINUTES * 60 * 1000
+  );
+
+  // Create user
+  const user = await User.create({
     name,
     email,
-    password, // In production, hash the password before saving
-    profile,
+    password: hashedPassword,
+    emailVerificationCode: verificationCode,
+    emailVerificationCodeExpire: emailVerificationCodeExpire,
   });
 
-  // Save to database
-  const savedUser = await newUser.save();
+  console.log('registe rcheck 4 ');
+
+  await SendEmail(email, verificationCode);
+
+  console.log('registe rcheck 5 ');
 
   return {
-    _id: savedUser._id.toString(),
-    name: savedUser.name,
-    email: savedUser.email,
-    profile: savedUser.profile,
-    message: 'Registration successful',
-    createdAt: savedUser.createdAt,
+    message: 'Check your email for verification code',
+    email: user.email,
   };
 }
 

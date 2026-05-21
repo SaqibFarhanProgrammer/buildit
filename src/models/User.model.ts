@@ -46,31 +46,28 @@ const UserSchema = new mongoose.Schema<IUser>(
     emailVerificationCode: {
       type: String,
     },
-
+    emailVerificationCodeExpire: {
+      type: Date,
+    },
     profile: {
       programmingLanguage: {
         type: String,
-        required: true,
       },
       role: {
         type: String,
         enum: ['FrontEnd', 'Backend', 'Both'],
-        required: true,
       },
 
       experience: {
         type: Number,
-        required: true,
       },
       theme: {
         type: String,
         enum: ['Dark', 'Light'],
-        required: true,
       },
       codingLevel: {
         type: String,
         enum: ['Beginner', 'Intermediate', 'Expert'],
-        required: true,
       },
     },
   },

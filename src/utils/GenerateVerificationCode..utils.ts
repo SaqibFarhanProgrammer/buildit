@@ -1,4 +1,4 @@
-export function generateVerificationCode(): string {
+export function GenerateVerificationCOde(): string {
   const timestampSegment = Number(String(Date.now()).slice(-4));
   const randomSegment = Math.floor(Math.random() * 10000);
   const codeNumber = (timestampSegment * 10000 + randomSegment) % 100000000;

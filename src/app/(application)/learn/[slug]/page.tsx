@@ -83,19 +83,26 @@ export default async function LanguageDetailPage({ params }: PageProps) {
                   <p className="text-xs uppercase tracking-[0.2em] text-[#7a5800]">
                     Focus
                   </p>
-                  <p className="mt-2 text-sm font-medium">Develop modern coding skills with polished lessons and examples.</p>
+                  <p className="mt-2 text-sm font-medium">
+                    Develop modern coding skills with polished lessons and
+                    examples.
+                  </p>
                 </div>
                 <div className="rounded-3xl bg-[#f8f2d4] px-4 py-4">
                   <p className="text-xs uppercase tracking-[0.2em] text-[#7a5800]">
                     Flow
                   </p>
-                  <p className="mt-2 text-sm font-medium">Easy navigation between video lessons and code walkthroughs.</p>
+                  <p className="mt-2 text-sm font-medium">
+                    Easy navigation between video lessons and code walkthroughs.
+                  </p>
                 </div>
                 <div className="rounded-3xl bg-[#fff4b8]/80 px-4 py-4">
                   <p className="text-xs uppercase tracking-[0.2em] text-[#7a5800]">
                     Style
                   </p>
-                  <p className="mt-2 text-sm font-medium">Warm yellow accents balanced with clean white space.</p>
+                  <p className="mt-2 text-sm font-medium">
+                    Warm yellow accents balanced with clean white space.
+                  </p>
                 </div>
               </div>
             </aside>

@@ -14,7 +14,11 @@ const typeLabels: Record<string, string> = {
   feature: 'Feature',
 };
 
-export default function WorkflowCard({ workflows }: { workflows: WorkflowItem[] }) {
+export default function WorkflowCard({
+  workflows,
+}: {
+  workflows: WorkflowItem[];
+}) {
   return (
     <div>
       <div className="flex items-center justify-between mb-5 sm:mb-6">

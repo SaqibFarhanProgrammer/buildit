@@ -1,6 +1,6 @@
 'use client';
 
-import {  useState } from 'react';
+import { useState } from 'react';
 import SearchBar from './SearchBar';
 import ProjectCard from './ProjectCard';
 import EmptyState from './EmptyState';
