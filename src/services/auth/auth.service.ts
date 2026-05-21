@@ -114,10 +114,34 @@ async function RegisterUser(body: UserType) {
 
   // Check existing user
   const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    throw new AppError('Email already registered', 409);
+  console.log(existingUser.isVerified);
+  console.log(typeof existingUser.isVerified);
+
+  if (existingUser?.isVerified) {
+    throw new AppError('User already exists', 409);
   }
 
+  if (existingUser && !existingUser.isVerified) {
+    const newCode = GenerateVerificationCOde();
+
+    await User.updateOne(
+      { email },
+      {
+        $set: {
+          emailVerificationCode: newCode,
+          emailVerificationCodeExpire: new Date(Date.now() + 10 * 60 * 1000),
+        },
+      }
+    );
+
+    await SendEmail(email, newCode);
+
+    return {
+      message: 'Verification code resent',
+      email: email,
+      status: 200,
+    };
+  }
   // Hash password (CRITICAL FIX)
   const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -146,6 +170,7 @@ async function RegisterUser(body: UserType) {
   return {
     message: 'Check your email for verification code',
     email: user.email,
+    status: 200,
   };
 }
 

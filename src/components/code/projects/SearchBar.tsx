@@ -21,8 +21,8 @@ export default function CodeBlock({ title, code, language }: CodeBlockProps) {
   const lines = code?.split('\n');
 
   return (
-    <div className="rounded-[20px] border border-black/[0.08] overflow-hidden bg-[#0a0a0a]">
-      <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.06]">
+    <div className="rounded-[20px] border border-black/8 overflow-hidden bg-[#0a0a0a]">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-white/6">
         <span className="text-sm font-['inter-semi'] text-white">{title}</span>
         <div className="flex items-center gap-3">
           <span className="text-xs text-[#6b7280] font-['inter-rag']">
@@ -39,9 +39,9 @@ export default function CodeBlock({ title, code, language }: CodeBlockProps) {
 
       <div className="p-5 overflow-x-auto">
         <pre className="text-sm font-mono leading-relaxed">
-          {lines?.map((line, i) => (
+          {lines?.map((line: string, i: number) => (
             <div key={i} className="flex">
-              <span className="text-[#6b7280] select-none w-8 text-right mr-4 flex-shrink-0">
+              <span className="text-[#6b7280] select-none w-8 text-right mr-4 shrink-0">
                 {i + 1}
               </span>
               <code className="text-[#e6edf3] whitespace-pre">{line}</code>

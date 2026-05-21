@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { use, useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { SiGithub } from 'react-icons/si';
@@ -8,6 +8,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const signupSchema = z
   .object({
@@ -25,7 +26,8 @@ type SignupForm = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const [error, seterror] = useState(null);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -35,10 +37,11 @@ export default function SignupPage() {
   });
 
   const onSubmit = async (data: SignupForm) => {
-    console.log(data);
     try {
       const RegisterResponse = await axios.post('/api/auth/register', data);
-      console.log(RegisterResponse);
+      if (RegisterResponse.status === 200) {
+        router.push('/email-verify?');
+      }
     } catch (error) {
       console.log(error);
     }
