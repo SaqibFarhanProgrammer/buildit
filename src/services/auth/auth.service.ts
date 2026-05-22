@@ -5,6 +5,7 @@ import { GenerateVerificationCOde } from '@/utils/GenerateVerificationCode..util
 import { SendEmail } from './EmailVerification.service';
 import { AppError } from '@/lib/AppError';
 import bcrypt from 'bcryptjs';
+import { EncodeEmail } from '@/utils/EncodeEmail';
 
 type LoginBody = {
   email: string;
@@ -114,8 +115,6 @@ async function RegisterUser(body: UserType) {
 
   // Check existing user
   const existingUser = await User.findOne({ email });
-  console.log(existingUser.isVerified);
-  console.log(typeof existingUser.isVerified);
 
   if (existingUser?.isVerified) {
     throw new AppError('User already exists', 409);
@@ -123,6 +122,7 @@ async function RegisterUser(body: UserType) {
 
   if (existingUser && !existingUser.isVerified) {
     const newCode = GenerateVerificationCOde();
+    const EncodedEmail = EncodeEmail(email);
 
     await User.updateOne(
       { email },
@@ -138,7 +138,7 @@ async function RegisterUser(body: UserType) {
 
     return {
       message: 'Verification code resent',
-      email: email,
+      email: EncodedEmail,
       status: 200,
     };
   }
@@ -167,9 +167,11 @@ async function RegisterUser(body: UserType) {
 
   console.log('registe rcheck 5 ');
 
+  const EncodedEmail = EncodeEmail(email);
+
   return {
     message: 'Check your email for verification code',
-    email: user.email,
+    email: EncodedEmail,
     status: 200,
   };
 }

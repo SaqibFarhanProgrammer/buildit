@@ -1,3 +1,4 @@
+import { DecodeEmail, EncodeEmail } from '@/utils/EncodeEmail';
 import './globals.css';
 
 export default async function RootLayout({

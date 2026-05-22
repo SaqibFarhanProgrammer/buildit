@@ -1,41 +1,54 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
+import { AppError } from '@/lib/AppError';
+import { DecodeEmail } from '@/utils/EncodeEmail';
+import axios from 'axios';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function VerifyEmailPage() {
   const [code, setCode] = useState(['', '', '', '', '', '', '', '']);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const SearchParams = useSearchParams();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const fullCode = code.join('');
+  const EncodedEmail = SearchParams.get('e');
 
-    if (fullCode.length !== 8) {
-      setError('Please enter all 8 digits');
-      return;
+  if (!EncodedEmail) {
+    throw new AppError('Email not Found inn Url', 400);
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+      const fullCode = code.join('');
+
+      if (fullCode.length !== 8) {
+        setError('Please enter all 8 digits');
+        return;
+      }
+      setLoading(true);
+
+      const res = await axios.post('/api/auth/verify-email', {
+        email: EncodedEmail,
+        code: fullCode,
+      });
+      console.log(res);
+
+      router.push('/profile');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.error);
+      }
+      setLoading(false);
     }
-
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1500);
   };
 
   const isComplete = code.every((c) => c !== '');
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <div className="px-6 pt-6">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm font-['inter-semi'] text-[#6b7280] hover:text-black transition-colors"
-        >
-          <FaArrowLeft size={14} />
-          back to home
-        </Link>
-      </div>
-
       <div className="flex-1 flex items-center justify-center px-6 -mt-16">
         <div className="w-full max-w-sm">
           <div className="flex items-center justify-center gap-2 mb-10">

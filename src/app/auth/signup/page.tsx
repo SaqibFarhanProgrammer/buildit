@@ -8,7 +8,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const signupSchema = z
   .object({
@@ -26,7 +26,7 @@ type SignupForm = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [error, seterror] = useState(null);
+  const [UiError, setUiError] = useState('User ALready exits');
   const router = useRouter();
   const {
     register,
@@ -39,11 +39,22 @@ export default function SignupPage() {
   const onSubmit = async (data: SignupForm) => {
     try {
       const RegisterResponse = await axios.post('/api/auth/register', data);
-      if (RegisterResponse.status === 200) {
-        router.push('/email-verify?');
-      }
+      console.log(RegisterResponse.data.res);
+      const email = RegisterResponse?.data?.res?.email;
+      console.log(email);
+
+      router.push(`/auth/verify-email?e=${email}`);
     } catch (error) {
-      console.log(error);
+      let message = 'Something went wrong';
+
+      if (axios.isAxiosError(error)) {
+        message =
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          error.message;
+      }
+
+      setUiError(message);
     }
   };
 
@@ -142,6 +153,9 @@ export default function SignupPage() {
             )}
           </div>
 
+          <p className="text-xx font-[inter-semi] text-red-500 text-center mt-1">
+            {UiError}
+          </p>
           <button
             type="submit"
             disabled={isSubmitting}
