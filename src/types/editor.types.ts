@@ -9,9 +9,6 @@ export interface EditorFile {
 }
 
 export interface EditorContextType {
-  activeFile: EditorFile | null;
-  setActiveFile: (file: EditorFile) => void;
-  files: EditorFile[];
   terminalOpen: boolean;
   setTerminalOpen: (open: boolean) => void;
   zoom: number;

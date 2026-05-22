@@ -5,25 +5,11 @@ import Editor from '@monaco-editor/react';
 import { useEditor } from '@/context/EditorProvider.context';
 
 export default function CodeEditor() {
-  const { activeFile, zoom, theme } = useEditor();
+  const {  zoom, theme } = useEditor();
 
   return (
     <div className="flex-1 flex flex-col bg-[#0A0A0A] overflow-hidden">
       {/* Tabs */}
-      <div className="h-9 bg-[#0A0A0A] flex items-center border-b border-[#1a1a1a]">
-        {activeFile && (
-          <div className="h-full px-4 flex items-center gap-2 bg-[#0A0A0A] border-t-2 border-[#0004ff] text-[#ffffff]">
-            <FileIcon language={activeFile.language} />
-            <span className="text-xs font-['inter-semi']">
-              {activeFile.name}
-            </span>
-            <button className="text-[#333333] hover:text-[#ffffff] ml-2 text-[10px] transition-colors">
-              ×
-            </button>
-          </div>
-        )}
-      </div>
-
       {/* Editor */}
       <div className="flex-1 overflow-hidden">
         <Editor
