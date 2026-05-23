@@ -26,7 +26,7 @@ type SignupForm = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [UiError, setUiError] = useState('User ALready exits');
+  const [UiError, setUiError] = useState('');
   const router = useRouter();
   const {
     register,

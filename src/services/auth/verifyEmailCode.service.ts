@@ -3,8 +3,6 @@ import { User } from '@/models/User.model';
 
 export async function VerifyEmailCode(email: string, code: string) {
   const user = await User.findOne({ email });
-  console.log('check 1 ');
-
   const TEN_MINUTES = 10 * 60 * 1000;
 
   const isExpired =
@@ -22,8 +20,6 @@ export async function VerifyEmailCode(email: string, code: string) {
     };
   }
 
-  console.log('check 2     ');
-
   user.isVerified = true;
   user.emailVerificationCode = null;
   user.emailVerificationCodeExpire = null;
@@ -33,5 +29,7 @@ export async function VerifyEmailCode(email: string, code: string) {
   return {
     message: 'Verified successfully',
     status: 200,
+    id: user._id,
+    isVerified: user.isVerified,
   };
 }

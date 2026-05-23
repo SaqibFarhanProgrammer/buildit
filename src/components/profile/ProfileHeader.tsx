@@ -1,6 +1,17 @@
+'use client';
 import type { ProfileUser } from '@/types/profile/profile.types';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function ProfileHeader({ user }: { user: ProfileUser }) {
+  const router = useRouter();
+
+  async function logout() {
+    const res = await axios.post('/api/auth/logout');
+    console.log(res);
+
+    router.push('/auth/login');
+  }
   return (
     <div className="relative bg-[#0a0a0a] text-white">
       {/* Top bar */}
@@ -55,6 +66,12 @@ export default function ProfileHeader({ user }: { user: ProfileUser }) {
           <div className="flex items-center gap-3 shrink-0">
             <button className="font-['inter-semi'] text-xs bg-white text-[#0a0a0a] px-5 py-2.5 rounded-full hover:bg-white/90 transition-all">
               Edit Profile
+            </button>
+            <button
+              onClick={logout}
+              className="font-['inter-semi'] text-xs bg-red-400 text-[#0a0a0a] px-5 py-2.5 rounded-full hover:bg-white/90 transition-all"
+            >
+              Logout
             </button>
             <button className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-all">
               <svg

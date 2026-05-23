@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   RiMenuLine,
   RiCloseLine,
@@ -17,6 +17,7 @@ import {
   RiArrowRightSLine,
 } from 'react-icons/ri';
 import { CgProfile } from 'react-icons/cg';
+import axios from 'axios';
 
 const menuItems = [
   { name: 'Profile', href: '/profile', icon: CgProfile },
@@ -30,7 +31,6 @@ const menuItems = [
 
 const bottomItems = [
   { name: 'Settings', href: '/settings', icon: RiSettings4Line },
-  { name: 'Logout', href: '/logout', icon: RiLogoutBoxLine },
 ];
 
 export default function Sidebar() {
@@ -42,7 +42,7 @@ export default function Sidebar() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed top-5 left-5 z-[60] w-10 h-10 bg-[#0a0a0a] text-white rounded-lg flex items-center justify-center hover:bg-[#0a0a0a]/90 transition-all shadow-lg"
+          className="fixed  top-5 left-5 z-160 **:w-10 h-10 bg-[#0a0a0a] text-white rounded-lg flex items-center justify-center hover:bg-[#0a0a0a]/90 transition-all shadow-lg"
         >
           <RiMenuLine className="w-5 h-5" />
         </button>

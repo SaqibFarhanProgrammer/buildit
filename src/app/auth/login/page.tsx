@@ -7,6 +7,8 @@ import { FcGoogle } from 'react-icons/fc';
 import { useForm } from 'react-hook-form';
 
 import { SiGithub } from 'react-icons/si';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 type LoginForm = {
   email: string;
@@ -22,8 +24,18 @@ export default function LoginPage() {
     formState: { errors, isSubmitting },
   } = useForm<LoginForm>();
 
+  const router = useRouter();
+
   const onSubmit = async (data: LoginForm) => {
-    console.log(data);
+    try {
+      const res = await axios.post('?api/auth/login', {
+        email: data.email,
+        password: data.password,
+      });
+      console.log(res);
+
+      router.push('/profile');
+    } catch (error) {}
   };
 
   return (

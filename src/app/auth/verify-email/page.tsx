@@ -1,10 +1,9 @@
 'use client';
 
 import { AppError } from '@/lib/AppError';
-import { DecodeEmail } from '@/utils/EncodeEmail';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function VerifyEmailPage() {
   const [code, setCode] = useState(['', '', '', '', '', '', '', '']);
@@ -30,11 +29,10 @@ export default function VerifyEmailPage() {
       }
       setLoading(true);
 
-      const res = await axios.post('/api/auth/verify-email', {
+      await axios.post('/api/auth/verify-email', {
         email: EncodedEmail,
         code: fullCode,
       });
-      console.log(res);
 
       router.push('/profile');
     } catch (error) {

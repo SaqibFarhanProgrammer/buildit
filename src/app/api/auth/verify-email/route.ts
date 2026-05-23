@@ -4,6 +4,8 @@ import { User } from '@/models/User.model';
 import { connectDB } from '@/core/db/DbConnection';
 import { VerifyEmailCode } from '@/services/auth/verifyEmailCode.service';
 import { AppError } from '@/lib/AppError';
+import { cookies } from 'next/headers';
+import jwt from 'jsonwebtoken';
 
 export async function POST(request: Request) {
   try {
@@ -21,7 +23,30 @@ export async function POST(request: Request) {
     const email = DecodeEmail(encodedEmail);
     console.log(email);
 
-    await VerifyEmailCode(email as string, code);
+    const res = await VerifyEmailCode(email as string, code);
+
+    console.log(res.id);
+
+    const cookieStore = await cookies();
+
+    const token = jwt.sign(
+      {
+        userId: res.id,
+        isVerified: res.isVerified,
+      },
+      process.env.JWT_SECRET!,
+      {
+        expiresIn: '7d',
+      }
+    );
+
+    cookieStore.set('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    });
 
     return NextResponse.json({
       success: true,

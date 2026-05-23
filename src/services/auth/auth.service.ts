@@ -48,40 +48,13 @@ async function LoginUser(body: LoginBody) {
   }
 
   // Set authentication cookies for 7 days
-  const cookieStore = await cookies();
+
   const userId = user._id.toString();
-  const token = jwt.sign(
-    { userId: userId, email: user.email },
-    process.env.JWT_SECRET!,
-    { expiresIn: '7d' }
-  );
-
-  cookieStore.set('Token', token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: COOKIE_MAX_AGE,
-    path: '/',
-  });
-
   return {
     _id: userId,
     email: user.email,
     name: user.name,
     message: 'Login successful',
-    token: token,
-    expiresAt: new Date(Date.now() + COOKIE_MAX_AGE * 1000).toISOString(),
-  };
-}
-
-async function LogoutUser() {
-  const cookieStore = await cookies();
-
-  // Clear all authentication cookies
-  cookieStore.delete('Token');
-
-  return {
-    message: 'Logout successful',
   };
 }
 
@@ -153,7 +126,7 @@ async function RegisterUser(body: UserType) {
   );
 
   // Create user
-  const user = await User.create({
+  await User.create({
     name,
     email,
     password: hashedPassword,
