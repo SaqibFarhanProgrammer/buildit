@@ -9,6 +9,12 @@ export default function EditorProvider({ children }: { children: ReactNode }) {
   const [terminalOpen, setTerminalOpen] = useState(false);
   const [zoom, setZoom] = useState(14);
   const [theme, setTheme] = useState('vs-dark');
+  const [activeFile, setActiveFile] = useState<EditorFile | null>({
+    id: 'main.js',
+    name: 'main.js',
+    language: 'javascript',
+    content: '// Select a file to start coding',
+  });
 
   return (
     <EditorContext.Provider
@@ -19,6 +25,8 @@ export default function EditorProvider({ children }: { children: ReactNode }) {
         setZoom,
         theme,
         setTheme,
+        activeFile,
+        setActiveFile,
       }}
     >
       {children}

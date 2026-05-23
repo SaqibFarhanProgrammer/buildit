@@ -15,4 +15,6 @@ export interface EditorContextType {
   setZoom: (zoom: number) => void;
   theme: string;
   setTheme: (theme: string) => void;
+  activeFile: EditorFile | null;
+  setActiveFile: (file: EditorFile | null) => void;
 }

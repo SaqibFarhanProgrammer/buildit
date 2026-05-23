@@ -5,7 +5,15 @@ import Editor from '@monaco-editor/react';
 import { useEditor } from '@/context/EditorProvider.context';
 
 export default function CodeEditor() {
-  const {  zoom, theme } = useEditor();
+  const { zoom, theme, activeFile, setActiveFile } = useEditor();
+
+  const handleEditorChange = (value?: string) => {
+    if (!activeFile) return;
+    setActiveFile({
+      ...activeFile,
+      content: value ?? '',
+    });
+  };
 
   return (
     <div className="flex-1 flex flex-col bg-[#0A0A0A] overflow-hidden">
@@ -17,7 +25,8 @@ export default function CodeEditor() {
           defaultLanguage={activeFile?.language || 'javascript'}
           language={activeFile?.language || 'javascript'}
           value={activeFile?.content || '// Select a file to start coding'}
-          theme="buildit-black"
+          theme={theme === 'vs-dark' ? 'buildit-black' : 'light'}
+          onChange={handleEditorChange}
           options={{
             fontSize: zoom,
             fontFamily: 'JetBrains Mono, Fira Code, monospace',
