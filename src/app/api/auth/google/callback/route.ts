@@ -1,13 +1,18 @@
 // app/api/auth/google/callback/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { User } from '@/models/User.model';
-import { AppError } from '@/lib/AppError';
 import { connectDB } from '@/core/db/DbConnection';
+import { cookies } from 'next/headers';
+import { EncodeEmail } from '@/utils/EncodeEmail';
+import { AppError } from '@/lib/AppError';
 
 export async function GET(req: NextRequest) {
   await connectDB();
+  const cookieStore = await cookies();
+
   const code = req.nextUrl.searchParams.get('code');
 
   if (!code) {
@@ -15,24 +20,26 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // 1. Exchange code for access token
+    // 1. Exchange code for token
     const tokenRes = await axios.post(
       'https://oauth2.googleapis.com/token',
-      null,
+      new URLSearchParams({
+        code,
+        client_id: process.env.GOOGLE_CLIENT_ID!,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        redirect_uri: process.env.GOOGLE_REDIRECT_URI!,
+        grant_type: 'authorization_code',
+      }),
       {
-        params: {
-          code,
-          client_id: process.env.GOOGLE_CLIENT_ID,
-          client_secret: process.env.GOOGLE_CLIENT_SECRET,
-          redirect_uri: process.env.GOOGLE_REDIRECT_URI,
-          grant_type: 'authorization_code',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
       }
     );
 
     const access_token = tokenRes.data.access_token;
 
-    // 2. Get user info
+    // 2. Get Google user
     const userRes = await axios.get(
       'https://www.googleapis.com/oauth2/v2/userinfo',
       {
@@ -42,32 +49,37 @@ export async function GET(req: NextRequest) {
       }
     );
 
-    const user = userRes.data;
-    console.log(user);
+    const googleUser = userRes.data;
 
-    // aik rotned per passwor dka eorute abnanahaishi phri us password wlae rou tmein passswor dlenahai kio ekgooels e authhai htphriuskodmeinsektawraka rphri uskojao whai whi cookei meinsteraknahaok
+    // 3. Find or create user (IMPORTANT FIX)
+    let dbUser = await User.findOne({ email: googleUser.email });
 
-    const newuser = await User.create({
-      name: userRes.data.name,
-      email: userRes.data.email,
-      image: userRes.data.picture,
-      password: '',
-      provider: 'google',
-    });
-    console.log(newuser);
+    if (!dbUser) {
+      dbUser = await User.create({
+        name: googleUser.name,
+        email: googleUser.email,
+        password: 'initial',
+        image: googleUser.picture,
+        provider: 'google',
+      });
+    }
 
-    // 3. Create your JWT
+    // 4. Create JWT
     const token = jwt.sign(
       {
-        useriD: newuser._id,
+        userId: dbUser._id,
       },
       process.env.JWT_SECRET!,
       { expiresIn: '7d' }
     );
 
-    // 4. Set cookie
-    const response = NextResponse.redirect(new URL('/profile', req.url));
-    response.cookies.set('token', token, {
+    // 5. Set cookie + redirect
+    const encodedEmail = EncodeEmail(dbUser.email);
+
+    const response = NextResponse.redirect(
+      new URL(`/auth/setpassword?e=${encodedEmail}`, req.url)
+    );
+    cookieStore.set('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       path: '/',
@@ -76,7 +88,18 @@ export async function GET(req: NextRequest) {
 
     return response;
   } catch (error) {
-    console.error('OAuth Error:', error);
-    return NextResponse.redirect(new URL('/auth/login', req.url));
+    console.error('REGISTER_USER_ERROR:', error);
+
+    let message = 'Server Error';
+    let statusCode = 500;
+
+    if (error instanceof AppError) {
+      message = error.message;
+      statusCode = error.statusCode;
+    } else if (error instanceof Error) {
+      message = error.message;
+    }
+
+    return NextResponse.json({ message }, { status: statusCode });
   }
 }
