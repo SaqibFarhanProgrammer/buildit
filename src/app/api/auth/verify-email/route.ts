@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { DecodeEmail } from '@/utils/EncodeEmail'; // Adjust this import path to match your utility folder
-import { User } from '@/models/User.model';
 import { connectDB } from '@/core/db/DbConnection';
 import { VerifyEmailCode } from '@/services/auth/verifyEmailCode.service';
 import { AppError } from '@/lib/AppError';

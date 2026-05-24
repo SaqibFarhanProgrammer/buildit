@@ -17,6 +17,7 @@ type LoginForm = {
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [UiError, setUiError] = useState('');
 
   const {
     register,
@@ -28,14 +29,27 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginForm) => {
     try {
-      const res = await axios.post('?api/auth/login', {
+      console.log(data);
+
+      const res = await axios.post('/api/auth/login', {
         email: data.email,
         password: data.password,
       });
       console.log(res);
 
       router.push('/profile');
-    } catch (error) {}
+    } catch (error) {
+      let message = 'Something went wrong';
+
+      if (axios.isAxiosError(error)) {
+        message =
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          error.message;
+      }
+
+      setUiError(message);
+    }
   };
 
   return (
@@ -128,10 +142,12 @@ export default function LoginPage() {
             <SiGithub className="text-xl" />
             Continue with Github
           </button>
-          <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/40 text-sm font-medium text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
-            <FcGoogle className="text-xl" />
-            Continue with Google
-          </button>
+          <Link href="/api/auth/google">
+            <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/40 text-sm font-medium text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
+              <FcGoogle className="text-xl" />
+              Continue with Google
+            </button>
+          </Link>
         </div>
 
         <p className="text-center text-xs text-[#0a0a0a]/40 mt-6">

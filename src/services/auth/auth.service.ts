@@ -1,5 +1,3 @@
-import { cookies } from 'next/headers';
-import jwt from 'jsonwebtoken';
 import { User } from '@/models/User.model';
 import { GenerateVerificationCOde } from '@/utils/GenerateVerificationCode..utils';
 import { SendEmail } from './EmailVerification.service';
@@ -43,7 +41,8 @@ async function LoginUser(body: LoginBody) {
   }
 
   // Verify password (in production, compare hashed password)
-  if (password !== user.password) {
+  const hashedPassword = bcrypt.compare(password, user.password);
+  if (!hashedPassword) {
     throw new Error('Email or password is incorrect');
   }
 
@@ -129,9 +128,11 @@ async function RegisterUser(body: UserType) {
   await User.create({
     name,
     email,
+    image: '',
     password: hashedPassword,
     emailVerificationCode: verificationCode,
     emailVerificationCodeExpire: emailVerificationCodeExpire,
+    provider: 'signup',
   });
 
   console.log('registe rcheck 4 ');
@@ -149,4 +150,4 @@ async function RegisterUser(body: UserType) {
   };
 }
 
-export { LoginUser, LogoutUser, RegisterUser };
+export { LoginUser, RegisterUser };

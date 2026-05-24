@@ -16,7 +16,9 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
+  image: string;
   profile: UserProfile;
+  provider: string;
   createdAt?: Date;
   isVerified: boolean;
   updatedAt?: Date;
@@ -39,6 +41,9 @@ const UserSchema = new mongoose.Schema<IUser>(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+    },
     isVerified: {
       type: Boolean,
       default: false,
@@ -49,6 +54,7 @@ const UserSchema = new mongoose.Schema<IUser>(
     emailVerificationCodeExpire: {
       type: Date,
     },
+
     profile: {
       programmingLanguage: {
         type: String,
@@ -69,6 +75,10 @@ const UserSchema = new mongoose.Schema<IUser>(
         type: String,
         enum: ['Beginner', 'Intermediate', 'Expert'],
       },
+    },
+    provider: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }
