@@ -8,7 +8,7 @@ export default function UseCases() {
         className="relative py-20 md:py-28 bg-white overflow-hidden"
       >
         <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
             The AI-native code editor
           </h2>
           <p className="text-[inter4-medium] font-[inter4-medium] md:text-lg text-[#0a0a0a] leading-relaxed max-w-xl mx-auto">
@@ -43,7 +43,7 @@ export default function UseCases() {
         className="relative py-20 md:py-28 bg-white overflow-hidden"
       >
         <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
             Your productivity command center
           </h2>
           <p className="text-[inter4-medium] md:text-lg font-[inter4-medium] text-black/80 leading-tight max-w-xl mx-auto">
@@ -76,7 +76,7 @@ export default function UseCases() {
         className="relative py-20 md:py-28 bg-white overflow-hidden"
       >
         <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
             Ship projects with <span className="text-black">confidancee</span>
           </h2>
           <p className="text-[inter4-medium] md:text-lg text-black/80 leading-tight max-w-xl mx-auto">
@@ -113,12 +113,12 @@ export default function UseCases() {
             <div className="w-full lg:w-[45%] shrink-0">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/10 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-black" />
-                <span className="text-black text-[10px] font-[inter] uppercase -tracking-[2px]">
+                <span className="text-black text-[10px] font-[inter] uppercase tracking-[-2px]">
                   AI Explainer
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
                 Understand code <span className="text-black">instantly</span>
               </h2>
 
@@ -230,12 +230,12 @@ export default function UseCases() {
             <div className="w-full lg:w-[45%] shrink-0">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/10 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-black" />
-                <span className="text-black text-[10px] font-[inter] uppercase -tracking-[2px]">
+                <span className="text-black text-[10px] font-[inter] uppercase tracking-[-2px]">
                   Coding Challenges
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
                 Level up your{' '}
                 <span className="text-black">problem solving</span>
               </h2>
@@ -359,12 +359,12 @@ export default function UseCases() {
             <div className="w-full lg:w-[45%] shrink-0">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/10 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-black" />
-                <span className="text-black text-[10px] font-[inter] uppercase -tracking-[2px]">
+                <span className="text-black text-[10px] font-[inter] uppercase tracking-[-2px]">
                   Learning Platform
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
                 Master skills <span className="text-black">step by step</span>
               </h2>
 

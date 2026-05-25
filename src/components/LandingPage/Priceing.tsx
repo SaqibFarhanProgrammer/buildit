@@ -66,7 +66,7 @@ export default function Pricing() {
         </div>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <h2 className="text-3xl font-[inter] md:text-4xl lg:text-5xl f[inter] text-[#0a0a0a] leading-tight -tracking-[2px] max-w-xl">
+            <h2 className="text-3xl font-[inter] md:text-4xl lg:text-5xl f[inter] text-[#0a0a0a] leading-tight tracking-[-2px] max-w-xl">
               Simple pricing for{' '}
               <span className="text-black">every developer</span>.
             </h2>

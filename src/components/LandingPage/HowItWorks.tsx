@@ -101,7 +101,7 @@ export default function HowItWorks() {
             How It Works
           </span>
         </div>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] max-w-2xl">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] max-w-2xl">
           Four steps to <span className="text-black">ship faster</span>.
         </h2>
         <p className="mt-4 font-[inter4-medium] text-[#0a0a0a]/80 max-w-lg leading-tight">
@@ -123,7 +123,7 @@ export default function HowItWorks() {
                 <span className="text-5xl md:text-6xl font-[inter] text-[#0a0a0a]/[0.06] leading-none -tracking-[3px] group-hover:text-black/10 transition-colors duration-300">
                   {step.number}
                 </span>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/[0.03] text-[#0a0a0a]/60 group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/3 text-[#0a0a0a]/60 group-hover:bg-black group-hover:text-white transition-colors duration-300">
                   {step.icon}
                 </div>
               </div>

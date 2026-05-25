@@ -145,7 +145,7 @@ export default function Features() {
             Features
           </span>
         </div>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] max-w-2xl">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] max-w-2xl">
           Everything you need to{' '}
           <span className="text-black">build and ship</span> faster.
         </h2>
@@ -163,7 +163,7 @@ export default function Features() {
               className="group relative p-6 md:p-7 rounded-2xl border border-[#0a0a0a]/5 bg-white hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03] transition-all duration-300"
             >
               <div className="flex items-center justify-between mb-5">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/[0.03] text-[#0a0a0a]/60 group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/3 text-[#0a0a0a]/60 group-hover:bg-black group-hover:text-white transition-colors duration-300">
                   {feature.icon}
                 </div>
                 <span className="text-[10px] font-semibold text-[#0a0a0a]/30 uppercase tracking-wider">
@@ -171,7 +171,7 @@ export default function Features() {
                 </span>
               </div>
 
-              <h3 className="text-lg font-[inter] text-[#0a0a0a] mb-2 -tracking-[2px]">
+              <h3 className="text-lg font-[inter] text-[#0a0a0a] mb-2 tracking-[-2px]">
                 {feature.title}
               </h3>
               <p className="text-sm text-black/60 leading-tight">
@@ -196,7 +196,7 @@ export default function Features() {
               </div>
 
               <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-black/[0.04] rotate-45 transform origin-top-right" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-black/4 rotate-45 transform origin-top-right" />
               </div>
             </div>
           ))}

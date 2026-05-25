@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useState } from 'react';
+import {  useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { SiGithub } from 'react-icons/si';
@@ -170,7 +170,7 @@ export default function SignupPage() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <button className="w-full flex items-center bg-black text-white justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/10 text-sm font-[inter4-medium] text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/2 transition-all">
+          <button className="w-full flex items-center bg-black text-white justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/10 text-sm font-[inter4-medium]  hover:bg-[#0a0a0a]/2 transition-all">
             <SiGithub className="text-xl" />
             Continue with Github
           </button>
