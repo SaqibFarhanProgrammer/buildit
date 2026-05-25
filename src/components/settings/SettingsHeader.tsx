@@ -3,7 +3,7 @@ export default function SettingsHeader() {
     <div className="relative bg-[#0a0a0a] text-white">
       <div className="max-w-6xl mx-auto px-6 lg:px-8 pt-8 pb-16 sm:pt-12 sm:pb-20">
         <div className="flex items-center gap-3 mb-8 sm:mb-10">
-          <div className="w-6 h-[1px] bg-white/20" />
+          <div className="w-6 h-px bg-white/20" />
           <span className="font-['inter4-medium'] text-[10px] text-white/40 uppercase tracking-[0.2em]">
             Settings
           </span>

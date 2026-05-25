@@ -59,7 +59,7 @@ export default function Pricing() {
       {/* Section Header */}
       <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-16 md:mb-24">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-[1px] bg-[#0a0a0a]" />
+          <div className="w-8 h-px bg-[#0a0a0a]" />
           <span className="text-xs font-[inter] text-[#0a0a0a]/40 uppercase tracking-[0.2em]">
             Pricing
           </span>
@@ -140,7 +140,7 @@ export default function Pricing() {
 
               {/* Divider */}
               <div
-                className={`w-full h-[1px] mb-6 ${
+                className={`w-full h-px mb-6 ${
                   plan.popular ? 'bg-white/10' : 'bg-[#0a0a0a]/5'
                 }`}
               />

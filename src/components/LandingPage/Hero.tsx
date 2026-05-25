@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <section className="relative z-40 min-h-[150vh] flex items-center flex-col justify-center overflow-hidden bg-white pt-16">
       <div
-        className="-0  inset-0 opacity-[0.02] z-20 mt-10"
+        className="-0  inset-0 opacity-2 z-20 mt-10"
         style={{
           backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`,
           backgroundSize: '100px 100px',

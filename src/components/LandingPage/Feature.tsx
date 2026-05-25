@@ -140,7 +140,7 @@ export default function Features() {
     <section id="features" className="relative py-24 md:py-32 bg-white">
       <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-16 md:mb-20">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-[1px] bg-[#0a0a0a]" />
+          <div className="w-8 h-px bg-[#0a0a0a]" />
           <span className="text-xs font-semibold text-[#0a0a0a]/40 uppercase tracking-[0.2em]">
             Features
           </span>
@@ -206,7 +206,7 @@ export default function Features() {
       <div className="max-w-5xl mx-auto px-6 lg:px-8 mt-16 md:mt-20">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-8 md:p-10 rounded-2xl bg-[#0a0a0a]">
           <div>
-            <h3 className="text-xl md:text-2xl font-[inter] text-white -tracking-[1px]">
+            <h3 className="text-xl md:text-2xl font-[inter] text-white -tracking-px">
               Ready to start building?
             </h3>
             <p className="mt-1 text-sm text-white/50">

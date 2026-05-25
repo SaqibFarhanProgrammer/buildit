@@ -96,7 +96,7 @@ export default function HowItWorks() {
     <section id="how-it-works" className="relative py-24 md:py-32 bg-[#f9fafb]">
       <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-16 md:mb-24">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-[1px] bg-[#0a0a0a]" />
+          <div className="w-8 h-px bg-[#0a0a0a]" />
           <span className="text-xs font-semibold text-[#0a0a0a]/40 uppercase tracking-[0.2em]">
             How It Works
           </span>

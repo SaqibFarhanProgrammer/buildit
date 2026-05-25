@@ -164,18 +164,18 @@ export default function SignupPage() {
         </form>
 
         <div className="flex items-center gap-3 my-6">
-          <div className="flex-1 h-[1px] bg-[#0a0a0a]/5" />
+          <div className="flex-1 h-px bg-[#0a0a0a]/5" />
           <span className="text-xs text-[#0a0a0a]/30">or</span>
-          <div className="flex-1 h-[1px] bg-[#0a0a0a]/5" />
+          <div className="flex-1 h-px bg-[#0a0a0a]/5" />
         </div>
 
         <div className="flex flex-col gap-2">
-          <button className="w-full flex items-center bg-black text-white justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/10 text-sm font-[inter4-medium] text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
+          <button className="w-full flex items-center bg-black text-white justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/10 text-sm font-[inter4-medium] text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/2 transition-all">
             <SiGithub className="text-xl" />
             Continue with Github
           </button>
 
-          <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded border border-[#0a0a0a]/10 text-sm font-[inter4-medium] text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
+          <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded border border-[#0a0a0a]/10 text-sm font-[inter4-medium] text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/2 transition-all">
             <FcGoogle className="text-xl" />
             Continue with Google
           </button>
