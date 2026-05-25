@@ -29,13 +29,10 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginForm) => {
     try {
-      console.log(data);
-
       const res = await axios.post('/api/auth/login', {
         email: data.email,
         password: data.password,
       });
-      console.log(res);
 
       router.push('/profile');
     } catch (error) {
@@ -138,10 +135,12 @@ export default function LoginPage() {
           <div className="flex-1 h-[1px] bg-[#0a0a0a]/5" />
         </div>
         <div className="gap-2 flex flex-col">
-          <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/40 text-sm font-medium text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
-            <SiGithub className="text-xl" />
-            Continue with Github
-          </button>
+          <Link href="/api/auth/github/login">
+            <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/40 text-sm font-medium text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
+              <SiGithub className="text-xl" />
+              Continue with Github
+            </button>
+          </Link>
           <Link href="/api/auth/google">
             <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-[#0a0a0a]/40 text-sm font-medium text-[#0a0a0a]/70 hover:bg-[#0a0a0a]/[0.02] transition-all">
               <FcGoogle className="text-xl" />

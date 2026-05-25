@@ -1,8 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import { DecodeEmail } from '@/utils/EncodeEmail';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 export default function SetPasswordPage() {
@@ -14,6 +13,7 @@ export default function SetPasswordPage() {
   const [UiError, setUiError] = useState('');
 
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const value = searchParams.get('e');
 
@@ -28,7 +28,7 @@ export default function SetPasswordPage() {
         email: value,
       });
 
-      console.log(response);
+      router.push('/profile');
 
       setPassword('');
       setConfirmPassword('');
@@ -63,7 +63,7 @@ export default function SetPasswordPage() {
           </div>
 
           <h1 className="text-2xl font-['inter-bold'] text-black text-center mb-2">
-            Set your password
+            Change your password
           </h1>
 
           <p className="text-sm font-['inter-rag'] text-[#6b7280] text-center mb-8">
@@ -118,6 +118,8 @@ export default function SetPasswordPage() {
                 </button>
               </div>
             </div>
+
+            <p className="text-red-500">{UiError}</p>
 
             <button
               type="submit"

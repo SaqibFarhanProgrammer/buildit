@@ -9,8 +9,6 @@ export async function POST(request: NextRequest) {
   try {
     await connectDB();
 
-    console.log('route reached');
-
     const body = await request.json();
 
     const { email, password } = body;
@@ -19,27 +17,13 @@ export async function POST(request: NextRequest) {
       throw new AppError('Email and password are required', 400);
     }
 
-    const decoded = jwt.verify(email, process.env.JWT_SECRET as string) as {
-      email: string;
-    };
-
-    console.log(decoded);
-
-    const user = await User.findOne({
-      email: decoded,
-    });
-
-    console.log(user);
-
-    if (!user) {
-      throw new AppError('User not found', 404);
-    }
+    const decoded = jwt.verify(email, process.env.JWT_SECRET as string);
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await User.updateOne(
       {
-        email: decoded.email,
+        email: decoded,
       },
       {
         $set: {
@@ -47,8 +31,6 @@ export async function POST(request: NextRequest) {
         },
       }
     );
-
-    // workingon setpassor d
 
     return NextResponse.json(
       {
@@ -60,29 +42,18 @@ export async function POST(request: NextRequest) {
       }
     );
   } catch (error: unknown) {
-    console.error('SET_PASSWORD_ERROR:', error);
+    console.error('REGISTER_USER_ERROR:', error);
 
-    let message = 'Internal Server Error';
+    let message = 'Server Error';
     let statusCode = 500;
 
-    if (error instanceof jwt.JsonWebTokenError) {
-      message = 'Invalid or expired token';
-      statusCode = 401;
-    } else if (error instanceof AppError) {
+    if (error instanceof AppError) {
       message = error.message;
       statusCode = error.statusCode;
     } else if (error instanceof Error) {
       message = error.message;
     }
 
-    return NextResponse.json(
-      {
-        success: false,
-        message,
-      },
-      {
-        status: statusCode,
-      }
-    );
+    return NextResponse.json({ message }, { status: statusCode });
   }
 }

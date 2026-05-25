@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
   });
 
   // loginper kaamakrrah tah cookeis sotre per
-  console.log(res._id);
 
   cookieStore.set('token', token, {
     httpOnly: true,

@@ -34,7 +34,7 @@ export default function VerifyEmailPage() {
         code: fullCode,
       });
 
-      router.push('/profile');
+      router.push('/auth/complete-profile');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setError(error.response?.data?.error);

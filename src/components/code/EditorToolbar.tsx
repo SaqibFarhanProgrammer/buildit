@@ -28,7 +28,6 @@ export default function EditorToolbar() {
   const handleZoomOut = () => setZoom(Math.max(zoom - 2, 10));
   const handleSave = () => {
     // Save logic
-    console.log('Saving:', activeFile?.name);
   };
 
   const handleRun = () => {

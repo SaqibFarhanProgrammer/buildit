@@ -27,7 +27,7 @@ export function proxy(req: NextRequest) {
   }
 
   if (pathname.startsWith('/auth') && token) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+    return NextResponse.redirect(new URL('/profile', req.url));
   }
 
   return NextResponse.next();
@@ -44,6 +44,7 @@ export const config = {
     '/learn/:path*',
     '/problems/:path*',
     '/code/:path*',
-    '/auth/:path*',
+    '/auth/signup/:path*',
+    '/auth/login/:path*',
   ],
 };

@@ -78,7 +78,6 @@ export default function OnboardingPage() {
   };
 
   const handleSubmit = () => {
-    console.log(formData);
     router.push('/dashboard');
   };
 

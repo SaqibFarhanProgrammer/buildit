@@ -20,11 +20,8 @@ export async function POST(request: Request) {
     }
 
     const email = DecodeEmail(encodedEmail);
-    console.log(email);
 
     const res = await VerifyEmailCode(email as string, code);
-
-    console.log(res.id);
 
     const cookieStore = await cookies();
 

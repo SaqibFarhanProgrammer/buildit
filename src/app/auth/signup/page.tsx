@@ -39,9 +39,7 @@ export default function SignupPage() {
   const onSubmit = async (data: SignupForm) => {
     try {
       const RegisterResponse = await axios.post('/api/auth/register', data);
-      console.log(RegisterResponse.data.res);
       const email = RegisterResponse?.data?.res?.email;
-      console.log(email);
 
       router.push(`/auth/verify-email?e=${email}`);
     } catch (error) {

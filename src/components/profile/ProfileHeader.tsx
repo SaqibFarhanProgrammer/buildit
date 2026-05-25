@@ -8,7 +8,6 @@ export default function ProfileHeader({ user }: { user: ProfileUser }) {
 
   async function logout() {
     const res = await axios.post('/api/auth/logout');
-    console.log(res);
 
     router.push('/auth/login');
   }

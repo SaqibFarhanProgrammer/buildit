@@ -7,7 +7,7 @@ export type CodingLevel = 'Beginner' | 'Intermediate' | 'Expert';
 export interface UserProfile {
   programmingLanguage: string;
   role: UserRole;
-  experience: number;
+  experience: string;
   theme: ThemeType;
   codingLevel: CodingLevel;
 }
@@ -65,7 +65,7 @@ const UserSchema = new mongoose.Schema<IUser>(
       },
 
       experience: {
-        type: Number,
+        type: String,
       },
       theme: {
         type: String,

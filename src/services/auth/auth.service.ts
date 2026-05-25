@@ -59,7 +59,6 @@ async function LoginUser(body: LoginBody) {
 
 async function RegisterUser(body: UserType) {
   const { name, email, password, confirmPassword } = body;
-  console.log('registe rcheck 1 ');
 
   // Validate name
   if (!name || name.trim().length === 0) {
@@ -71,7 +70,6 @@ async function RegisterUser(body: UserType) {
   if (!email || !emailRegex.test(email)) {
     throw new AppError('Invalid email address', 400);
   }
-  console.log('registe rcheck 2 ');
 
   // Validate password
   if (!password || password.length < 8) {
@@ -82,8 +80,6 @@ async function RegisterUser(body: UserType) {
   if (password !== confirmPassword) {
     throw new AppError('Passwords do not match', 400);
   }
-
-  console.log('registe rcheck 3 ');
 
   // Check existing user
   const existingUser = await User.findOne({ email });
@@ -135,11 +131,7 @@ async function RegisterUser(body: UserType) {
     provider: 'signup',
   });
 
-  console.log('registe rcheck 4 ');
-
   await SendEmail(email, verificationCode);
-
-  console.log('registe rcheck 5 ');
 
   const EncodedEmail = EncodeEmail(email);
 
