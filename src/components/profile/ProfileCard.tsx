@@ -30,9 +30,6 @@ export default function ProfileCard({ user }: { user: ProfileUser }) {
         </div>
         <div className="flex items-center gap-3">
           <div className="w-1 h-1 rounded-full bg-[#0a0a0a]/20" />
-          <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/40">
-            {user.location}
-          </span>
         </div>
         <div className="flex items-center gap-3">
           <div className="w-1 h-1 rounded-full bg-[#0a0a0a]/20" />
@@ -42,10 +39,6 @@ export default function ProfileCard({ user }: { user: ProfileUser }) {
         </div>
       </div>
 
-      {/* Bio */}
-      <p className="font-['inter-rag'] text-sm text-[#0a0a0a]/50 leading-relaxed mb-6">
-        {user.bio}
-      </p>
 
       {/* Email */}
       <div className="p-3 rounded-lg bg-white border border-[#0a0a0a]/5 mb-6">

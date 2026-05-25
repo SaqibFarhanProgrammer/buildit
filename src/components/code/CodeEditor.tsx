@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Editor from '@monaco-editor/react';
 import { useEditor } from '@/context/EditorProvider.context';
 

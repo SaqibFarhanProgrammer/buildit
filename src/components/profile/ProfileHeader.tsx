@@ -42,17 +42,9 @@ export default function ProfileHeader({ user }: { user: ProfileUser }) {
               </span>
             </div>
 
-            <p className="font-['inter-rag'] text-sm text-white/50 leading-relaxed max-w-xl mb-4">
-              {user.bio}
-            </p>
-
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <span className="font-['inter-semi'] text-[10px] text-white/40 uppercase tracking-wider px-2 py-1 rounded bg-white/5 border border-white/10">
                 {user.role}
-              </span>
-              <span className="font-['inter-light'] text-xs text-white/30 flex items-center gap-1.5">
-                <span className="w-1 h-1 rounded-full bg-white/20" />
-                {user.location}
               </span>
               <span className="font-['inter-light'] text-xs text-white/30 flex items-center gap-1.5">
                 <span className="w-1 h-1 rounded-full bg-white/20" />

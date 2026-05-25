@@ -8,7 +8,6 @@ export default function ProfileForm() {
     username: 'alexchen',
     email: 'alex@buildit.dev',
     bio: 'Building scalable apps with TypeScript & Node.js.',
-    location: 'San Francisco, CA',
     website: 'https://alexchen.dev',
   });
 

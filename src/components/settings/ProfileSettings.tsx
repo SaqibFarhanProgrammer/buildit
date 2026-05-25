@@ -9,7 +9,6 @@ export default function ProfileSettings() {
     username: 'alexchen',
     email: 'alex@buildit.dev',
     bio: 'Building scalable apps with TypeScript & Node.js. Open source contributor.',
-    location: 'San Francisco, CA',
     website: 'https://alexchen.dev',
   });
 

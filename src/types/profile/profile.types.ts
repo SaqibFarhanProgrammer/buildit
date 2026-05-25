@@ -3,9 +3,7 @@ export interface ProfileUser {
   username: string;
   email: string;
   role: string;
-  bio: string;
   avatar: string;
-  location: string;
   joinDate: string;
 }
 

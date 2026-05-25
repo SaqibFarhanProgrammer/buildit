@@ -2,6 +2,7 @@ import { connectDB } from '@/core/db/DbConnection';
 import { IsUserAuthenticate } from '@/utils/AuthRequest';
 import { NextRequest, NextResponse } from 'next/server';
 import { User } from '@/models/User.model';
+import { cookies } from 'next/headers';
 
 const cache = new Map();
 
@@ -9,12 +10,12 @@ export async function GET(request: NextRequest) {
   try {
     await connectDB();
 
-    // 1. Auth check
+    // 1. Auth checkconst
+    const cookieStore = await cookies()
+    const token = cookieStore.get("token")
+    console.log(token);
+    
     const id = await IsUserAuthenticate(request);
-
-    if (!id) {
-      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-    }
 
     const cacheKey = `user:${id}`;
 

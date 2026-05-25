@@ -1,7 +1,6 @@
 import ProjectList from '@/components/code/projects/ProjectList';
 import { ProjectType } from '@/types/code-edittor/projects/projects.types';
 
-// Dummy data — replace with API later
 const Projects: ProjectType[] = [
   {
     id: '1',
@@ -53,7 +52,7 @@ const Projects: ProjectType[] = [
 export default async function CodePage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white">
-      <ProjectList initialProjects={Projects} />]
+      <ProjectList initialProjects={Projects} />
     </div>
   );
 }
