@@ -120,6 +120,8 @@ export default function LoginPage() {
             )}
           </div>
 
+          <p className='text-red-500'>{UiError}</p>
+
           <button
             type="submit"
             disabled={isSubmitting}
