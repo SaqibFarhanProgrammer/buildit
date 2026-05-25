@@ -147,7 +147,7 @@ export default function Features() {
         </div>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] max-w-2xl">
           Everything you need to{' '}
-          <span className="text-[#000]">build and ship</span> faster.
+          <span className="text-black">build and ship</span> faster.
         </h2>
         <p className="mt-4 text-base text-black/60 max-w-lg leading-tight">
           A complete toolkit for modern developers. From writing your first line
@@ -163,7 +163,7 @@ export default function Features() {
               className="group relative p-6 md:p-7 rounded-2xl border border-[#0a0a0a]/5 bg-white hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03] transition-all duration-300"
             >
               <div className="flex items-center justify-between mb-5">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/[0.03] text-[#0a0a0a]/60 group-hover:bg-[#000] group-hover:text-white transition-colors duration-300">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/[0.03] text-[#0a0a0a]/60 group-hover:bg-black group-hover:text-white transition-colors duration-300">
                   {feature.icon}
                 </div>
                 <span className="text-[10px] font-semibold text-[#0a0a0a]/30 uppercase tracking-wider">
@@ -178,7 +178,7 @@ export default function Features() {
                 {feature.description}
               </p>
 
-              <div className="mt-5 flex items-center gap-1 text-xs font-semibold text-[#000] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="mt-5 flex items-center gap-1 text-xs font-semibold text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span>Learn more</span>
                 <svg
                   className="w-3 h-3"
@@ -196,7 +196,7 @@ export default function Features() {
               </div>
 
               <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-[#000]/[0.04] rotate-45 transform origin-top-right" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-black/[0.04] rotate-45 transform origin-top-right" />
               </div>
             </div>
           ))}

@@ -77,9 +77,9 @@ export default function UseCases() {
       >
         <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
-            Ship projects with <span className="text-[#000]">confidancee</span>
+            Ship projects with <span className="text-black">confidancee</span>
           </h2>
-          <p className="text-[inter4-medium] md:text-lg text-[#000]/80 leading-tight max-w-xl mx-auto">
+          <p className="text-[inter4-medium] md:text-lg text-black/80 leading-tight max-w-xl mx-auto">
             Kanban boards, sprint planning, and real-time progress tracking.
             Manage tasks, hit deadlines, and keep your team aligned — all
             without leaving your editor.
@@ -111,15 +111,15 @@ export default function UseCases() {
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
             <div className="w-full lg:w-[45%] shrink-0">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#000]/5 border border-[#000]/10 mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#000]" />
-                <span className="text-[#000] text-[10px] font-[inter] uppercase -tracking-[2px]">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/10 mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-black" />
+                <span className="text-black text-[10px] font-[inter] uppercase -tracking-[2px]">
                   AI Explainer
                 </span>
               </div>
 
               <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
-                Understand code <span className="text-[#000]">instantly</span>
+                Understand code <span className="text-black">instantly</span>
               </h2>
 
               <p className="text-[inter4-medium] text-black/80 leading-relaxed mb-6 max-w-md">
@@ -131,7 +131,7 @@ export default function UseCases() {
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-3">
                   <svg
-                    className="w-4 h-4 mt-0.5 text-[#000]"
+                    className="w-4 h-4 mt-0.5 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -149,7 +149,7 @@ export default function UseCases() {
                 </li>
                 <li className="flex items-start gap-3">
                   <svg
-                    className="w-4 h-4 mt-0.5 text-[#000]"
+                    className="w-4 h-4 mt-0.5 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -167,7 +167,7 @@ export default function UseCases() {
                 </li>
                 <li className="flex items-start gap-3">
                   <svg
-                    className="w-4 h-4 mt-0.5 text-[#000]"
+                    className="w-4 h-4 mt-0.5 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -187,7 +187,7 @@ export default function UseCases() {
 
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-[#000] hover:gap-3 transition-all duration-200"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-black hover:gap-3 transition-all duration-200"
               >
                 <span>Try AI Explainer</span>
                 <svg
@@ -228,16 +228,16 @@ export default function UseCases() {
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16">
             <div className="w-full lg:w-[45%] shrink-0">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#000]/5 border border-[#000]/10 mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#000]" />
-                <span className="text-[#000] text-[10px] font-[inter] uppercase -tracking-[2px]">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/10 mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-black" />
+                <span className="text-black text-[10px] font-[inter] uppercase -tracking-[2px]">
                   Coding Challenges
                 </span>
               </div>
 
               <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
                 Level up your{' '}
-                <span className="text-[#000]">problem solving</span>
+                <span className="text-black">problem solving</span>
               </h2>
 
               <p className="text-[inter4-medium] text-black/80 leading-relaxed mb-6 max-w-md">
@@ -249,7 +249,7 @@ export default function UseCases() {
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-3">
                   <svg
-                    className="w-4 h-4 mt-0.5 text-[#000]"
+                    className="w-4 h-4 mt-0.5 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -267,7 +267,7 @@ export default function UseCases() {
                 </li>
                 <li className="flex items-start gap-3">
                   <svg
-                    className="w-4 h-4 mt-0.5 text-[#000]"
+                    className="w-4 h-4 mt-0.5 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -285,7 +285,7 @@ export default function UseCases() {
                 </li>
                 <li className="flex items-start gap-3">
                   <svg
-                    className="w-4 h-4 mt-0.5 text-[#000]"
+                    className="w-4 h-4 mt-0.5 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -305,7 +305,7 @@ export default function UseCases() {
 
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-[#000] hover:gap-3 transition-all duration-200"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-black hover:gap-3 transition-all duration-200"
               >
                 <span>Start Practicing</span>
                 <svg
@@ -357,15 +357,15 @@ export default function UseCases() {
               </div>
             </div>
             <div className="w-full lg:w-[45%] shrink-0">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#000]/5 border border-[#000]/10 mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#000]" />
-                <span className="text-[#000] text-[10px] font-[inter] uppercase -tracking-[2px]">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/10 mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-black" />
+                <span className="text-black text-[10px] font-[inter] uppercase -tracking-[2px]">
                   Learning Platform
                 </span>
               </div>
 
               <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] mb-4">
-                Master skills <span className="text-[#000]">step by step</span>
+                Master skills <span className="text-black">step by step</span>
               </h2>
 
               <p className="text-[inter4-medium] text-black/80 leading-relaxed mb-6 max-w-md">
@@ -377,7 +377,7 @@ export default function UseCases() {
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-3">
                   <svg
-                    className="w-4 h-4 mt-0.5 text-[#000]"
+                    className="w-4 h-4 mt-0.5 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -395,7 +395,7 @@ export default function UseCases() {
                 </li>
                 <li className="flex items-start gap-3">
                   <svg
-                    className="w-4 h-4 mt-0.5 text-[#000]"
+                    className="w-4 h-4 mt-0.5 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -413,7 +413,7 @@ export default function UseCases() {
                 </li>
                 <li className="flex items-start gap-3">
                   <svg
-                    className="w-4 h-4 mt-0.5 text-[#000]"
+                    className="w-4 h-4 mt-0.5 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -433,7 +433,7 @@ export default function UseCases() {
 
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-[#000] hover:gap-3 transition-all duration-200"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-black hover:gap-3 transition-all duration-200"
               >
                 <span>Start Learning</span>
                 <svg

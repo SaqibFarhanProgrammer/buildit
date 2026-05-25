@@ -14,7 +14,7 @@ export default function AuthLayout({
       >
         <IoIosArrowRoundBack
           size={30}
-          className="text-[#0a0a0a] hover:text-[#000] transition-colors duration-200"
+          className="text-[#0a0a0a] hover:text-black transition-colors duration-200"
         />
         back to home
       </Link>

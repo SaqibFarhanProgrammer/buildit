@@ -13,12 +13,12 @@ export default function Hero() {
         }}
       />
 
-      <div className="absolute top-1/3 right-1/3 w-72 h-72 bg-[#000]/3 rounded-full blur-3xl" />
+      <div className="absolute top-1/3 right-1/3 w-72 h-72 bg-black/3 rounded-full blur-3xl" />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#000]/5 border border-[#000]/10 mb-6">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#000]" />
-          <span className="text-[#000] text-xs font-semibold tracking-wide uppercase">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/10 mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-black" />
+          <span className="text-black text-xs font-semibold tracking-wide uppercase">
             AI-Powered Platform
           </span>
         </div>
@@ -26,7 +26,7 @@ export default function Hero() {
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-[inter4-medium] text-[#0a0a0a] leading-[1.05] tracking-tight mb-5">
           Build Better.
           <br />
-          <span className="text-[#000]">Ship Faster.</span>
+          <span className="text-black">Ship Faster.</span>
         </h1>
 
         <p className="text-base md:text-lg text-black/60 max-w-xl mx-auto mb-8 leading-relaxed">
@@ -37,13 +37,13 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/signup"
-            className="bg-[#000] text-white px-6 py-2.5 rounded-full text-sm font-[inter4-medium] hover:bg-[#000]/90 transition-all duration-200 hover:shadow-md hover:shadow-[#000]/15"
+            className="bg-black text-white px-6 py-2.5 rounded-full text-sm font-[inter4-medium] hover:bg-black/90 transition-all duration-200 hover:shadow-md hover:shadow-black/15"
           >
             Start Building Free
           </Link>
           <Link
             href="#how-it-works"
-            className="border border-[#0a0a0a]/10 text-[#0a0a0a] px-6 py-2.5 rounded-full text-sm font-[inter4-medium] hover:border-[#000] hover:text-[#000] transition-all duration-200"
+            className="border border-[#0a0a0a]/10 text-[#0a0a0a] px-6 py-2.5 rounded-full text-sm font-[inter4-medium] hover:border-black hover:text-black transition-all duration-200"
           >
             How It Works
           </Link>

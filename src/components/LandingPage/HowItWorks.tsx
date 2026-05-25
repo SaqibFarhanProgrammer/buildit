@@ -102,7 +102,7 @@ export default function HowItWorks() {
           </span>
         </div>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight -tracking-[2px] max-w-2xl">
-          Four steps to <span className="text-[#000]">ship faster</span>.
+          Four steps to <span className="text-black">ship faster</span>.
         </h2>
         <p className="mt-4 font-[inter4-medium] text-[#0a0a0a]/80 max-w-lg leading-tight">
           From your first line of code to production deployment. A streamlined
@@ -120,10 +120,10 @@ export default function HowItWorks() {
               } ${index < 2 ? 'md:border-b' : ''} border-b last:border-b-0 md:last:border-b-0`}
             >
               <div className="flex items-start justify-between mb-6">
-                <span className="text-5xl md:text-6xl font-[inter] text-[#0a0a0a]/[0.06] leading-none -tracking-[3px] group-hover:text-[#000]/10 transition-colors duration-300">
+                <span className="text-5xl md:text-6xl font-[inter] text-[#0a0a0a]/[0.06] leading-none -tracking-[3px] group-hover:text-black/10 transition-colors duration-300">
                   {step.number}
                 </span>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/[0.03] text-[#0a0a0a]/60 group-hover:bg-[#000] group-hover:text-white transition-colors duration-300">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/[0.03] text-[#0a0a0a]/60 group-hover:bg-black group-hover:text-white transition-colors duration-300">
                   {step.icon}
                 </div>
               </div>
@@ -135,7 +135,7 @@ export default function HowItWorks() {
                 {step.description}
               </p>
 
-              <div className="mt-8 w-12 h-[2px] bg-[#0a0a0a]/10 group-hover:bg-[#000] group-hover:w-20 transition-all duration-300" />
+              <div className="mt-8 w-12 h-[2px] bg-[#0a0a0a]/10 group-hover:bg-black group-hover:w-20 transition-all duration-300" />
             </div>
           ))}
         </div>

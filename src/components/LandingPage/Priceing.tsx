@@ -68,7 +68,7 @@ export default function Pricing() {
           <div>
             <h2 className="text-3xl font-[inter] md:text-4xl lg:text-5xl f[inter] text-[#0a0a0a] leading-tight -tracking-[2px] max-w-xl">
               Simple pricing for{' '}
-              <span className="text-[#000]">every developer</span>.
+              <span className="text-black">every developer</span>.
             </h2>
             <p className="mt-4 text-base text-[#0a0a0a]/80 max-w-md leading-tight">
               Start free, upgrade when you need more power. No hidden fees,
@@ -96,7 +96,7 @@ export default function Pricing() {
               {/* Popular Badge */}
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-[#000] text-white text-[10px] f[inter] uppercase tracking-wider px-3 py-1 rounded-full">
+                  <span className="bg-black text-white text-[10px] f[inter] uppercase tracking-wider px-3 py-1 rounded-full">
                     Most Popular
                   </span>
                 </div>
@@ -151,7 +151,7 @@ export default function Pricing() {
                   <li key={idx} className="flex items-start gap-3">
                     <svg
                       className={`w-4 h-4 mt-0.5 shrink-0 ${
-                        plan.popular ? 'text-[#000]' : 'text-[#0a0a0a]/30'
+                        plan.popular ? 'text-black' : 'text-[#0a0a0a]/30'
                       }`}
                       fill="none"
                       stroke="currentColor"

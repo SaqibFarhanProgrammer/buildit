@@ -29,7 +29,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-13">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-[#000] rounded-sm flex items-center justify-center">
+            <div className="w-7 h-7 bg-black rounded-sm flex items-center justify-center">
               <span className="text-white font-bold text-xs">B</span>
             </div>
             <span className="text-[#0a0a0a] font-bold text-lg tracking-tight">
@@ -42,7 +42,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-[#0a0a0a]/50 hover:text-[#000] text-sm font-medium transition-colors duration-200"
+                className="text-[#0a0a0a]/50 hover:text-black text-sm font-medium transition-colors duration-200"
               >
                 {link.name}
               </Link>
@@ -52,13 +52,13 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-4">
             <Link
               href="/auth/login"
-              className="text-[#0a0a0a]/60 text-sm font-medium hover:text-[#000] transition-colors"
+              className="text-[#0a0a0a]/60 text-sm font-medium hover:text-black transition-colors"
             >
               Log in
             </Link>
             <Link
               href="/auth/signup"
-              className="bg-[#000] text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#000]/90 transition-all duration-200"
+              className="bg-black text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-black/90 transition-all duration-200"
             >
               Get Started
             </Link>
@@ -102,7 +102,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="block text-[#0a0a0a]/60 hover:text-[#000] text-sm font-medium py-2"
+                className="block text-[#0a0a0a]/60 hover:text-black text-sm font-medium py-2"
               >
                 {link.name}
               </Link>
@@ -116,7 +116,7 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/auth/signup"
-                className="block bg-[#000] text-white px-4 py-2.5 rounded-full text-sm font-semibold text-center"
+                className="block bg-black text-white px-4 py-2.5 rounded-full text-sm font-semibold text-center"
               >
                 Get Started
               </Link>

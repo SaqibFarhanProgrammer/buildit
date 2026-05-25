@@ -61,7 +61,7 @@ export default function SignupPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-4">
-            <div className="w-7 h-7 bg-[#000] rounded-md flex items-center justify-center">
+            <div className="w-7 h-7 bg-black rounded-md flex items-center justify-center">
               <span className="text-white font-bold text-xs">B</span>
             </div>
             <span className="text-[#0a0a0a] font-bold text-lg">BuildIt</span>
@@ -84,7 +84,7 @@ export default function SignupPage() {
               {...register('name')}
               type="text"
               placeholder="John Doe"
-              className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#000] transition-all"
+              className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-black transition-all"
             />
             {errors.name && (
               <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
@@ -99,7 +99,7 @@ export default function SignupPage() {
               {...register('email')}
               type="email"
               placeholder="you@example.com"
-              className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#000] transition-all"
+              className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-black transition-all"
             />
             {errors.email && (
               <p className="text-xs text-red-500 mt-1">
@@ -117,7 +117,7 @@ export default function SignupPage() {
                 {...register('password')}
                 type={showPassword ? 'text' : 'password'}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#000] transition-all"
+                className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-black transition-all"
               />
               <button
                 type="button"
@@ -142,7 +142,7 @@ export default function SignupPage() {
               {...register('confirmPassword')}
               type="password"
               placeholder="••••••••"
-              className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#000] transition-all"
+              className="w-full px-4 py-2.5 rounded-lg border border-[#0a0a0a]/10 bg-white text-sm text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-black transition-all"
             />
             {errors.confirmPassword && (
               <p className="text-xs text-red-500 mt-1">
@@ -157,7 +157,7 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-[#000] text-white py-2.5 rounded-lg text-sm font-[inter4-medium] hover:bg-[#000]/90 transition-all disabled:opacity-50"
+            className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-[inter4-medium] hover:bg-black/90 transition-all disabled:opacity-50"
           >
             {isSubmitting ? 'Creating...' : 'Create account'}
           </button>
@@ -185,7 +185,7 @@ export default function SignupPage() {
           Already have an account?{' '}
           <Link
             href="/auth/login"
-            className="text-[#000] font-[inter4-medium] hover:underline"
+            className="text-black font-[inter4-medium] hover:underline"
           >
             Sign in
           </Link>
