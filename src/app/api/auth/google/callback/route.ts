@@ -1,8 +1,6 @@
-// app/api/auth/google/callback/route.ts
-
 import { NextRequest, NextResponse } from 'next/server';
-import axios from 'axios';
 import jwt from 'jsonwebtoken';
+
 import { User } from '@/models/User.model';
 import { connectDB } from '@/core/db/DbConnection';
 import { cookies } from 'next/headers';
@@ -20,27 +18,32 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // 1. Exchange code for token
-    const tokenRes = await axios.post(
-      'https://oauth2.googleapis.com/token',
-      new URLSearchParams({
+    // 1. Exchange code for token (FETCH version)
+
+    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
         code,
         client_id: process.env.GOOGLE_CLIENT_ID!,
         client_secret: process.env.GOOGLE_CLIENT_SECRET!,
         redirect_uri: process.env.GOOGLE_REDIRECT_URI!,
         grant_type: 'authorization_code',
       }),
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      }
-    );
+    });
 
-    const access_token = tokenRes.data.access_token;
+    const tokenData = await tokenRes.json();
+    const access_token = tokenData.access_token;
 
-    // 2. Get Google user
-    const userRes = await axios.get(
+    if (!access_token) {
+      throw new AppError('Failed to get access token', 401);
+    }
+
+    // 2. Get Google user (FETCH version)
+
+    const userRes = await fetch(
       'https://www.googleapis.com/oauth2/v2/userinfo',
       {
         headers: {
@@ -49,9 +52,10 @@ export async function GET(req: NextRequest) {
       }
     );
 
-    const googleUser = userRes.data;
+    const googleUser = await userRes.json();
 
-    // 3. Find or create user (IMPORTANT FIX)
+    // 3. Find or create user
+
     let dbUser = await User.findOne({ email: googleUser.email });
 
     if (!dbUser) {
@@ -65,20 +69,18 @@ export async function GET(req: NextRequest) {
     }
 
     // 4. Create JWT
-    const token = jwt.sign(
-      {
-        userId: dbUser._id,
-      },
-      process.env.JWT_SECRET!,
-      { expiresIn: '7d' }
-    );
 
-    // 5. Set cookie + redirect
-    const encodedEmail = EncodeEmail(dbUser.email);
+    const token = jwt.sign({ userId: dbUser._id }, process.env.JWT_SECRET!, {
+      expiresIn: '7d',
+    });
+
+    // 5. Redirect
+
 
     const response = NextResponse.redirect(
-      new URL(`/auth/setpassword?e=${encodedEmail}`, req.url)
+      new URL(`/auth/complete-profile`, req.url)
     );
+
     cookieStore.set('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

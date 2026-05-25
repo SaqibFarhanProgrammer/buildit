@@ -67,6 +67,6 @@ today taski inshallah  <--
 ## Expected Outcome
 
 * Rating system fully stable
-* No missing or broken UI states
+* No missing or broken UI states 
 * Clean API structure ready for scaling
 * Frontend rendering fully aligned with backend data

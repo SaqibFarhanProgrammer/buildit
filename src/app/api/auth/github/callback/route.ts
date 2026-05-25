@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
 import { connectDB } from '@/core/db/DbConnection';
 import { User } from '@/models/User.model';
-import { EncodeEmail } from '@/utils/EncodeEmail';
 import { AppError } from '@/lib/AppError';
 
 export async function GET(req: NextRequest) {
@@ -17,63 +15,64 @@ export async function GET(req: NextRequest) {
       throw new AppError('Authorization code missing', 400);
     }
 
-    // 1. Exchange code for access token
+    // 1. Exchange code for access token (GitHub OAuth)
 
-    const tokenRes = await axios.post(
+    const tokenRes = await fetch(
       'https://github.com/login/oauth/access_token',
       {
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET,
-        code,
-      },
-      {
+        method: 'POST',
         headers: {
           Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          client_id: process.env.GITHUB_CLIENT_ID,
+          client_secret: process.env.GITHUB_CLIENT_SECRET,
+          code,
+        }),
       }
     );
 
-    const accessToken = tokenRes.data.access_token;
+    const tokenData = await tokenRes.json();
+    const accessToken = tokenData.access_token;
 
     if (!accessToken) {
       throw new AppError('Failed to get access token', 401);
     }
 
-    // 2. Fetch GitHub user
+    // 2. Get GitHub user
 
-    const githubUserRes = await axios.get('https://api.github.com/user', {
+    const githubUserRes = await fetch('https://api.github.com/user', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
 
-    const githubUser = githubUserRes.data;
+    const githubUser = await githubUserRes.json();
 
-    // 3. Fetch email separately
-    // GitHub often keeps email private
+    // 3. Get emails
 
-    const emailRes = await axios.get('https://api.github.com/user/emails', {
+    const emailRes = await fetch('https://api.github.com/user/emails', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
 
-    const primaryEmail = emailRes.data.find(
-      (email: { primary: boolean; verified: boolean; email: string }) =>
-        email.primary && email.verified
+    const emails = await emailRes.json();
+
+    const primaryEmail = emails.find(
+      (email: any) => email.primary && email.verified
     );
 
     if (!primaryEmail?.email) {
       throw new AppError('GitHub email not found', 400);
     }
 
-    // 4. Find existing user
+    // 4. Find or create user
 
     let dbUser = await User.findOne({
       email: primaryEmail.email,
     });
-
-    // 5. Create user if not exists
 
     if (!dbUser) {
       dbUser = await User.create({
@@ -86,7 +85,7 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // 6. Create app JWT
+    // 5. Create JWT
 
     const token = jwt.sign(
       {
@@ -98,13 +97,13 @@ export async function GET(req: NextRequest) {
       }
     );
 
-    // 7. Redirect logic
+    // 6. Redirect response
 
     const response = NextResponse.redirect(
-      new URL(`/auth/complete-profile`, req.url)
+      new URL('/auth/complete-profile', req.url)
     );
 
-    // 8. Set cookie
+    // 7. Set cookie
 
     response.cookies.set('token', token, {
       httpOnly: true,
@@ -115,26 +114,16 @@ export async function GET(req: NextRequest) {
     });
 
     return response;
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error('GITHUB_AUTH_ERROR:', error);
-
-    let message = 'Internal Server Error';
-    let statusCode = 500;
-
-    if (error instanceof AppError) {
-      message = error.message;
-      statusCode = error.statusCode;
-    } else if (error instanceof Error) {
-      message = error.message;
-    }
 
     return NextResponse.json(
       {
         success: false,
-        message,
+        message: error?.message || 'Internal Server Error',
       },
       {
-        status: statusCode,
+        status: error?.statusCode || 500,
       }
     );
   }
