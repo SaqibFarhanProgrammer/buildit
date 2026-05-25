@@ -1,0 +1,72 @@
+# BuildIt — Next Day Tasks (Post Authentication Phase)
+
+## Current Status
+
+Authentication system is completed and stable. OAuth flow is working, user session creation is functional, and basic protected routing is in place.
+
+The next phase focuses on UI refinement, API-level data consistency, and improving rendering logic for core features (especially rating-related data handling).
+
+---
+
+## Day Task Breakdown
+
+### 1. Rating System Fix (API + UI Sync)
+
+* Ensure rating data is correctly coming from API responses
+* Validate schema consistency in backend (MongoDB model check)
+* Fix missing or undefined rating fields in API output
+* Normalize rating values (avoid null/undefined cases)
+
+---
+
+### 2. Frontend Rendering Improvements
+
+* Improve UI rendering for rating components
+* Handle edge cases (no rating, loading state, empty data)
+* Ensure smooth conditional rendering (no UI flicker)
+
+---
+
+### 3. API Response Cleanup
+
+* Standardize API response structure
+* Ensure all endpoints return consistent format:
+
+  * success
+  * data
+  * error (if any)
+* Remove inconsistent or partial payloads
+
+---
+
+### 4. Data Validation Layer
+
+* Add server-side validation for incoming data
+* Prevent invalid rating submissions
+* Sanitize user inputs before DB storage
+
+---
+
+### 5. Debugging & Logging
+
+* Add temporary logs for rating-related API routes
+* Track missing or broken responses
+* Identify mismatch between DB and frontend expectations
+
+---
+
+## Engineering Focus
+
+* Stability over features
+* Data consistency between API and UI
+* Clean separation between backend logic and frontend rendering
+
+---
+
+today taski inshallah  <--
+## Expected Outcome
+
+* Rating system fully stable
+* No missing or broken UI states
+* Clean API structure ready for scaling
+* Frontend rendering fully aligned with backend data
