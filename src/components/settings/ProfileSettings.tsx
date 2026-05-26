@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 
 export default function ProfileSettings() {
   const [saved, setSaved] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -33,8 +34,24 @@ export default function ProfileSettings() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    const maxBytes = 2 * 1024 * 1024;
+
+    if (!allowedTypes.includes(file.type)) {
+      setErrorMessage('Only JPG, PNG, GIF or WEBP images are allowed.');
+      e.target.value = '';
+      return;
+    }
+
+    if (file.size > maxBytes) {
+      setErrorMessage('Image size must be less than 2MB.');
+      e.target.value = '';
+      return;
+    }
+
     setUploading(true);
     setSaved(false);
+    setErrorMessage('');
 
     try {
       const body = new FormData();
@@ -54,8 +71,9 @@ export default function ProfileSettings() {
       if (json.imageUrl) setAvatarUrl(json.imageUrl);
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
-    } catch {
-      // keep UI minimal: if upload fails, just stop loading state
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Upload failed';
+      setErrorMessage(message);
     } finally {
       setUploading(false);
       e.target.value = '';
@@ -114,6 +132,11 @@ export default function ProfileSettings() {
             <p className="font-['inter-light'] text-[10px] sm:text-xs text-[#0a0a0a]/30 mt-2">
               JPG, PNG or GIF. Max 2MB.
             </p>
+            {errorMessage ? (
+              <p className="font-['inter-semi'] text-xs text-red-600 mt-2">
+                {errorMessage}
+              </p>
+            ) : null}
           </div>
         </div>
       </div>

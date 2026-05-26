@@ -26,6 +26,7 @@ function toProfileUser(user: DbProfileUser): ProfileUser {
     name: user.name,
     username: user.email.split('@')[0],
     email: user.email,
+    image: user.image,
     role: user.profile?.role ?? 'Member',
     avatar: user.name.charAt(0).toUpperCase(),
     joinDate,

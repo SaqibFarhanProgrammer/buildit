@@ -40,6 +40,14 @@ export async function uploadAvatarToCloudinary(args: {
   const folder = 'buildit/avatars';
   const public_id = args.userId;
 
+  console.log('[cloudinary-service] Preparing upload', {
+    userId: args.userId,
+    fileType: args.file.type,
+    fileSize: args.file.size,
+    cloudName,
+    folder,
+  });
+
   const signature = makeSignature(
     {
       folder,
@@ -67,9 +75,18 @@ export async function uploadAvatarToCloudinary(args: {
 
   if (!res.ok) {
     const text = await res.text().catch(() => '');
+    console.error('[cloudinary-service] Upload request failed', {
+      status: res.status,
+      body: text,
+    });
     throw new Error(`Cloudinary upload failed (${res.status}): ${text}`);
   }
 
-  return (await res.json()) as CloudinaryUploadResult;
+  const json = (await res.json()) as CloudinaryUploadResult;
+  console.log('[cloudinary-service] Upload success', {
+    publicId: json.public_id,
+    hasSecureUrl: Boolean(json.secure_url),
+  });
+  return json;
 }
 
