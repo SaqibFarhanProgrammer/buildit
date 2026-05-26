@@ -1,13 +1,15 @@
 'use client';
 import type { ProfileUser } from '@/types/profile/profile.types';
 import axios from 'axios';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function ProfileHeader({ user }: { user: ProfileUser }) {
   const router = useRouter();
 
   async function logout() {
-    const res = await axios.post('/api/auth/logout');
+     await axios.post('/api/auth/logout');
 
     router.push('/auth/login');
   }
@@ -26,9 +28,11 @@ export default function ProfileHeader({ user }: { user: ProfileUser }) {
         <div className="flex flex-col sm:flex-row items-start gap-6 sm:gap-8">
           {/* Large Avatar */}
           <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#0004ff] flex items-center justify-center shrink-0 border-2 border-white/10">
+          {user.image ? <Image src={user.image} alt={user.name} width={96} height={96} /> : (
             <span className="font-['inter-bold'] text-3xl sm:text-4xl text-white">
               {user.avatar}
             </span>
+            )}
           </div>
 
           {/* Info */}
@@ -55,9 +59,11 @@ export default function ProfileHeader({ user }: { user: ProfileUser }) {
 
           {/* Actions */}
           <div className="flex items-center gap-3 shrink-0">
+            <Link href="/settings">
             <button className="font-['inter-semi'] text-xs bg-white text-[#0a0a0a] px-5 py-2.5 rounded-full hover:bg-white/90 transition-all">
               Edit Profile
             </button>
+            </Link>
             <button
               onClick={logout}
               className="font-['inter-semi'] text-xs bg-red-400 text-[#0a0a0a] px-5 py-2.5 rounded-full hover:bg-white/90 transition-all"

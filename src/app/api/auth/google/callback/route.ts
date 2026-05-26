@@ -76,7 +76,6 @@ export async function GET(req: NextRequest) {
 
     // 5. Redirect
 
-
     const response = NextResponse.redirect(
       new URL(`/auth/complete-profile`, req.url)
     );

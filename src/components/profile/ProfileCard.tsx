@@ -39,7 +39,6 @@ export default function ProfileCard({ user }: { user: ProfileUser }) {
         </div>
       </div>
 
-
       {/* Email */}
       <div className="p-3 rounded-lg bg-white border border-[#0a0a0a]/5 mb-6">
         <span className="font-['inter-light'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider block mb-1">

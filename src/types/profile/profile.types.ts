@@ -2,6 +2,7 @@ export interface ProfileUser {
   name: string;
   username: string;
   email: string;
+  image?: string;
   role: string;
   avatar: string;
   joinDate: string;
