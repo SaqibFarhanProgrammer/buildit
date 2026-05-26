@@ -2,28 +2,55 @@ import ProfileHeader from '@/components/profile/ProfileHeader';
 import StatsBar from '@/components/profile/StateBar';
 import WorkflowCard from '@/components/profile/WorkflowList';
 import TaskList from '@/components/profile/TaskList';
+import type { ProfileUser } from '@/types/profile/profile.types';
 import { cookies } from 'next/headers';
 import { getUserProfile } from '@/utils/GetProfiledata';
+import { redirect } from 'next/navigation';
+type DbProfileUser = {
+  name: string;
+  email: string;
+  image?: string;
+  createdAt?: Date | string;
+  profile?: { role?: string };
+};
+
+function toProfileUser(user: DbProfileUser): ProfileUser {
+  const joinDate = user.createdAt
+    ? new Date(user.createdAt).toLocaleDateString('en-US', {
+        month: 'short',
+        year: 'numeric',
+      })
+    : 'Recently';
+
+  return {
+    name: user.name,
+    username: user.email.split('@')[0],
+    email: user.email,
+    role: user.profile?.role ?? 'Member',
+    avatar: user.name.charAt(0).toUpperCase(),
+    joinDate,
+  };
+}
 
 export default async function ProfilePage() {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
 
   if (!token) {
-    return <div>Unauthorized</div>;
+    redirect('/auth/login');
   }
 
   const result = await getUserProfile(token);
 
   if (!result) {
-    return <div>User not found</div>;
+    redirect('/auth/login');
   }
 
-  const user = result.data;
+  const profileUser = toProfileUser(result.data as DbProfileUser);
 
   return (
     <div className="min-h-screen bg-white">
-      <ProfileHeader user={user} />
+      <ProfileHeader user={profileUser} />
 
       <StatsBar
         stats={[
