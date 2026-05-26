@@ -1,9 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function ProfileSettings() {
   const [saved, setSaved] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [formData, setFormData] = useState({
     name: 'Alex Chen',
     username: 'alexchen',
@@ -12,12 +15,52 @@ export default function ProfileSettings() {
     website: 'https://alexchen.dev',
   });
 
+  const initials = formData.name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p.charAt(0).toUpperCase())
+    .join('');
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     setSaved(false);
   };
+
+  async function onPickAvatarFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setSaved(false);
+
+    try {
+      const body = new FormData();
+      body.append('file', file);
+
+      const res = await fetch('/api/profile/avatar', {
+        method: 'POST',
+        body,
+      });
+
+      const json = (await res.json()) as { imageUrl?: string; message?: string };
+
+      if (!res.ok) {
+        throw new Error(json.message || 'Upload failed');
+      }
+
+      if (json.imageUrl) setAvatarUrl(json.imageUrl);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch {
+      // keep UI minimal: if upload fails, just stop loading state
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,16 +82,34 @@ export default function ProfileSettings() {
       <div className="p-5 sm:p-6 rounded-2xl border border-[#0a0a0a]/5 bg-[#f9fafb]">
         <div className="flex items-center gap-4 sm:gap-5">
           <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#0a0a0a] flex items-center justify-center shrink-0">
-            <span className="font-['inter-bold'] text-2xl sm:text-3xl text-white">
-              AC
-            </span>
+            {avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={avatarUrl}
+                alt="Avatar"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+            ) : (
+              <span className="font-['inter-bold'] text-2xl sm:text-3xl text-white">
+                {initials || 'U'}
+              </span>
+            )}
           </div>
           <div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={onPickAvatarFile}
+            />
             <button
               type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
               className="font-['inter-semi'] text-xs sm:text-sm bg-[#0a0a0a] text-white px-5 py-2.5 rounded-lg hover:bg-[#0a0a0a]/90 transition-all"
             >
-              Change Avatar
+              {uploading ? 'Uploading...' : 'Change Avatar'}
             </button>
             <p className="font-['inter-light'] text-[10px] sm:text-xs text-[#0a0a0a]/30 mt-2">
               JPG, PNG or GIF. Max 2MB.
