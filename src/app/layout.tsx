@@ -1,5 +1,5 @@
-import { DecodeEmail, EncodeEmail } from '@/utils/EncodeEmail';
 import './globals.css';
+import ThemeInitializer from '@/components/theme/ThemeInitializer';
 
 export default async function RootLayout({
   children,
@@ -9,6 +9,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`h-full antialiased`} cz-shortcut-listen="true">
       <body className="min-h-full flex flex-col" cz-shortcut-listen="true">
+        <ThemeInitializer />
         <>{children}</>
       </body>
     </html>
