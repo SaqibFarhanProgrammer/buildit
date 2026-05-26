@@ -1,7 +1,7 @@
 'use client';
 
 import { useForm, Controller } from 'react-hook-form';
-import { FaArrowLeft, FaCheck } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import {
@@ -59,7 +59,7 @@ export default function CompleteProfilePage() {
     setUiError('');
 
     try {
-      const res = await axios.post('/api/auth/complete-profile', data);
+      await axios.post('/api/auth/complete-profile', data);
       router.push('/profile');
     } catch (error) {
       setLoading(false);
@@ -180,7 +180,7 @@ export default function CompleteProfilePage() {
                         type="button"
                         onClick={() => field.onChange(years)}
                         className={`w-16 h-12 rounded-xl text-sm font-['inter-semi'] border transition-all ${
-                          (field.value as string) === years
+                          Number(field.value) === years
                             ? 'bg-[#0004ff] text-white border-[#0004ff]'
                             : 'bg-white text-black border-black/10 hover:border-[#0004ff]/30'
                         }`}

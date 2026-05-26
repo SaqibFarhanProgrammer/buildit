@@ -13,6 +13,7 @@ export default function ProfileSettings() {
     username: 'alexchen',
     email: 'alex@buildit.dev',
     bio: 'Building scalable apps with TypeScript & Node.js. Open source contributor.',
+    location: '',
     website: 'https://alexchen.dev',
   });
 

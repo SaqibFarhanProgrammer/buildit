@@ -65,13 +65,10 @@ export async function uploadAvatarToCloudinary(args: {
   form.append('public_id', public_id);
   form.append('signature', signature);
 
-  const res = await fetch(
-    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-    {
-      method: 'POST',
-      body: form,
-    }
-  );
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+    method: 'POST',
+    body: form,
+  });
 
   if (!res.ok) {
     const text = await res.text().catch(() => '');

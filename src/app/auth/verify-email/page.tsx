@@ -3,9 +3,9 @@
 import { AppError } from '@/lib/AppError';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
-export default function VerifyEmailPage() {
+function VerifyEmailForm() {
   const [code, setCode] = useState(['', '', '', '', '', '', '', '']);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -109,5 +109,13 @@ export default function VerifyEmailPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <VerifyEmailForm />
+    </Suspense>
   );
 }
