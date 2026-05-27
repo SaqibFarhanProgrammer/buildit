@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { DecodeEmail } from '@/utils/EncodeEmail'; // Adjust this import path to match your utility folder
+import { VerifyToken } from '@/utils/EncodeEmail'; // Adjust this import path to match your utility folder
 import { connectDB } from '@/core/db/DbConnection';
 import { VerifyEmailCode } from '@/services/auth/verifyEmailCode.service';
 import { AppError } from '@/lib/AppError';
@@ -19,9 +19,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const email = DecodeEmail(encodedEmail);
+    const decoded = VerifyToken(encodedEmail);
 
-    const res = await VerifyEmailCode(email as string, code);
+    // Validate decoded token
+    if (!decoded || !decoded.email) {
+      throw new AppError('Invalid or expired email token', 400);
+    }
+
+    const res = await VerifyEmailCode(decoded.email, code);
 
     const cookieStore = await cookies();
 
@@ -43,6 +48,8 @@ export async function POST(request: Request) {
       path: '/',
       maxAge: 60 * 60 * 24 * 7,
     });
+
+    //  project creation
 
     return NextResponse.json({
       success: true,

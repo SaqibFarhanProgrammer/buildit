@@ -24,7 +24,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Missing file' }, { status: 400 });
     }
 
-    const allowedTypes = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
+    const allowedTypes = new Set([
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/webp',
+    ]);
     const maxBytes = 2 * 1024 * 1024;
 
     if (!allowedTypes.has(file.type)) {
@@ -74,4 +79,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message }, { status: 500 });
   }
 }
-

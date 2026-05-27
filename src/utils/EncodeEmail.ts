@@ -1,19 +1,22 @@
-import jwt from 'jsonwebtoken';
-export function EncodeEmail(email: string) {
-  const encodedMail = jwt.sign(email, process.env.JWT_SECRET!);
-  return encodedMail;
+import jwt, { JwtPayload } from 'jsonwebtoken';
+
+type TokenPayload = {
+  userId?: string;
+  email?: string;
+  role?: string;
+};
+
+export function GenerateToken(payload: TokenPayload) {
+  return jwt.sign(payload, process.env.JWT_SECRET!);
 }
 
-export function DecodeEmail(email: string) {
+export function VerifyToken(token: string) {
   try {
-    const decode = jwt.verify(email, process.env.JWT_SECRET!);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload &
+      TokenPayload;
 
-    if (typeof decode === 'string') {
-      return decode;
-    }
-
-    return null;
-  } catch (err) {
+    return decoded;
+  } catch {
     return null;
   }
 }

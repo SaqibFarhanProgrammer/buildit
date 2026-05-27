@@ -54,7 +54,7 @@ const Projectsdata: ProjectType[] = [
 type ValueType = {
   projects: ProjectType[];
   setprojects: React.Dispatch<React.SetStateAction<ProjectType[]>>;
-    addProject: (project: ProjectType) => Promise<void>;
+  addProject: (project: ProjectType) => Promise<void>;
 };
 
 export const ProjectContext = createContext<ValueType>({

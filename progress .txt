@@ -70,3 +70,95 @@ today taski inshallah  <--
 * No missing or broken UI states 
 * Clean API structure ready for scaling
 * Frontend rendering fully aligned with backend data
+
+
+working on code and projects adn sessions 
+
+# Step 1 — Project Creation System
+- Create project schema
+- Create project API
+- Create project creation form
+- Save project in database
+- Show projects on dashboard
+
+---
+
+# Step 2 — Single Project Page
+- Create dynamic route
+- Fetch project by ID
+- Show project details
+- Handle loading and error states
+
+Example:
+`/project/[projectId]`
+
+---
+
+# Step 3 — Connect Project To Code Editor
+- Open editor from project
+- Pass project ID into editor
+- Load project data inside editor
+- Create editor layout
+
+---
+
+# Step 4 — Save & Fetch Code
+- Create code schema
+- Save code into database
+- Fetch code when editor opens
+- Auto-load latest saved code
+
+---
+
+# Step 5 — Editor Activity Tracking
+- Detect typing activity
+- Detect idle state
+- Track last active timestamp
+- Create activity state system
+
+---
+
+# Step 6 — Session Creation System
+- Create session schema
+- Start coding session
+- Store session in DB
+- Add session status
+
+Example:
+active
+paused
+completed
+
+---
+
+# Step 7 — Timer System
+- Start timer on session start
+- Run timer locally on frontend
+- Handle pause/resume
+- Calculate total duration
+
+---
+
+# Step 8 — Session Sync Logic
+- Save session on code save
+- Auto-sync every few minutes
+- Handle refresh recovery
+- Handle tab close
+
+---
+
+# Step 9 — Dashboard Analytics
+- Total coding hours
+- Daily activity
+- Weekly stats
+- Most used language
+- Session history
+
+---
+
+# Step 10 — Gamification
+- XP system
+- Streak system
+- Levels
+- Leaderboard
+- Achievements

@@ -14,6 +14,7 @@ import EmptyState from './EmptyState';
 import NewProjectModal from './NewProjectModal';
 import { ProjectType } from '@/types/code-edittor/projects/projects.types';
 import { useProjectContext } from '@/context/Project.context';
+import Cookies from 'js-cookie';
 
 type Status = 'All' | 'Active' | 'Finished';
 
@@ -22,6 +23,9 @@ export default function ProjectList() {
   const [filter, setFilter] = useState<Status>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { projects } = useProjectContext();
+  const userToken = Cookies.get('token');
+
+  console.log(userToken);
 
   const filteredProjects = projects.filter((p: ProjectType) => {
     const matchesFilter = filter === 'All' || p.status === filter;

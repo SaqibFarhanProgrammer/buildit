@@ -38,7 +38,7 @@ function EditorContent() {
   );
 }
 
-export default function EditorLayout() {
+export default function EditorLayout({}) {
   return (
     <EditorProvider>
       <EditorContent />

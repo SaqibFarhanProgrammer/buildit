@@ -3,7 +3,7 @@ import { GenerateVerificationCOde } from '@/utils/GenerateVerificationCode..util
 import { SendEmail } from './EmailVerification.service';
 import { AppError } from '@/lib/AppError';
 import bcrypt from 'bcryptjs';
-import { EncodeEmail } from '@/utils/EncodeEmail';
+import { VerifyToken } from '@/utils/EncodeEmail';
 
 type LoginBody = {
   email: string;
@@ -90,7 +90,7 @@ async function RegisterUser(body: UserType) {
 
   if (existingUser && !existingUser.isVerified) {
     const newCode = GenerateVerificationCOde();
-    const EncodedEmail = EncodeEmail(email);
+    const EncodedEmail = VerifyToken(email);
 
     await User.updateOne(
       { email },
@@ -133,7 +133,7 @@ async function RegisterUser(body: UserType) {
 
   await SendEmail(email, verificationCode);
 
-  const EncodedEmail = EncodeEmail(email);
+  const EncodedEmail = VerifyToken(email);
 
   return {
     message: 'Check your email for verification code',

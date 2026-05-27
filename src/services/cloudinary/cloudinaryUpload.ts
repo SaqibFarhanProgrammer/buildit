@@ -18,7 +18,10 @@ function sha1(input: string) {
   return crypto.createHash('sha1').update(input).digest('hex');
 }
 
-function makeSignature(params: Record<string, string | number>, apiSecret: string) {
+function makeSignature(
+  params: Record<string, string | number>,
+  apiSecret: string
+) {
   const toSign = Object.entries(params)
     .filter(([, v]) => v !== undefined && v !== null && v !== '')
     .sort(([a], [b]) => a.localeCompare(b))
@@ -65,10 +68,13 @@ export async function uploadAvatarToCloudinary(args: {
   form.append('public_id', public_id);
   form.append('signature', signature);
 
-  const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-    method: 'POST',
-    body: form,
-  });
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+    {
+      method: 'POST',
+      body: form,
+    }
+  );
 
   if (!res.ok) {
     const text = await res.text().catch(() => '');
@@ -86,4 +92,3 @@ export async function uploadAvatarToCloudinary(args: {
   });
   return json;
 }
-
