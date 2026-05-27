@@ -1,6 +1,7 @@
 'use client';
 
 import { ProjectType } from '@/types/code-edittor/projects/projects.types';
+import Link from 'next/link';
 
 interface ProjectCardProps {
   project: ProjectType;
@@ -17,10 +18,11 @@ const languageColors: Record<string, string> = {
 };
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const timeAgo = getTimeAgo(project.lastModified);
 
   return (
+    <Link href={`/code/project?pid=${project._id}`} className="block">
     <div className="group relative p-5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[#0004ff]/30 hover:bg-white/[0.05] transition-all duration-300">
+
       <div className="absolute top-4 right-4">
         <span
           className={`w-2 h-2 rounded-full ${
@@ -78,7 +80,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          {timeAgo}
         </span>
       </div>
 
@@ -86,19 +87,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <span className="text-[#0004ff] text-lg">→</span>
       </div>
     </div>
+    </Link>
   );
 }
 
-function getTimeAgo(dateString: string): string {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 60) return `${diffMins}m ago`;
-  if (diffHours < 24) return `${diffHours}h ago`;
-  if (diffDays < 7) return `${diffDays}d ago`;
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}

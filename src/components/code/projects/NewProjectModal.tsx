@@ -1,5 +1,6 @@
 'use client';
 
+import { useProjectContext } from '@/context/Project.context';
 import { useState } from 'react';
 
 interface NewProjectModalProps {
@@ -32,13 +33,23 @@ export default function NewProjectModal({
   const [language, setLanguage] = useState('TypeScript');
   const [description, setDescription] = useState('');
   const [errors, setErrors] = useState<ErrorSate>({});
-
+  const { addProject } = useProjectContext();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
 
     if (!name.trim()) newErrors.name = 'Project name required';
     if (!description.trim()) newErrors.description = 'Description required';
+
+    addProject({
+      _id: Date.now().toString(),
+      name: name.trim(),
+      description: description.trim(),
+      language,
+      lastModified: new Date().toISOString(),
+      filesCount: 0,
+      status: 'Active',
+    });
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);

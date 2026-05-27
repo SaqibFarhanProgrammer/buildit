@@ -63,7 +63,10 @@ export default function ProfileSettings() {
         body,
       });
 
-      const json = (await res.json()) as { imageUrl?: string; message?: string };
+      const json = (await res.json()) as {
+        imageUrl?: string;
+        message?: string;
+      };
 
       if (!res.ok) {
         throw new Error(json.message || 'Upload failed');
@@ -162,60 +165,6 @@ export default function ProfileSettings() {
             <input
               name="username"
               value={formData.username}
-              onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl border border-[#0a0a0a]/8 bg-white text-sm font-['inter-rag'] text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#0004ff] transition-all"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="font-['inter-semi'] text-[10px] sm:text-xs text-[#0a0a0a]/60 uppercase tracking-wider block mb-2">
-            Email Address
-          </label>
-          <input
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-[#0a0a0a]/8 bg-white text-sm font-['inter-rag'] text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#0004ff] transition-all"
-          />
-        </div>
-
-        <div>
-          <label className="font-['inter-semi'] text-[10px] sm:text-xs text-[#0a0a0a]/60 uppercase tracking-wider block mb-2">
-            Bio
-          </label>
-          <textarea
-            name="bio"
-            rows={4}
-            value={formData.bio}
-            onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-[#0a0a0a]/8 bg-white text-sm font-['inter-rag'] text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#0004ff] transition-all resize-none"
-          />
-          <p className="font-['inter-light'] text-[10px] text-[#0a0a0a]/30 mt-1.5 text-right">
-            {formData.bio.length}/160
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="font-['inter-semi'] text-[10px] sm:text-xs text-[#0a0a0a]/60 uppercase tracking-wider block mb-2">
-              Location
-            </label>
-            <input
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl border border-[#0a0a0a]/8 bg-white text-sm font-['inter-rag'] text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#0004ff] transition-all"
-            />
-          </div>
-          <div>
-            <label className="font-['inter-semi'] text-[10px] sm:text-xs text-[#0a0a0a]/60 uppercase tracking-wider block mb-2">
-              Website
-            </label>
-            <input
-              name="website"
-              value={formData.website}
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-xl border border-[#0a0a0a]/8 bg-white text-sm font-['inter-rag'] text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#0004ff] transition-all"
             />

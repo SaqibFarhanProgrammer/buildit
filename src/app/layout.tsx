@@ -1,3 +1,4 @@
+import { ProjectProvider } from '@/context/Project.context';
 import './globals.css';
 
 export default async function RootLayout({
@@ -8,7 +9,10 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`h-full antialiased`} cz-shortcut-listen="true">
       <body className="min-h-full flex flex-col" cz-shortcut-listen="true">
-        <>{children}</>
+        <ProjectProvider>
+
+        {children}
+        </ProjectProvider>
       </body>
     </html>
   );
