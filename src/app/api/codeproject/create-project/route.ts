@@ -1,2 +1,2 @@
-// Note: we're working on creating project code
+// Note: we're working on creating project code edittor
  
