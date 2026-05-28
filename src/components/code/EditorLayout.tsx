@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CodeEditor from './CodeEditor';
 import EditorToolbar from './EditorToolbar';
 import Terminal from './Terminal';
 import EditorProvider, { useEditor } from '@/context/EditorProvider.context';
+import Timer from '../global/Timer';
 
 function EditorContent() {
   const { terminalOpen, setTerminalOpen } = useEditor();
@@ -24,8 +25,8 @@ function EditorContent() {
     <div className="h-screen flex flex-col bg-[#0A0A0A]">
       {/* Top Toolbar */}
       <EditorToolbar />
-
       {/* Main Content */}
+      <Timer />
       <div className="flex-1 flex overflow-hidden">
         <div className="flex-1 flex flex-col min-w-0">
           <CodeEditor />
