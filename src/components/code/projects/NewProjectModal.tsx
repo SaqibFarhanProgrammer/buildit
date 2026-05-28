@@ -1,6 +1,7 @@
 'use client';
 
 import { useProjectContext } from '@/context/Project.context';
+import axios from 'axios';
 import { useState } from 'react';
 
 interface NewProjectModalProps {
@@ -34,7 +35,7 @@ export default function NewProjectModal({
   const [description, setDescription] = useState('');
   const [errors, setErrors] = useState<ErrorSate>({});
   const { addProject } = useProjectContext();
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
 
@@ -51,6 +52,14 @@ export default function NewProjectModal({
       status: 'Active',
     });
 
+    const res = await  axios.post("/api/codeproject/create-project", {
+      name: name.trim(),
+      description: description.trim(),
+      language,
+      CreatedUserid: '12345',
+    })
+    console.log(res);
+    
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
