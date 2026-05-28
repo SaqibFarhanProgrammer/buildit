@@ -33,6 +33,7 @@ export async function CreateProject(request: NextRequest) {
       language: language,
       CreatedUserid: decoded?.userId,
       content: '',
+      state: 'active',
     });
 
     // For this example, we'll just return a success message

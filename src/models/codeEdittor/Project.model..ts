@@ -5,6 +5,7 @@ export interface IProject extends Document {
   language: string;
   description?: string;
   content?: string;
+  state: 'active' | 'Finished';
   CreatedUserid?: string;
   createdAt: Date;
 }
@@ -16,6 +17,7 @@ const ProjectSchema: Schema<IProject> = new Schema(
     description: { type: String, default: '' },
     content: { type: String, default: '' },
     CreatedUserid: { type: String, default: '' },
+    state: { type: String, enum: ['active', 'Finished'], default: 'active' },
     createdAt: { type: Date, default: Date.now },
   },
   {
@@ -23,4 +25,5 @@ const ProjectSchema: Schema<IProject> = new Schema(
   }
 );
 
-export const Project: Model<IProject> = mongoose.models.Project || model<IProject>('Project', ProjectSchema);
+export const Project: Model<IProject> =
+  mongoose.models.Project || model<IProject>('Project', ProjectSchema);
