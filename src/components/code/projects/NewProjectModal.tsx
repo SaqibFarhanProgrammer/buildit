@@ -52,14 +52,14 @@ export default function NewProjectModal({
       status: 'Active',
     });
 
-    const res = await  axios.post("/api/codeproject/create-project", {
+    const res = await axios.post('/api/codeproject/create-project', {
       name: name.trim(),
       description: description.trim(),
       language,
       CreatedUserid: '12345',
-    })
+    });
     console.log(res);
-    
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;

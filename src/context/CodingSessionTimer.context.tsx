@@ -37,7 +37,7 @@ export const CodingSessionTimerProvider: React.FC<{
     setTimer,
     pauseTimer,
     stopTimer,
-  }
+  };
 
   return (
     <CodingSessionTimerContext.Provider value={value}>

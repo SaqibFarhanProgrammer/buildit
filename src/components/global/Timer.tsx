@@ -1,11 +1,9 @@
-import { useCodingSessionTimer } from '@/context/CodingSessionTimer.context'
-import React from 'react'
+import { useCodingSessionTimer } from '@/context/CodingSessionTimer.context';
+import React from 'react';
 
 function Timer() {
-    const {timer} = useCodingSessionTimer()
-  return (
-    <div>Timer: {timer}</div>
-  )
+  const { timer } = useCodingSessionTimer();
+  return <div>Timer: {timer}</div>;
 }
 
-export default Timer
+export default Timer;
