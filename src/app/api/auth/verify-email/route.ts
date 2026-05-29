@@ -19,10 +19,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const decoded = VerifyToken(encodedEmail);
+    console.log(encodedEmail);
+    
+    const value = VerifyToken(encodedEmail);
 
     // Validate decoded token
-    if (!decoded || !decoded.email) {
+    console.log(value);
+    
+    if (!value || !value.email) {
       throw new AppError('Invalid or expired email token', 400);
     }
 
