@@ -20,12 +20,12 @@ export async function POST(request: Request) {
     }
 
     console.log(encodedEmail);
-    
+
     const value = VerifyToken(encodedEmail);
 
     // Validate decoded token
     console.log(value);
-    
+
     if (!value || !value.email) {
       throw new AppError('Invalid or expired email token', 400);
     }
