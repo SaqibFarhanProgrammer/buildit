@@ -1,5 +1,4 @@
 import EditorLayout from '@/components/code/EditorLayout';
-import { CodingSessionTimerProvider } from '@/context/CodingSessionTimer.context';
 import { VerifyToken } from '@/utils/EncodeEmail';
 import { cookies } from 'next/headers';
 

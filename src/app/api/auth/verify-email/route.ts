@@ -1,36 +1,34 @@
 import { NextResponse } from 'next/server';
-import { VerifyToken } from '@/utils/EncodeEmail'; // Adjust this import path to match your utility folder
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { connectDB } from '@/core/db/DbConnection';
 import { VerifyEmailCode } from '@/services/auth/verifyEmailCode.service';
 import { AppError } from '@/lib/AppError';
 import { cookies } from 'next/headers';
-import jwt from 'jsonwebtoken';
+import { VerifyToken } from '@/utils/EncodeEmail';
 
 export async function POST(request: Request) {
   try {
     await connectDB();
+
     const body = await request.json();
     const { email: encodedEmail, code } = body;
 
     if (!encodedEmail) {
       return NextResponse.json(
-        { error: 'Email token is required in the request body' },
+        { error: 'Email token is required' },
         { status: 400 }
       );
     }
+    const decoded = VerifyToken(encodedEmail);
 
-    console.log(encodedEmail);
+    const email = decoded.email;
+    console.log(decoded);
 
-    const value = VerifyToken(encodedEmail);
-
-    // Validate decoded token
-    console.log(value);
-
-    if (!value || !value.email) {
-      throw new AppError('Invalid or expired email token', 400);
+    if (!email) {
+      throw new AppError('Token payload invalid', 400);
     }
 
-    const res = await VerifyEmailCode(decoded.email, code);
+    const res = await VerifyEmailCode(email, code);
 
     const cookieStore = await cookies();
 
@@ -53,15 +51,13 @@ export async function POST(request: Request) {
       maxAge: 60 * 60 * 24 * 7,
     });
 
-    //  project creation
-
     return NextResponse.json({
       success: true,
       message: 'verified success',
       status: 200,
     });
   } catch (error) {
-    console.error('REGISTER_USER_ERROR:', error);
+    console.error('VERIFY_EMAIL_ERROR:', error);
 
     let message = 'Server Error';
     let statusCode = 500;

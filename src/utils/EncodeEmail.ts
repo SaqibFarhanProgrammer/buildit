@@ -1,22 +1,11 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
+export function GenerateToken(email: string) {
+  console.log(process.env.JWT_SECRET);
 
-type TokenPayload = {
-  userId?: string;
-  email?: string;
-  role?: string;
-};
-
-export function GenerateToken(payload: TokenPayload) {
-  return jwt.sign(payload, process.env.JWT_SECRET!);
+  return jwt.sign({ email }, process.env.JWT_SECRET!, { expiresIn: '1h' });
 }
 
 export function VerifyToken(token: string) {
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload &
-      TokenPayload;
-
-    return decoded;
-  } catch {
-    return null;
-  }
+  console.log(process.env.JWT_SECRET);
+  return jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload;
 }

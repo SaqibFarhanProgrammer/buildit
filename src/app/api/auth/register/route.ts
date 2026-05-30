@@ -5,18 +5,17 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const ip =
-      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-      'unknown';
-    console.log(ip);
-
     await connectDB();
 
     const body = await request.json();
     const res = await RegisterUser(body);
+    if (!res) {
+      throw new AppError('Failed to register user', 400);
+    }
+    const encodedEmail = (res as any).encodedEmail ?? (res as any).email;
 
     return NextResponse.json(
-      { message: 'User Registered Successfully', res },
+      { message: 'User Registered Successfully', res, encodedEmail },
       { status: 201 }
     );
   } catch (error: unknown) {
