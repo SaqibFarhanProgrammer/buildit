@@ -1,39 +1,27 @@
 import ProjectList from '@/components/code/projects/ProjectList';
+import { GetProjects } from '@/services/codeProject/create-project.service';
 import { ProjectType } from '@/types';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export default async function CodePage() {
-  const projects: ProjectType[] = [
-    {
-      _id: 'proj-1',
-      name: 'BuildIt Dashboard',
-      description:
-        'A dashboard for tracking project progress and team activity.',
-      language: 'TypeScript',
-      lastModified: '2026-05-28',
-      filesCount: 24,
-      status: 'Active',
-    },
-    {
-      _id: 'proj-2',
-      name: 'API Gateway',
-      description:
-        'A lightweight gateway service for routing and authenticating API requests.',
-      language: 'JavaScript',
-      lastModified: '2026-05-14',
-      filesCount: 16,
-      status: 'Finished',
-    },
-    {
-      _id: 'proj-3',
-      name: 'Component Library',
-      description:
-        'Reusable UI components and design tokens for the main application.',
-      language: 'TypeScript',
-      lastModified: '2026-05-30',
-      filesCount: 32,
-      status: 'Active',
-    },
-  ];
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value;
+
+  if (!token) {
+    redirect('/auth/login');
+  }
+
+  let projects: ProjectType[] = [];
+
+  try {
+    const response = await GetProjects(token);
+    projects = response.data as unknown as ProjectType[];
+  } catch (error) {
+    console.error('Failed to load projects:', error);
+    redirect('/auth/login');
+  }
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white">
       <ProjectList projectsData={projects} />

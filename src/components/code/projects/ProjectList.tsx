@@ -48,7 +48,6 @@ export default function ProjectList({ projectsData }: PropType) {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
-      {/* Header Section */}
       <div className="mb-10 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-8 h-[1px] bg-white/20" />
@@ -65,9 +64,7 @@ export default function ProjectList({ projectsData }: PropType) {
         </p>
       </div>
 
-      {/* Controls Bar */}
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-8">
-        {/* Search */}
         <div className="relative w-full lg:w-80">
           <FiSearch
             className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30"
@@ -82,7 +79,6 @@ export default function ProjectList({ projectsData }: PropType) {
           />
         </div>
 
-        {/* Filter + New */}
         <div className="flex items-center gap-3 w-full lg:w-auto">
           <div className="flex items-center gap-1.5 bg-white/[0.03] border border-white/[0.08] rounded-xl p-1">
             {(['All', 'Active', 'Finished'] as const).map((f) => (
@@ -113,7 +109,6 @@ export default function ProjectList({ projectsData }: PropType) {
         </div>
       </div>
 
-      {/* Stats Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
           <div className="flex items-center justify-between mb-3">
@@ -161,7 +156,6 @@ export default function ProjectList({ projectsData }: PropType) {
         </div>
       </div>
 
-      {/* Projects Grid */}
       {filteredProjects.length === 0 ? (
         <EmptyState
           searchQuery={searchQuery}
@@ -175,7 +169,6 @@ export default function ProjectList({ projectsData }: PropType) {
         </div>
       )}
 
-      {/* Footer Info */}
       <div className="mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <p className="font-['inter-rag'] text-xs text-white/20">
           Showing {filteredProjects.length} of {ProjectData.length} projects
@@ -192,7 +185,6 @@ export default function ProjectList({ projectsData }: PropType) {
         </div>
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
         <NewProjectModal
           onCreate={handlecreate}
