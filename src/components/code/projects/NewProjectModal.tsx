@@ -1,15 +1,19 @@
 'use client';
 
-import { useProjectContext } from '@/context/Project.context';
 import axios from 'axios';
 import { useState } from 'react';
 
 interface NewProjectModalProps {
   onClose: () => void;
+
   onCreate: (project: {
     name: string;
     language: string;
     description: string;
+    content?: string;
+    state: 'active' | 'Finished';
+    CreatedUserid?: string;
+    createdAt: Date;
   }) => void;
 }
 
@@ -34,23 +38,13 @@ export default function NewProjectModal({
   const [language, setLanguage] = useState('TypeScript');
   const [description, setDescription] = useState('');
   const [errors, setErrors] = useState<ErrorSate>({});
-  const { addProject } = useProjectContext();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
 
     if (!name.trim()) newErrors.name = 'Project name required';
     if (!description.trim()) newErrors.description = 'Description required';
-
-    addProject({
-      _id: Date.now().toString(),
-      name: name.trim(),
-      description: description.trim(),
-      language,
-      lastModified: new Date().toISOString(),
-      filesCount: 0,
-      status: 'Active',
-    });
 
     const res = await axios.post('/api/codeproject/create-project', {
       name: name.trim(),
@@ -65,7 +59,14 @@ export default function NewProjectModal({
       return;
     }
 
-    onCreate({ name: name.trim(), language, description: description.trim() });
+    onCreate({
+      name: name.trim(),
+      language,
+      description: description.trim(),
+      state: 'active',
+      CreatedUserid: '12345',
+      createdAt: new Date(),
+    });
   };
 
   return (

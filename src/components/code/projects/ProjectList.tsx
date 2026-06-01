@@ -17,17 +17,16 @@ import { useProjectContext } from '@/context/Project.context';
 import Cookies from 'js-cookie';
 
 type Status = 'All' | 'Active' | 'Finished';
-
-export default function ProjectList() {
+type PropType = {
+  projectsData: ProjectType[];
+};
+export default function ProjectList({ projectsData }: PropType) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState<Status>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { projects } = useProjectContext();
-  const userToken = Cookies.get('token');
+  const [ProjectData, setProjectData] = useState<ProjectType[]>(projectsData);
 
-  console.log(userToken);
-
-  const filteredProjects = projects.filter((p: ProjectType) => {
+  const filteredProjects = ProjectData.filter((p: ProjectType) => {
     const matchesFilter = filter === 'All' || p.status === filter;
     const matchesSearch = p.name
       .toLowerCase()
@@ -36,14 +35,15 @@ export default function ProjectList() {
   });
 
   const activeCount = filteredProjects.filter(
-    (p: ProjectType) => p.status === 'Active'
+    (p: ProjectType) => p.state === 'active'
   ).length;
   const finishedCount = filteredProjects.filter(
     (p: ProjectType) => p.status === 'Finished'
   ).length;
 
-  function handlecreate() {
+  function handlecreate(project: ProjectType) {
     setIsModalOpen(false);
+    setProjectData((prev) => [project, ...prev]);
   }
 
   return (
@@ -91,12 +91,12 @@ export default function ProjectList() {
                 onClick={() => setFilter(f)}
                 className={`px-4 py-2 rounded-lg text-xs font-['inter-semi'] transition-all ${
                   filter === f
-                    ? 'bg-[#0004FF] text-white shadow-lg shadow-[#0004FF]/20'
+                    ? 'bg-[#0004FF] text-white '
                     : 'text-white/40 hover:text-white/70 hover:bg-white/[0.05]'
                 }`}
               >
                 {f === 'All' && (
-                  <span className="mr-1.5">{projects.length}</span>
+                  <span className="mr-1.5">{ProjectData.length}</span>
                 )}
                 {f}
               </button>
@@ -105,7 +105,7 @@ export default function ProjectList() {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="ml-auto lg:ml-0 bg-[#0004FF] text-white px-5 py-2.5 rounded-xl text-sm font-['inter-semi'] hover:bg-[#0004FF]/90 transition-all flex items-center gap-2 shadow-lg shadow-[#0004FF]/20"
+            className="ml-auto lg:ml-0 bg-[#0004FF] text-white px-5 py-2.5 rounded-xl text-sm font-['inter-semi'] hover:bg-[#0004FF]/90 transition-all flex items-center gap-2  "
           >
             <FiPlus size={16} />
             New Project
@@ -123,7 +123,7 @@ export default function ProjectList() {
             <FiFolder className="text-[#0004FF]" size={16} />
           </div>
           <p className="font-['inter-bold'] text-2xl text-white">
-            {projects.length}
+            {ProjectData.length}
           </p>
         </div>
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
@@ -156,7 +156,7 @@ export default function ProjectList() {
             <FiFileText className="text-[#0004FF]" size={16} />
           </div>
           <p className="font-['inter-bold'] text-2xl text-white">
-            {new Set(projects.map((p) => p.language)).size}
+            {new Set(ProjectData.map((p) => p.language)).size}
           </p>
         </div>
       </div>
@@ -178,7 +178,7 @@ export default function ProjectList() {
       {/* Footer Info */}
       <div className="mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <p className="font-['inter-rag'] text-xs text-white/20">
-          Showing {filteredProjects.length} of {projects.length} projects
+          Showing {filteredProjects.length} of {ProjectData.length} projects
         </p>
         <div className="flex items-center gap-6">
           <span className="flex items-center gap-2 text-xs text-white/30 font-['inter-rag']">

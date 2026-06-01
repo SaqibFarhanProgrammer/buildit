@@ -1,9 +1,10 @@
 export interface ProjectType {
-  _id: string;
+  _id?: string;
   name: string;
-  description: string;
   language: string;
-  lastModified: string;
-  filesCount: number;
-  status: 'Active' | 'Finished';
+  description?: string;
+  content?: string;
+  state: 'active' | 'Finished';
+  CreatedUserid?: string;
+  createdAt: Date;
 }
