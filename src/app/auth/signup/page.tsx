@@ -9,7 +9,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-
 const signupSchema = z
   .object({
     name: z.string().min(2, 'Min 2 chars'),
