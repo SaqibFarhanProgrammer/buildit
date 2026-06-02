@@ -50,7 +50,6 @@ export async function GET(req: NextRequest) {
 
     const githubUser = await githubUserRes.json();
 
-    // 3. Get emails
 
     const emailRes = await fetch('https://api.github.com/user/emails', {
       headers: {
@@ -68,7 +67,6 @@ export async function GET(req: NextRequest) {
       throw new AppError('GitHub email not found', 400);
     }
 
-    // 4. Find or create user
 
     let dbUser = await User.findOne({
       email: primaryEmail.email,
@@ -85,7 +83,6 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // 5. Create JWT
 
     const token = jwt.sign(
       {
@@ -96,9 +93,6 @@ export async function GET(req: NextRequest) {
         expiresIn: '7d',
       }
     );
-
-    // 6. Redirect response
-
     const response = NextResponse.redirect(
       new URL('/auth/complete-profile', req.url)
     );
