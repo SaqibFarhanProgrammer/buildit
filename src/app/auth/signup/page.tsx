@@ -21,7 +21,7 @@ const signupSchema = z
     message: "Passwords don't match",
     path: ['confirmPassword'],
   });
-
+  
 type SignupForm = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
