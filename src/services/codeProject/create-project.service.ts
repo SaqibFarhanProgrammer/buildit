@@ -53,20 +53,19 @@ export async function CreateProject(request: NextRequest) {
   }
 }
 
-export async function GetProjects(input: NextRequest | string): Promise<ProjectsResponse> {
+export async function GetProjects(
+  input: NextRequest | string
+): Promise<ProjectsResponse> {
   try {
     const token =
-      typeof input === 'string'
-        ? input
-        : input.cookies.get('token')?.value;
+      typeof input === 'string' ? input : input.cookies.get('token')?.value;
 
     if (!token) {
       throw new AppError('Unauthorized', 401);
     }
 
     const decoded = VerifyToken(token);
-    const userId =
-      typeof decoded?.userId === 'string' ? decoded.userId : null;
+    const userId = typeof decoded?.userId === 'string' ? decoded.userId : null;
 
     if (!userId) {
       throw new AppError('Unauthorized', 401);
@@ -89,7 +88,7 @@ export async function GetProjects(input: NextRequest | string): Promise<Projects
       _id:
         typeof project._id === 'string'
           ? project._id
-          : project._id?.toString?.() ?? '',
+          : (project._id?.toString?.() ?? ''),
       createdAt:
         project.createdAt instanceof Date
           ? project.createdAt.toISOString()
