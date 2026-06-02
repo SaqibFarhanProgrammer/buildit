@@ -21,7 +21,7 @@ const signupSchema = z
     message: "Passwords don't match",
     path: ['confirmPassword'],
   });
-  
+
 type SignupForm = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
@@ -47,14 +47,12 @@ export default function SignupPage() {
       console.log('chala 4');
     } catch (error) {
       let message = 'Something went wrong';
-
       if (axios.isAxiosError(error)) {
         message =
           error.response?.data?.error ||
           error.response?.data?.message ||
           error.message;
       }
-
       setUiError(message);
     }
   };
