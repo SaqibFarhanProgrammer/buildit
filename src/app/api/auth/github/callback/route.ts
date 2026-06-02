@@ -97,8 +97,6 @@ export async function GET(req: NextRequest) {
       new URL('/auth/complete-profile', req.url)
     );
 
-    // 7. Set cookie
-
     response.cookies.set('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
