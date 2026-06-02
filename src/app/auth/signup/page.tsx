@@ -132,6 +132,7 @@ export default function SignupPage() {
                 {errors.password.message}
               </p>
             )}
+            
           </div>
 
           <div>
