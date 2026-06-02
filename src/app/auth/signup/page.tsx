@@ -56,14 +56,13 @@ export default function SignupPage() {
       setUiError(message);
     }
   };
-
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-4">
             <div className="w-7 h-7 bg-black rounded-md flex items-center justify-center">
-              <span className="text-white font-bold text-xs">B</span>
+         <span className="text-white font-bold text-xs">B</span>
             </div>
             <span className="text-[#0a0a0a] font-bold text-lg">BuildIt</span>
           </Link>
