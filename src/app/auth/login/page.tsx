@@ -3,9 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
-
 import { useForm } from 'react-hook-form';
-
 import { SiGithub } from 'react-icons/si';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
