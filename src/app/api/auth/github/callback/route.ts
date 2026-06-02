@@ -50,7 +50,6 @@ export async function GET(req: NextRequest) {
 
     const githubUser = await githubUserRes.json();
 
-
     const emailRes = await fetch('https://api.github.com/user/emails', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -67,7 +66,6 @@ export async function GET(req: NextRequest) {
       throw new AppError('GitHub email not found', 400);
     }
 
-
     let dbUser = await User.findOne({
       email: primaryEmail.email,
     });
@@ -82,7 +80,6 @@ export async function GET(req: NextRequest) {
         password: null,
       });
     }
-
 
     const token = jwt.sign(
       {
