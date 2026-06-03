@@ -48,7 +48,7 @@ export default function ProjectList({ projectsData }: PropType) {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
-      <div className="mb-10 bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+      <div className="mb-10 bg-white/2 border border-white/6 rounded-2xl p-5">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-8 h-[1px] bg-white/20" />
           <span className="font-['inter-semi'] text-xs tracking-[0.2em] text-white/40 uppercase">
@@ -75,12 +75,12 @@ export default function ProjectList({ projectsData }: PropType) {
             placeholder="Search projects..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl pl-10 pr-4 py-2.5 text-sm font-['inter-rag'] text-white placeholder:text-white/20 focus:outline-none focus:border-[#0004FF]/50 focus:bg-white/[0.05] transition-all"
+            className="w-full bg-white/3 border border-white/8 rounded-xl pl-10 pr-4 py-2.5 text-sm font-['inter-rag'] text-white placeholder:text-white/20 focus:outline-none focus:border-[#0004FF]/50 focus:bg-white/5 transition-all"
           />
         </div>
 
         <div className="flex items-center gap-3 w-full lg:w-auto">
-          <div className="flex items-center gap-1.5 bg-white/[0.03] border border-white/[0.08] rounded-xl p-1">
+          <div className="flex items-center gap-1.5 bg-white/3 border border-white/8 rounded-xl p-1">
             {(['All', 'Active', 'Finished'] as const).map((f) => (
               <button
                 key={f}
@@ -88,7 +88,7 @@ export default function ProjectList({ projectsData }: PropType) {
                 className={`px-4 py-2 rounded-lg text-xs font-['inter-semi'] transition-all ${
                   filter === f
                     ? 'bg-[#0004FF] text-white '
-                    : 'text-white/40 hover:text-white/70 hover:bg-white/[0.05]'
+                    : 'text-white/40 hover:text-white/70 hover:bg-white/5'
                 }`}
               >
                 {f === 'All' && (
@@ -110,7 +110,7 @@ export default function ProjectList({ projectsData }: PropType) {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+        <div className="bg-white/2 border border-white/6 rounded-2xl p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="font-['inter-semi'] text-[10px] tracking-wider text-white/30 uppercase">
               Total
@@ -121,7 +121,7 @@ export default function ProjectList({ projectsData }: PropType) {
             {ProjectData.length}
           </p>
         </div>
-        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+        <div className="bg-white/2 border border-white/6 rounded-2xl p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="font-['inter-semi'] text-[10px] tracking-wider text-white/30 uppercase">
               Active
@@ -132,7 +132,7 @@ export default function ProjectList({ projectsData }: PropType) {
             {activeCount}
           </p>
         </div>
-        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+        <div className="bg-white/2 border border-white/6 rounded-2xl p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="font-['inter-semi'] text-[10px] tracking-wider text-white/30 uppercase">
               Finished
@@ -143,7 +143,7 @@ export default function ProjectList({ projectsData }: PropType) {
             {finishedCount}
           </p>
         </div>
-        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+        <div className="bg-white/2 border border-white/6 rounded-2xl p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="font-['inter-semi'] text-[10px] tracking-wider text-white/30 uppercase">
               Languages
@@ -169,7 +169,7 @@ export default function ProjectList({ projectsData }: PropType) {
         </div>
       )}
 
-      <div className="mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="mt-12 pt-6 border-t border-white/6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <p className="font-['inter-rag'] text-xs text-white/20">
           Showing {filteredProjects.length} of {ProjectData.length} projects
         </p>

@@ -90,7 +90,7 @@ export default function Pricing() {
               className={`group relative p-7 md:p-8 rounded-2xl border transition-all duration-300 ${
                 plan.popular
                   ? 'border-[#0a0a0a]/10 bg-[#0a0a0a] text-white'
-                  : 'border-[#0a0a0a]/5 bg-white hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03]'
+                  : 'border-[#0a0a0a]/5 bg-white hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/3'
               }`}
             >
               {/* Popular Badge */}

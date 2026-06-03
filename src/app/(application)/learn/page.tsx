@@ -23,7 +23,7 @@ export default function LearningPage() {
           </div>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            <div className="rounded-[28px] border border-black/[0.06] bg-[#f9fafb] px-6 py-5">
+            <div className="rounded-[28px] border border-black/6 bg-[#f9fafb] px-6 py-5">
               <p className="text-sm font-['inter-semi'] uppercase tracking-[0.18em] text-[#0004ff]">
                 Ready in minutes
               </p>
@@ -32,7 +32,7 @@ export default function LearningPage() {
                 with clear overview cards.
               </p>
             </div>
-            <div className="rounded-[28px] border border-black/[0.06] bg-[#f9fafb] px-6 py-5">
+            <div className="rounded-[28px] border border-black/6 bg-[#f9fafb] px-6 py-5">
               <p className="text-sm font-['inter-semi'] uppercase tracking-[0.18em] text-[#0004ff]">
                 Clean layout
               </p>
@@ -41,7 +41,7 @@ export default function LearningPage() {
                 videos, and code examples.
               </p>
             </div>
-            <div className="rounded-[28px] border border-black/[0.06] bg-[#f9fafb] px-6 py-5">
+            <div className="rounded-[28px] border border-black/6 bg-[#f9fafb] px-6 py-5">
               <p className="text-sm font-['inter-semi'] uppercase tracking-[0.18em] text-[#0004ff]">
                 Blue accent
               </p>
@@ -50,7 +50,7 @@ export default function LearningPage() {
                 professional look.
               </p>
             </div>
-            <div className="rounded-[28px] border border-black/[0.06] bg-[#f9fafb] px-6 py-5">
+            <div className="rounded-[28px] border border-black/6 bg-[#f9fafb] px-6 py-5">
               <p className="text-sm font-['inter-semi'] uppercase tracking-[0.18em] text-[#0004ff]">
                 Focused learning
               </p>

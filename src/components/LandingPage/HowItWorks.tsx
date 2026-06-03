@@ -120,7 +120,7 @@ export default function HowItWorks() {
               } ${index < 2 ? 'md:border-b' : ''} border-b last:border-b-0 md:last:border-b-0`}
             >
               <div className="flex items-start justify-between mb-6">
-                <span className="text-5xl md:text-6xl font-[inter] text-[#0a0a0a]/[0.06] leading-none -tracking-[3px] group-hover:text-black/10 transition-colors duration-300">
+                <span className="text-5xl md:text-6xl font-[inter] text-[#0a0a0a]/6 leading-none -tracking-[3px] group-hover:text-black/10 transition-colors duration-300">
                   {step.number}
                 </span>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/3 text-[#0a0a0a]/60 group-hover:bg-black group-hover:text-white transition-colors duration-300">

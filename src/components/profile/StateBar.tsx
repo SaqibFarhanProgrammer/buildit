@@ -7,7 +7,7 @@ export default function StatsBar({ stats }: { stats: StatItem[] }) {
         {stats.map((stat, idx) => (
           <div
             key={idx}
-            className="group p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-[#0004FF] border border-[#ffff]/5 hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03] transition-all duration-300"
+            className="group p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-[#0004FF] border border-[#ffff]/5 hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/3 transition-all duration-300"
           >
             <div className="flex items-center justify-between mb-3">
               <span className="font-['inter-light'] text-[10px] text-[#fff]/90 uppercase tracking-wider">

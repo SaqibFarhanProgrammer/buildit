@@ -52,7 +52,7 @@ export default function MessageBubble({ message }: { message: ChatMessage }) {
         className={`max-w-[85%] sm:max-w-[75%] p-4 sm:p-5 rounded-2xl ${
           isUser
             ? 'bg-[#0a0a0a] text-white rounded-tr-sm'
-            : 'bg-[#0004ff]/[0.04] text-[#0a0a0a] border border-[#0004ff]/10 rounded-tl-sm'
+            : 'bg-[#0004ff]/4 text-[#0a0a0a] border border-[#0004ff]/10 rounded-tl-sm'
         }`}
       >
         <div

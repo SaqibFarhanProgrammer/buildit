@@ -160,7 +160,7 @@ export default function Features() {
           {features.map((feature) => (
             <div
               key={feature.id}
-              className="group relative p-6 md:p-7 rounded-2xl border border-[#0a0a0a]/5 bg-white hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03] transition-all duration-300"
+              className="group relative p-6 md:p-7 rounded-2xl border border-[#0a0a0a]/5 bg-white hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/3 transition-all duration-300"
             >
               <div className="flex items-center justify-between mb-5">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0a0a0a]/3 text-[#0a0a0a]/60 group-hover:bg-black group-hover:text-white transition-colors duration-300">

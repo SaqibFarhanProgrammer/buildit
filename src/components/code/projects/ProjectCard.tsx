@@ -20,7 +20,7 @@ const languageColors: Record<string, string> = {
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link href={`/code/${project.name}?id=${project._id}`} className="block">
-      <div className="group relative p-5 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[#0004ff]/30 hover:bg-white/[0.05] transition-all duration-300">
+      <div className="group relative p-5 rounded-xl bg-white/3 border border-white/5 hover:border-[#0004ff]/30 hover:bg-white/5 transition-all duration-300">
         <div className="absolute top-4 right-4">
           <span
             className={`w-2 h-2 rounded-full ${
