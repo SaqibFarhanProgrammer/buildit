@@ -20,6 +20,7 @@ type Status = 'All' | 'Active' | 'Finished';
 type PropType = {
   projectsData: ProjectType[];
 };
+
 export default function ProjectList({ projectsData }: PropType) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState<Status>('All');
@@ -27,7 +28,7 @@ export default function ProjectList({ projectsData }: PropType) {
   const [ProjectData, setProjectData] = useState<ProjectType[]>(projectsData);
 
   const filteredProjects = ProjectData.filter((p: ProjectType) => {
-    const matchesFilter = filter === 'All' || p.status === filter;
+    const matchesFilter = filter === 'All' || p.state === filter;
     const matchesSearch = p.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
@@ -38,7 +39,7 @@ export default function ProjectList({ projectsData }: PropType) {
     (p: ProjectType) => p.state === 'active'
   ).length;
   const finishedCount = filteredProjects.filter(
-    (p: ProjectType) => p.status === 'Finished'
+    (p: ProjectType) => p.state === 'Finished'
   ).length;
 
   function handlecreate(project: ProjectType) {
@@ -164,7 +165,14 @@ export default function ProjectList({ projectsData }: PropType) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {filteredProjects.map((project) => (
-            <ProjectCard key={project._id} project={project} />
+            <ProjectCard
+              key={
+                project._id
+                  ? project._id.toString()
+                  : Math.floor(Date.now() * Math.random())
+              }
+              project={project}
+            />
           ))}
         </div>
       )}

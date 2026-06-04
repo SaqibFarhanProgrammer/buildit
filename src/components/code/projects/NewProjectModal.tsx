@@ -1,20 +1,13 @@
 'use client';
 
+import { ProjectType } from '@/types/code-edittor/projects/projects.types';
 import axios from 'axios';
 import { useState } from 'react';
 
 interface NewProjectModalProps {
   onClose: () => void;
 
-  onCreate: (project: {
-    name: string;
-    language: string;
-    description: string;
-    content?: string;
-    state: 'active' | 'Finished';
-    CreatedUserid?: string;
-    createdAt: Date;
-  }) => void;
+  onCreate: (project: ProjectType) => void;
 }
 
 type ErrorSate = Record<string, string>;

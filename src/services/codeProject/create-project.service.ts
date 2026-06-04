@@ -5,19 +5,11 @@ import { ProjectType } from '@/types';
 import { VerifyToken } from '@/utils/EncodeEmail';
 import { NextRequest } from 'next/server';
 
-type ProjectsResponse = {
-  success: true;
-  source: 'database' | 'cache';
-  data: ProjectType[];
-};
-
-const cache = new Map<string, ProjectType[]>();
-
 export async function CreateProject(request: NextRequest) {
   try {
     await connectDB();
     const body = await request.json();
-    const { name, description, language } = body as IProject;
+    const { name, description, language } = body as ProjectType;
 
     if (!name || !description || !language) {
       throw new AppError('Missing required project data', 400);
@@ -39,7 +31,7 @@ export async function CreateProject(request: NextRequest) {
       description,
       language,
       CreatedUserid: decoded.userId,
-      content: '',
+      content: 'console.log("Hello, World!");',
       state: 'active',
     });
 
@@ -52,18 +44,10 @@ export async function CreateProject(request: NextRequest) {
     throw new AppError('Failed to create project', 500);
   }
 }
+const cache = new Map();
 
-export async function GetProjects(
-  input: NextRequest | string
-): Promise<ProjectsResponse> {
+export async function GetProjects(token: string) {
   try {
-    const token =
-      typeof input === 'string' ? input : input.cookies.get('token')?.value;
-
-    if (!token) {
-      throw new AppError('Unauthorized', 401);
-    }
-
     const decoded = VerifyToken(token);
     const userId = typeof decoded?.userId === 'string' ? decoded.userId : null;
 
@@ -73,6 +57,8 @@ export async function GetProjects(
 
     const cacheKey = `projects:${userId}`;
     if (cache.has(cacheKey)) {
+      console.log('cahche hit ');
+
       return {
         success: true,
         source: 'cache',
@@ -83,28 +69,36 @@ export async function GetProjects(
     await connectDB();
 
     const projects = await Project.find({ CreatedUserid: userId }).lean();
-    const plainProjects: ProjectType[] = projects.map((project) => ({
-      ...project,
-      _id:
-        typeof project._id === 'string'
-          ? project._id
-          : (project._id?.toString?.() ?? ''),
-      createdAt:
-        project.createdAt instanceof Date
-          ? project.createdAt.toISOString()
-          : String(project.createdAt),
-    }));
 
-    cache.set(cacheKey, plainProjects);
+    if (projects) {
+      cache.set(cacheKey, projects);
+    }
 
     return {
       success: true,
       source: 'database',
-      data: plainProjects,
+      data: projects,
     };
   } catch (error: unknown) {
     if (error instanceof AppError) throw error;
     console.error(error);
     throw new AppError('Failed to fetch projects', 500);
+  }
+}
+
+export async function GetProjectContent(id: string) {
+  try {
+    await connectDB();
+    const project = await Project.findById(id).select('content').lean();
+
+    if (!project) {
+      throw new AppError('Project not found', 404);
+    }
+
+    console.log(project);
+
+    return project.content;
+  } catch (error) {
+    throw new AppError('Failed to fetch project content', 500);
   }
 }

@@ -19,12 +19,15 @@ const languageColors: Record<string, string> = {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Link href={`/code/${project.name}?id=${project._id}`} className="block">
+    <Link
+      href={`/code/${project.name}?id=${project._id}`}
+      className="block"
+    >
       <div className="group relative p-5 rounded-xl bg-white/3 border border-white/5 hover:border-[#0004ff]/30 hover:bg-white/5 transition-all duration-300">
         <div className="absolute top-4 right-4">
           <span
             className={`w-2 h-2 rounded-full ${
-              project.status === 'Active' ? 'bg-green-500' : 'bg-white/20'
+              project.state === 'active' ? 'bg-green-500' : 'bg-white/20'
             }`}
           />
         </div>
@@ -62,7 +65,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
               />
             </svg>
-            {project.filesCount} files
           </span>
           <span className="flex items-center gap-1.5 text-[10px] text-white/20 font-['inter-rag']">
             <svg

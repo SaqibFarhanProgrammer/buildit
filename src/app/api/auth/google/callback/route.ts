@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import { User } from '@/models/User.model';
 import { connectDB } from '@/core/db/DbConnection';
 import { cookies } from 'next/headers';
-import { EncodeEmail } from '@/utils/EncodeEmail';
 import { AppError } from '@/lib/AppError';
 
 export async function GET(req: NextRequest) {
@@ -18,7 +17,6 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // 1. Exchange code for token (FETCH version)
 
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
@@ -41,7 +39,6 @@ export async function GET(req: NextRequest) {
       throw new AppError('Failed to get access token', 401);
     }
 
-    // 2. Get Google user (FETCH version)
 
     const userRes = await fetch(
       'https://www.googleapis.com/oauth2/v2/userinfo',
@@ -54,7 +51,6 @@ export async function GET(req: NextRequest) {
 
     const googleUser = await userRes.json();
 
-    // 3. Find or create user
 
     let dbUser = await User.findOne({ email: googleUser.email });
 
@@ -68,13 +64,11 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // 4. Create JWT
 
     const token = jwt.sign({ userId: dbUser._id }, process.env.JWT_SECRET!, {
       expiresIn: '7d',
     });
 
-    // 5. Redirect
 
     const response = NextResponse.redirect(
       new URL(`/auth/complete-profile`, req.url)
