@@ -33,7 +33,7 @@ export default function CodeEditor() {
     }
   };
 
-  const handleEditorDidMount: OnMount = (editor, monacoInstance) => {
+  const handleEditorDidMount: OnMount = (editor: any, monacoInstance: any) => {
     editorRef.current = editor;
 
     monacoInstance.editor.defineTheme('buildit-black', {
