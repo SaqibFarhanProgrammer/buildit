@@ -38,6 +38,7 @@ export default function ProjectList({ projectsData }: PropType) {
   const activeCount = filteredProjects.filter(
     (p: ProjectType) => p.state === 'active'
   ).length;
+  
   const finishedCount = filteredProjects.filter(
     (p: ProjectType) => p.state === 'Finished'
   ).length;

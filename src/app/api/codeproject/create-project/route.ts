@@ -6,10 +6,11 @@ import { NextRequest } from 'next/server';
 // Note: we're working on creating project code edittor
 export async function POST(request: NextRequest) {
   try {
-    await CreateProject(request);
+    const result = await CreateProject(request);
 
     return NextResponse.json({
       message: 'Project created successfully',
+      project: result.project,
     });
   } catch (error) {
     console.error('REGISTER_USER_ERROR:', error);

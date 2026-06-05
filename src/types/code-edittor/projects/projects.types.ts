@@ -6,5 +6,5 @@ export interface ProjectType {
   content?: string;
   state: 'active' | 'Finished';
   CreatedUserid?: string;
-  createdAt?: Date;
+  createdAt?: string | Date;
 }

@@ -1,12 +1,4 @@
-export interface EditorFile {
-  id: string;
-  name: string;
-  language?: string;
-  content?: string;
-  isFolder?: boolean;
-  children?: EditorFile[];
-  isOpen?: boolean;
-}
+import { ProjectType } from './code-edittor/projects/projects.types';
 
 export interface EditorContextType {
   terminalOpen: boolean;
@@ -15,6 +7,14 @@ export interface EditorContextType {
   setZoom: (zoom: number) => void;
   theme: string;
   setTheme: (theme: string) => void;
-  activeFile: EditorFile | null;
-  setActiveFile: (file: EditorFile | null) => void;
+  CodeValue: string;
+  setCodeValue: (code: string) => void;
+  language: string;
+  setLanguage: (language: string) => void;
+  output: string[];
+  setOutput: (output: string[]) => void;
+  isRunning: boolean;
+  setIsRunning: (running: boolean) => void;
+  ProjectDetiles: ProjectType | null;
+  setProjectDetiles: (project: ProjectType | null) => void;
 }

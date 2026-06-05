@@ -1,6 +1,5 @@
 'use client';
 
-import { useEditor } from '../../context/EditorProvider.context';
 import {
   RiAddLine,
   RiSubtractLine,
@@ -12,29 +11,64 @@ import {
   RiSunLine,
 } from 'react-icons/ri';
 import { FaLaptopCode } from 'react-icons/fa';
+import axios from 'axios';
+import { useEditor } from '@/context/EditorProvider.context';
+import { languagesMap } from '../../../data';
+
+const languageList = Object.entries(languagesMap).map(([key, value]: [string, any]) => ({
+  key,
+  name: value.name,
+}));
 
 export default function EditorToolbar() {
   const {
-    activeFile,
     zoom,
     setZoom,
     theme,
     setTheme,
     terminalOpen,
     setTerminalOpen,
+    CodeValue,
+    language,
+    setLanguage,
+    setOutput,
+    setIsRunning,
   } = useEditor();
 
   const handleZoomIn = () => setZoom(Math.min(zoom + 2, 24));
   const handleZoomOut = () => setZoom(Math.max(zoom - 2, 10));
-  const handleSave = () => {
-    // Save logic
-  };
+  const handleSave = () => {};
 
-  const handleRun = () => {
-    console.log('Running:', activeFile?.name);
-  };
-  const handleExplain = () => {
-    console.log('Explaining:', activeFile?.name);
+  const handleRun = async () => {
+    if (!CodeValue.trim()) {
+      setOutput(['No code to run.']);
+      setTerminalOpen(true);
+      return;
+    }
+
+    setTerminalOpen(true);
+    setIsRunning(true);
+    setOutput(['Running...']);
+
+    try {
+      const response = await axios.post('/api/codeproject/run', {
+        code: CodeValue,
+        language,
+      });
+
+      const output = response.data?.output ?? 'No output';
+      const lines = output
+        .toString()
+        .split(/\r?\n/)
+        .filter((line: string) => line.length > 0);
+
+      setOutput(lines.length ? lines : ['No output']);
+    } catch (error) {
+      console.error('Run error:', error);
+      setOutput(['Execution failed. Check console for details.']);
+    } finally {
+      setIsRunning(false);
+    }
   };
   const toggleTheme = () => {
     setTheme(theme === 'vs-dark' ? 'light' : 'vs-dark');
@@ -43,19 +77,29 @@ export default function EditorToolbar() {
   return (
     <div className="h-12 bg-[#0A0A0A] border-b border-white/10 flex items-center justify-between px-4">
       <div className="flex items-center gap-3">
-        <h1>{activeFile?.language}</h1>
+        {/* <h1>{activeFile?.language}</h1> */}
       </div>
 
       <div className="flex items-center gap-1">
+        <select
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+          className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-white font-['inter-semi'] focus:outline-none focus:border-[#0004ff] transition-all cursor-pointer"
+        >
+          {languageList.map((lang) => (
+            <option key={lang.key} value={lang.key}>
+              {lang.name.split(' (')[0]}
+            </option>
+          ))}
+        </select>
+
         <button
-          onClick={handleExplain}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0004ff]/10 text-[#0004ff] hover:bg-[#0004ff]/20 transition-all"
         >
           <RiSparklingLine className="w-3.5 h-3.5" />
           <span className="font-['inter-semi'] text-[10px]">Explain</span>
         </button>
         <button
-          onClick={handleExplain}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0004ff]/10 text-[#0004ff] hover:bg-[#0004ff]/20 transition-all"
         >
           <FaLaptopCode className="w-3.5 h-3.5" />

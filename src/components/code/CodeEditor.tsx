@@ -2,34 +2,42 @@
 
 import Editor, { OnMount } from '@monaco-editor/react';
 import { useEditor } from '@/context/EditorProvider.context';
-import { useEffect, useRef, useState } from 'react';
-import type * as Monaco from 'monaco-types';
-import { coloursManaco, rulesManaco } from '@/utils/Manaco';
+import { useEffect, useRef } from 'react';
+import * as Monaco from 'monaco-types';
+import { coloursManaco } from '@/utils/Manaco';
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 
 export default function CodeEditor() {
   const searchParams = useSearchParams();
+
   async function GetProjectcontent() {
     const id = searchParams.get('id');
     try {
       const res = await axios.get(
         `/api/codeproject/get-project-content?id=${id}`
       );
-      return res.data.content;
+      return res.data;
     } catch (error) {
       console.error(error);
     }
   }
 
-  const { zoom, theme } = useEditor();
-  const [ValueEdittor, setValueEdittor] = useState<string>('');
+  const {
+    zoom,
+    theme,
+    CodeValue,
+    setCodeValue,
+    language,
+    setLanguage,
+    setProjectDetiles,
+  } = useEditor();
 
   const editorRef = useRef<Monaco.editor.IStandaloneCodeEditor | null>(null);
 
   const handleEditorChange = (value: string | undefined): void => {
     if (value) {
-      setValueEdittor(value);
+      setCodeValue(value);
     }
   };
 
@@ -51,19 +59,26 @@ export default function CodeEditor() {
     });
   };
   useEffect(() => {
-    GetProjectcontent().then((content) => {
-      setValueEdittor(content);
+    GetProjectcontent().then((project) => {
+      if (!project) return;
+      if (typeof project.content === 'string') {
+        setCodeValue(project.content);
+      }
+      if (typeof project.language === 'string') {
+        setLanguage(project.language);
+      }
+      setProjectDetiles(project);
     });
-  }, []);
+  }, [setCodeValue, setLanguage, setProjectDetiles]);
 
   return (
     <div className="flex-1 flex flex-col bg-[#0A0A0A] overflow-hidden">
       <div className="flex-1 overflow-hidden">
         <Editor
           height="100%"
-          defaultLanguage="javascript"
-          language="javascript"
-          value={ValueEdittor}
+          defaultLanguage={language.toLowerCase()}
+          language={language.toLowerCase()}
+          value={CodeValue}
           theme={theme === 'vs-dark' ? 'buildit-black' : 'light'}
           onChange={handleEditorChange}
           onMount={handleEditorDidMount}

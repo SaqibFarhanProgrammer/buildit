@@ -1,23 +1,16 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { useEditor } from '../../context/EditorProvider.context';
-import { RiTerminalLine, RiCloseLine, RiPlayFill } from 'react-icons/ri';
+import { RiTerminalLine, RiCloseLine } from 'react-icons/ri';
 
 export default function Terminal() {
-  const { setTerminalOpen } = useEditor();
-  const [output, setOutput] = useState<string[]>([]);
-  const [hasRun, setHasRun] = useState(false);
+  const { setTerminalOpen, output, isRunning } = useEditor();
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [output]);
-
-  const handleRun = () => {
-    setHasRun(true);
-    setOutput([]);
-  };
 
   return (
     <div className="h-48 bg-[#0A0A0A] border-t border-white/10 flex flex-col">
@@ -41,7 +34,13 @@ export default function Terminal() {
 
       {/* Terminal Output */}
       <div className="flex-1 overflow-y-auto p-4 font-mono">
-        {!hasRun ? (
+        {isRunning ? (
+          <div className="h-full flex items-center justify-center">
+            <span className="font-['inter-rag'] text-xs text-white/50">
+              Running...
+            </span>
+          </div>
+        ) : output.length === 0 ? (
           <div className="h-full flex items-center justify-center">
             <span className="font-['inter-rag'] text-xs text-white/50">
               Click on Run button to see the output

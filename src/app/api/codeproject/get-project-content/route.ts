@@ -1,7 +1,6 @@
 import { AppError } from '@/lib/AppError';
 import { GetProjectContent } from '@/services/codeProject/create-project.service';
 import { NextRequest, NextResponse } from 'next/server';
-import id from 'zod/v4/locales/id.js';
 
 type CacheData = {
   content: string;
@@ -30,9 +29,8 @@ export async function GET(request: NextRequest) {
 
       const cachedData = cache.get(cacheKey);
 
-      
       return NextResponse.json({
-        content: cachedData?.content,
+        content: cachedData?.content ?? '',
         message: 'Project content fetched successfully',
         source: 'cache',
       });
@@ -40,17 +38,17 @@ export async function GET(request: NextRequest) {
 
     console.log('Fetching from database');
 
-    const content = await GetProjectContent(id);
+    const project = await GetProjectContent(id);
 
-    if (content) {
+    if (project) {
       cache.set(cacheKey, {
-        content,
+        content: project.content ?? '',
         source: 'database',
       });
     }
 
     return NextResponse.json({
-      content,
+      ...project,
       message: 'Project content fetched successfully',
       source: 'database',
     });

@@ -1,26 +1,44 @@
-import { connectDB } from '@/core/db/DbConnection';
+import { AppError } from '@/lib/AppError';
 import { GetProjects } from '@/services/codeProject/create-project.service';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
-    await connectDB();
+    const token = request.cookies.get('token')?.value;
 
+    if (!token) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized',
+        },
+        { status: 401 }
+      );
+    }
 
-
-    const response = await GetProjects( await request);
+    const response = await GetProjects(token);
 
     return NextResponse.json(response);
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
+    console.error('GET_PROJECTS_ERROR:', error);
+
+    let message = 'Internal Server Error';
+    let statusCode = 500;
+
+    if (error instanceof AppError) {
+      message = error.message;
+      statusCode = error.statusCode;
+    } else if (error instanceof Error) {
+      message = error.message;
+    }
 
     return NextResponse.json(
       {
         success: false,
-        message: 'Internal Server Error',
+        message,
       },
       {
-        status: 500,
+        status: statusCode,
       }
     );
   }

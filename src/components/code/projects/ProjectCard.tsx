@@ -2,25 +2,35 @@
 
 import { ProjectType } from '@/types/code-edittor/projects/projects.types';
 import Link from 'next/link';
+import { languagesMap } from '../../../../data';
 
 interface ProjectCardProps {
   project: ProjectType;
 }
 
 const languageColors: Record<string, string> = {
-  TypeScript: 'text-[#79C0FF] bg-[#79C0FF]/10',
-  JavaScript: 'text-[#F1E05A] bg-[#F1E05A]/10',
-  Python: 'text-[#7EE787] bg-[#7EE787]/10',
-  Java: 'text-[#FFA657] bg-[#FFA657]/10',
-  'C++': 'text-[#FF7B72] bg-[#FF7B72]/10',
-  Go: 'text-[#79C0FF] bg-[#79C0FF]/10',
-  Rust: 'text-[#FFA657] bg-[#FFA657]/10',
+  javascript: 'text-[#F1E05A] bg-[#F1E05A]/10',
+  typescript: 'text-[#2B7A0B] bg-[#2B7A0B]/10',
+  python: 'text-[#3776AB] bg-[#3776AB]/10',
+  java: 'text-[#FF7800] bg-[#FF7800]/10',
+  cpp: 'text-[#00599C] bg-[#00599C]/10',
+  c: 'text-[#A8B9CC] bg-[#A8B9CC]/10',
+  go: 'text-[#00ADD8] bg-[#00ADD8]/10',
+  rust: 'text-[#CE422B] bg-[#CE422B]/10',
+  kotlin: 'text-[#7F52FF] bg-[#7F52FF]/10',
+  php: 'text-[#777BB4] bg-[#777BB4]/10',
+  ruby: 'text-[#CC342D] bg-[#CC342D]/10',
+  swift: 'text-[#FA7343] bg-[#FA7343]/10',
 };
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+  const languageKey = project.language?.toLowerCase() || 'javascript';
+  const languageData = languagesMap[languageKey];
+  const colorClass = languageColors[languageKey] || 'text-white/40 bg-white/5';
+
   return (
     <Link
-      href={`/code/${project.name}?id=${project._id}`}
+      href={`/code/${project.name.trim()}?id=${project._id}`}
       className="block"
     >
       <div className="group relative p-5 rounded-xl bg-white/3 border border-white/5 hover:border-[#0004ff]/30 hover:bg-white/5 transition-all duration-300">
@@ -34,11 +44,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
         <div className="mb-3">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded-md text-[10px] font-['inter-semi'] ${
-              languageColors[project.language] || 'text-white/40 bg-white/5'
-            }`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-[10px] font-['inter-semi'] ${colorClass}`}
           >
-            {project.language}
+            {languageData?.name.split(' (')[0] || project.language}
           </span>
         </div>
 

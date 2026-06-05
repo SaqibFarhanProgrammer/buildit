@@ -44,7 +44,20 @@ export async function CreateProject(request: NextRequest) {
     throw new AppError('Failed to create project', 500);
   }
 }
-const cache = new Map();
+const cache = new Map<string, ProjectType[]>();
+
+function serializeProject(project: any): ProjectType {
+  return {
+    _id: project._id?.toString(),
+    name: project.name,
+    language: project.language,
+    description: project.description,
+    content: project.content,
+    state: project.state,
+    CreatedUserid: project.CreatedUserid,
+    createdAt: project.createdAt ? project.createdAt.toISOString() : undefined,
+  };
+}
 
 export async function GetProjects(token: string) {
   try {
@@ -57,7 +70,7 @@ export async function GetProjects(token: string) {
 
     const cacheKey = `projects:${userId}`;
     if (cache.has(cacheKey)) {
-      console.log('cahche hit ');
+      console.log('cache hit');
 
       return {
         success: true,
@@ -67,17 +80,15 @@ export async function GetProjects(token: string) {
     }
 
     await connectDB();
-
     const projects = await Project.find({ CreatedUserid: userId }).lean();
+    const serializedProjects = projects.map(serializeProject);
 
-    if (projects) {
-      cache.set(cacheKey, projects);
-    }
+    cache.set(cacheKey, serializedProjects);
 
     return {
       success: true,
       source: 'database',
-      data: projects,
+      data: serializedProjects,
     };
   } catch (error: unknown) {
     if (error instanceof AppError) throw error;
@@ -89,16 +100,24 @@ export async function GetProjects(token: string) {
 export async function GetProjectContent(id: string) {
   try {
     await connectDB();
-    const project = await Project.findById(id).select('content').lean();
+    const project = await Project.findById(id).lean();
 
     if (!project) {
       throw new AppError('Project not found', 404);
     }
 
-    console.log(project);
-
-    return project.content;
-  } catch (error) {
+    return {
+      _id: project._id?.toString(),
+      name: project.name,
+      language: project.language,
+      description: project.description,
+      content: project.content,
+      state: project.state,
+      CreatedUserid: project.CreatedUserid,
+      createdAt: project.createdAt?.toISOString(),
+    };
+  } catch (error: unknown) {
+    if (error instanceof AppError) throw error;
     throw new AppError('Failed to fetch project content', 500);
   }
 }
