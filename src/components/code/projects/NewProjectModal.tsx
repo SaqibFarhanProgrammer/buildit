@@ -32,7 +32,10 @@ export default function NewProjectModal({
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     }
@@ -135,7 +138,9 @@ export default function NewProjectModal({
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="w-full px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white hover:border-white/20 focus:outline-none focus:border-[#0004ff] transition-all font-['inter-rag'] flex items-center justify-between group"
             >
-              <span>{languageList.find((l) => l.key === language)?.name || language}</span>
+              <span>
+                {languageList.find((l) => l.key === language)?.name || language}
+              </span>
               <FiChevronDown
                 className={`w-4 h-4 text-white/40 group-hover:text-white/60 transition-all ${
                   isDropdownOpen ? 'rotate-180' : ''

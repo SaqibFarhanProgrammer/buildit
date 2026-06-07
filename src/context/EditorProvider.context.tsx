@@ -7,7 +7,7 @@ import { ProjectType } from '@/types';
 const EditorContext = createContext<EditorContextType | null>(null);
 
 export default function EditorProvider({ children }: { children: ReactNode }) {
-  const [terminalOpen, setTerminalOpen] = useState(false);
+  const [terminalOpen, setTerminalOpen] = useState(true);
   const [zoom, setZoom] = useState(14);
   const [theme, setTheme] = useState('vs-dark');
   const [CodeValue, setCodeValue] = useState('');

@@ -7,8 +7,6 @@ type CacheData = {
   source: 'database';
 };
 
-const cache = new Map<string, CacheData>();
-
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -22,30 +20,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const cacheKey = `project-content-${id}`;
-
-    if (cache.has(cacheKey)) {
-      console.log('Cache hit');
-
-      const cachedData = cache.get(cacheKey);
-
-      return NextResponse.json({
-        content: cachedData?.content ?? '',
-        message: 'Project content fetched successfully',
-        source: 'cache',
-      });
-    }
-
-    console.log('Fetching from database');
-
     const project = await GetProjectContent(id);
-
-    if (project) {
-      cache.set(cacheKey, {
-        content: project.content ?? '',
-        source: 'database',
-      });
-    }
 
     return NextResponse.json({
       ...project,

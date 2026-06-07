@@ -16,7 +16,7 @@ import { ProjectType } from '@/types/code-edittor/projects/projects.types';
 import { useProjectContext } from '@/context/Project.context';
 import Cookies from 'js-cookie';
 
-type Status = 'All' | 'Active' | 'Finished';
+type Status = 'All' | 'active' | 'finished';
 type PropType = {
   projectsData: ProjectType[];
 };
@@ -38,7 +38,7 @@ export default function ProjectList({ projectsData }: PropType) {
   const activeCount = filteredProjects.filter(
     (p: ProjectType) => p.state === 'active'
   ).length;
-  
+
   const finishedCount = filteredProjects.filter(
     (p: ProjectType) => p.state === 'Finished'
   ).length;
@@ -49,7 +49,7 @@ export default function ProjectList({ projectsData }: PropType) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10">
+    <div className="max-w-7xl mx-auto px-6 py-10 ">
       <div className="mb-10 bg-white/2 border border-white/6 rounded-2xl p-5">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-8 h-[1px] bg-white/20" />
@@ -83,7 +83,7 @@ export default function ProjectList({ projectsData }: PropType) {
 
         <div className="flex items-center gap-3 w-full lg:w-auto">
           <div className="flex items-center gap-1.5 bg-white/3 border border-white/8 rounded-xl p-1">
-            {(['All', 'Active', 'Finished'] as const).map((f) => (
+            {(['All', 'active', 'finished'] as const).map((f) => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}

@@ -31,7 +31,7 @@ export async function CreateProject(request: NextRequest) {
       description,
       language,
       CreatedUserid: decoded.userId,
-      content: 'console.log("Hello, World!");',
+      content: '// Start coding here',
       state: 'active',
     });
 
@@ -44,7 +44,6 @@ export async function CreateProject(request: NextRequest) {
     throw new AppError('Failed to create project', 500);
   }
 }
-const cache = new Map<string, ProjectType[]>();
 
 function serializeProject(project: any): ProjectType {
   return {
@@ -68,22 +67,9 @@ export async function GetProjects(token: string) {
       throw new AppError('Unauthorized', 401);
     }
 
-    const cacheKey = `projects:${userId}`;
-    if (cache.has(cacheKey)) {
-      console.log('cache hit');
-
-      return {
-        success: true,
-        source: 'cache',
-        data: cache.get(cacheKey)!,
-      };
-    }
-
     await connectDB();
     const projects = await Project.find({ CreatedUserid: userId }).lean();
     const serializedProjects = projects.map(serializeProject);
-
-    cache.set(cacheKey, serializedProjects);
 
     return {
       success: true,
