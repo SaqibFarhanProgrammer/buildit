@@ -115,7 +115,10 @@ export async function SaveProjectContent(
 ) {
   try {
     await connectDB();
-    const project = await Project.findById({ CreatedUserid: UseriD, _id: projectiD });
+    const project = await Project.findById({
+      CreatedUserid: UseriD,
+      _id: projectiD,
+    });
 
     if (!project) {
       throw new AppError('Project not found', 404);

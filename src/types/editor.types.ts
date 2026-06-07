@@ -18,6 +18,6 @@ export interface EditorContextType {
   ProjectDetiles: ProjectType | null;
   setIsSaveCodeIsOpen: (open: boolean) => void;
   IsSaveCodeIsOpen: boolean;
-  
+
   setProjectDetiles: (project: ProjectType | null) => void;
 }

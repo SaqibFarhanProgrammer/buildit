@@ -77,7 +77,6 @@ export default function EditorToolbar() {
 
   return (
     <div className="h-12 bg-[#0A0A0A] border-b border-white/[0.12] flex items-center justify-between px-4">
-
       {/* Left: Language Label */}
       <div className="flex items-center gap-3 ml-10 shrink-0">
         <h1 className="text-white/90 max-[620px]:hidden font-['inter-semi'] text-sm tracking-wide">

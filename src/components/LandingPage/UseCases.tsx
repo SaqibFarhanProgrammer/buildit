@@ -1,38 +1,55 @@
 import Image from 'next/image';
+import { RiCheckLine, RiArrowRightLine } from 'react-icons/ri';
 
 export default function UseCases() {
   return (
     <section>
       <section
         id="use-cases"
-        className="relative py-20 md:py-28 bg-white overflow-hidden"
+        className="relative py-24 md:py-32 bg-white overflow-hidden"
       >
-        <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
+        <div
+          className="absolute inset-0 opacity-[0.015]"
+          style={{
+            backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`,
+            backgroundSize: '80px 80px',
+          }}
+        />
+
+        <div className="relative max-w-6xl mx-auto px-6 lg:px-8 text-center mb-14 md:mb-20">
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="w-8 h-px bg-[#0004ff]" />
+            <span className="text-[11px] font-['inter-semi'] text-[#0004ff] uppercase tracking-[0.2em]">
+              Editor
+            </span>
+            <div className="w-8 h-px bg-[#0004ff]" />
+          </div>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-['inter4-medium'] text-[#0a0a0a] leading-[1.1] tracking-tight mb-5">
             The AI-native code editor
           </h2>
-          <p className="text-[inter4-medium] font-[inter4-medium] md:text-lg text-[#0a0a0a] leading-relaxed max-w-xl mx-auto">
+          <p className="text-base md:text-lg text-black/50 max-w-xl mx-auto leading-relaxed font-['inter-rag']">
             Built to make you extraordinarily productive, BuildIt is the best
             way to code with AI.
           </p>
         </div>
 
-        <div className="w-[90%] md:w-[80%] mx-auto mb-12 md:mb-16">
-          <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-2xl shadow-[#0a0a0a]/10">
-            <div className="relative aspect-[16/9] bg-[#0a0a0a]">
-              <Image
-                src="/mnt/agents/upload/image(1).png"
-                alt="BuildIt AI Code Editor Interface"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
+        <div className="relative max-w-5xl mx-auto px-6 lg:px-8 mb-12 md:mb-16">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[80%] bg-gradient-to-b from-[#0004ff]/[0.06] to-transparent rounded-full blur-[80px] pointer-events-none" />
+
+          <div className="relative rounded-2xl overflow-hidden border border-black/[0.06] shadow-2xl shadow-black/5 bg-[#0a0a0a]">
+            <Image
+              src="/editor-preview.png"
+              alt="BuildIt AI Code Editor Interface"
+              width={1200}
+              height={675}
+              className="w-full h-auto object-cover"
+              priority
+            />
           </div>
         </div>
 
         <div className="text-center">
-          <p className="text-sm md:text-[inter4-medium] text-[#0a0a0a]/40 font-medium">
+          <p className="text-sm text-black/30 font-['inter-semi']">
             Trusted every day by teams that build world-class software
           </p>
         </div>
@@ -40,181 +57,149 @@ export default function UseCases() {
 
       <section
         id="dashboard"
-        className="relative py-20 md:py-28 bg-white overflow-hidden"
+        className="relative py-24 md:py-32 bg-white overflow-hidden"
       >
-        <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
+        <div className="relative max-w-6xl mx-auto px-6 lg:px-8 text-center mb-14 md:mb-20">
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="w-8 h-px bg-[#0004ff]" />
+            <span className="text-[11px] font-['inter-semi'] text-[#0004ff] uppercase tracking-[0.2em]">
+              Dashboard
+            </span>
+            <div className="w-8 h-px bg-[#0004ff]" />
+          </div>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-['inter4-medium'] text-[#0a0a0a] leading-[1.1] tracking-tight mb-5">
             Your productivity command center
           </h2>
-          <p className="text-[inter4-medium] md:text-lg font-[inter4-medium] text-black/80 leading-tight max-w-xl mx-auto">
+          <p className="text-base md:text-lg text-black/50 max-w-xl mx-auto leading-relaxed font-['inter-rag']">
             Track projects, monitor coding streaks, and manage your entire
             developer workflow from one unified dashboard.
           </p>
         </div>
 
-        <div className="w-[90%] md:w-[80%] mx-auto mb-12 md:mb-16">
-          <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-2xl shadow-[#0a0a0a]/10">
-            <div className="relative aspect-[16/9] bg-[#0a0a0a]">
-              <img
-                src="https://design4users.com/wp-content/uploads/2025/05/dashboard-financial-product.jpg"
-                alt="BuildIt Developer Dashboard Interface"
-                className="w-full h-full object-cover"
-              />
-            </div>
+        <div className="relative max-w-5xl mx-auto px-6 lg:px-8 mb-12 md:mb-16">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[80%] bg-gradient-to-b from-[#0004ff]/[0.06] to-transparent rounded-full blur-[80px] pointer-events-none" />
+
+          <div className="relative rounded-2xl overflow-hidden border border-black/[0.06] shadow-2xl shadow-black/5 bg-[#0a0a0a]">
+            <Image
+              src="/dashboard-preview.png"
+              alt="BuildIt Developer Dashboard Interface"
+              width={1200}
+              height={675}
+              className="w-full h-auto object-cover"
+            />
           </div>
         </div>
 
         <div className="text-center">
-          <p className="text-sm md:text-[inter4-medium] text-[#0a0a0a]/40 font-medium">
+          <p className="text-sm text-black/30 font-['inter-semi']">
             Trusted every day by developers shipping world-class products
           </p>
         </div>
       </section>
 
       <section
-        id="dashboard"
-        className="relative py-20 md:py-28 bg-white overflow-hidden"
+        id="project-tracking"
+        className="relative py-24 md:py-32 bg-white overflow-hidden"
       >
-        <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
-            Ship projects with <span className="text-black">confidancee</span>
+        <div className="relative max-w-6xl mx-auto px-6 lg:px-8 text-center mb-14 md:mb-20">
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="w-8 h-px bg-[#0004ff]" />
+            <span className="text-[11px] font-['inter-semi'] text-[#0004ff] uppercase tracking-[0.2em]">
+              Tracking
+            </span>
+            <div className="w-8 h-px bg-[#0004ff]" />
+          </div>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-['inter4-medium'] text-[#0a0a0a] leading-[1.1] tracking-tight mb-5">
+            Ship projects with{' '}
+            <span className="text-[#0004ff]">confidence</span>
           </h2>
-          <p className="text-[inter4-medium] md:text-lg text-black/80 leading-tight max-w-xl mx-auto">
+          <p className="text-base md:text-lg text-black/50 max-w-xl mx-auto leading-relaxed font-['inter-rag']">
             Kanban boards, sprint planning, and real-time progress tracking.
-            Manage tasks, hit deadlines, and keep your team aligned — all
-            without leaving your editor.
+            Manage tasks, hit deadlines, and keep your team aligned.
           </p>
         </div>
 
-        <div className="w-[90%] md:w-[80%] mx-auto mb-12 md:mb-16">
-          <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-2xl shadow-[#0a0a0a]/10">
-            <div className="relative aspect-[16/9] bg-[#0a0a0a]">
-              <img
-                src="https://community.atlassian.com/forums/image/serverpage/image-id/72166i659DC4F29880DC84?v=v2"
-                alt="BuildIt Developer Dashboard Interface"
-                className="w-full h-full object-cover"
-              />
-            </div>
+        <div className="relative max-w-5xl mx-auto px-6 lg:px-8 mb-12 md:mb-16">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[80%] bg-gradient-to-b from-[#0004ff]/[0.06] to-transparent rounded-full blur-[80px] pointer-events-none" />
+
+          <div className="relative rounded-2xl overflow-hidden border border-black/[0.06] shadow-2xl shadow-black/5 bg-[#0a0a0a]">
+            <Image
+              src="/tracking-preview.png"
+              alt="BuildIt Project Tracking Interface"
+              width={1200}
+              height={675}
+              className="w-full h-auto object-cover"
+            />
           </div>
         </div>
 
         <div className="text-center">
-          <p className="text-sm md:text-[inter4-medium] text-[#0a0a0a]/40 font-medium">
+          <p className="text-sm text-black/30 font-['inter-semi']">
             From sprint planning to shipping — everything in one place
           </p>
         </div>
       </section>
+
       <section
         id="ai-explainer"
-        className="relative py-20 md:py-28 bg-[#f9fafb] overflow-hidden"
+        className="relative py-24 md:py-32 bg-[#f9fafb] overflow-hidden"
       >
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+        <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
             <div className="w-full lg:w-[45%] shrink-0">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/10 mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-black" />
-                <span className="text-black text-[10px] font-[inter] uppercase tracking-[-2px]">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.08] mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0004ff]" />
+                <span className="text-[10px] font-['inter-semi'] text-black/50 uppercase tracking-wider">
                   AI Explainer
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
-                Understand code <span className="text-black">instantly</span>
+              <h2 className="text-3xl md:text-4xl lg:text-[44px] font-['inter4-medium'] text-[#0a0a0a] leading-[1.1] tracking-tight mb-5">
+                Understand code{' '}
+                <span className="text-[#0004ff]">instantly</span>
               </h2>
 
-              <p className="text-[inter4-medium] text-black/80 leading-relaxed mb-6 max-w-md">
+              <p className="text-base text-black/50 leading-relaxed mb-8 max-w-md font-['inter-rag']">
                 Select any code block and get AI-generated explanations in plain
                 English. Complex algorithms, legacy code, or new frameworks —
                 understand everything with one click.
               </p>
 
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-3">
-                  <svg
-                    className="w-4 h-4 mt-0.5 text-black"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-sm text-[#0a0a0a]/60">
-                    One-click code explanation
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg
-                    className="w-4 h-4 mt-0.5 text-black"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-sm text-[#0a0a0a]/60">
-                    Plain English breakdowns
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg
-                    className="w-4 h-4 mt-0.5 text-black"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-sm text-[#0a0a0a]/60">
-                    Works with any language
-                  </span>
-                </li>
+              <ul className="space-y-4 mb-8">
+                {[
+                  'One-click code explanation',
+                  'Plain English breakdowns',
+                  'Works with any language',
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#0004ff]/10 flex items-center justify-center shrink-0">
+                      <RiCheckLine className="w-3 h-3 text-[#0004ff]" />
+                    </div>
+                    <span className="text-sm text-black/60 font-['inter-rag']">
+                      {item}
+                    </span>
+                  </li>
+                ))}
               </ul>
 
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-black hover:gap-3 transition-all duration-200"
+                className="inline-flex items-center gap-2 text-sm font-['inter-semi'] text-[#0004ff] hover:gap-3 transition-all duration-200"
               >
                 <span>Try AI Explainer</span>
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
+                <RiArrowRightLine className="w-4 h-4" />
               </a>
             </div>
 
             <div className="w-full lg:w-[55%] shrink-0">
-              <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-xl shadow-[#0a0a0a]/5 bg-[#0a0a0a]">
-                <div className="relative aspect-[16/10]">
-                  <img
-                    src="https://www.gstatic.com/bricks/image/4bb72519-deec-43aa-bb39-f58bc68e6f55.png"
-                    alt="BuildIt AI Code Explainer Interface"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+              <div className="relative rounded-2xl overflow-hidden border border-black/[0.06] shadow-xl shadow-black/5 bg-[#0a0a0a]">
+                <Image
+                  src="/ai-explainer-preview.png"
+                  alt="BuildIt AI Code Explainer Interface"
+                  width={700}
+                  height={438}
+                  className="w-full h-auto object-cover"
+                />
               </div>
             </div>
           </div>
@@ -223,116 +208,64 @@ export default function UseCases() {
 
       <section
         id="coding-challenges"
-        className="relative py-20 md:py-28 bg-white overflow-hidden"
+        className="relative py-24 md:py-32 bg-white overflow-hidden"
       >
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16">
+        <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-20">
             <div className="w-full lg:w-[45%] shrink-0">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/10 mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-black" />
-                <span className="text-black text-[10px] font-[inter] uppercase tracking-[-2px]">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.08] mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0004ff]" />
+                <span className="text-[10px] font-['inter-semi'] text-black/50 uppercase tracking-wider">
                   Coding Challenges
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-[44px] font-['inter4-medium'] text-[#0a0a0a] leading-[1.1] tracking-tight mb-5">
                 Level up your{' '}
-                <span className="text-black">problem solving</span>
+                <span className="text-[#0004ff]">problem solving</span>
               </h2>
 
-              <p className="text-[inter4-medium] text-black/80 leading-relaxed mb-6 max-w-md">
+              <p className="text-base text-black/50 leading-relaxed mb-8 max-w-md font-['inter-rag']">
                 Practice with competitive programming problems, track your
                 progress, and climb global rankings. From easy warmups to hard
-                system design — master every concept.
+                system design.
               </p>
 
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-3">
-                  <svg
-                    className="w-4 h-4 mt-0.5 text-black"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-sm text-[#0a0a0a]/60">
-                    500+ problems across all difficulty levels
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg
-                    className="w-4 h-4 mt-0.5 text-black"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-sm text-[#0a0a0a]/60">
-                    Automated test cases & instant feedback
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg
-                    className="w-4 h-4 mt-0.5 text-black"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-sm text-[#0a0a0a]/60">
-                    Global leaderboard & performance history
-                  </span>
-                </li>
+              <ul className="space-y-4 mb-8">
+                {[
+                  '500+ problems across all difficulty levels',
+                  'Automated test cases & instant feedback',
+                  'Global leaderboard & performance history',
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#0004ff]/10 flex items-center justify-center shrink-0">
+                      <RiCheckLine className="w-3 h-3 text-[#0004ff]" />
+                    </div>
+                    <span className="text-sm text-black/60 font-['inter-rag']">
+                      {item}
+                    </span>
+                  </li>
+                ))}
               </ul>
 
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-black hover:gap-3 transition-all duration-200"
+                className="inline-flex items-center gap-2 text-sm font-['inter-semi'] text-[#0004ff] hover:gap-3 transition-all duration-200"
               >
                 <span>Start Practicing</span>
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
+                <RiArrowRightLine className="w-4 h-4" />
               </a>
             </div>
 
             <div className="w-full lg:w-[55%] shrink-0">
-              <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-xl shadow-[#0a0a0a]/5 bg-[#0a0a0a]">
-                <div className="relative aspect-[16/10]">
-                  <img
-                    src="https://cdn.dribbble.com/userupload/16612909/file/original-657583e1aaf77903f05f141d3de41b56.png?format=webp&resize=400x300&vertical=center"
-                    alt="BuildIt Coding Challenges Interface"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+              <div className="relative rounded-2xl overflow-hidden border border-black/[0.06] shadow-xl shadow-black/5 bg-[#0a0a0a]">
+                <Image
+                  src="/challenges-preview.png"
+                  alt="BuildIt Coding Challenges Interface"
+                  width={700}
+                  height={438}
+                  className="w-full h-auto object-cover"
+                />
               </div>
             </div>
           </div>
@@ -341,115 +274,64 @@ export default function UseCases() {
 
       <section
         id="learning-platform"
-        className="relative py-20 md:py-28 bg-[#f9fafb] overflow-hidden"
+        className="relative py-24 md:py-32 bg-[#f9fafb] overflow-hidden"
       >
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16">
-            <div className="w-full lg:w-[55%] shrink-0">
-              <div className="relative rounded-xl overflow-hidden border border-[#0a0a0a]/10 shadow-xl shadow-[#0a0a0a]/5 bg-[#0a0a0a]">
-                <div className="relative aspect-[16/10]">
-                  <img
-                    src="https://framerusercontent.com/images/5zQRt35Mjj4AdNmGwNuPUf791pU.png?width=2400&height=1128"
-                    alt="BuildIt Learning Platform Interface"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            </div>
+        <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
             <div className="w-full lg:w-[45%] shrink-0">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/10 mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-black" />
-                <span className="text-black text-[10px] font-[inter] uppercase tracking-[-2px]">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.08] mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0004ff]" />
+                <span className="text-[10px] font-['inter-semi'] text-black/50 uppercase tracking-wider">
                   Learning Platform
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-[inter] text-[#0a0a0a] leading-tight tracking-[-2px] mb-4">
-                Master skills <span className="text-black">step by step</span>
+              <h2 className="text-3xl md:text-4xl lg:text-[44px] font-['inter4-medium'] text-[#0a0a0a] leading-[1.1] tracking-tight mb-5">
+                Master skills{' '}
+                <span className="text-[#0004ff]">step by step</span>
               </h2>
 
-              <p className="text-[inter4-medium] text-black/80 leading-relaxed mb-6 max-w-md">
+              <p className="text-base text-black/50 leading-relaxed mb-8 max-w-md font-['inter-rag']">
                 Structured tutorials, interactive lessons, and hands-on
-                projects. From beginner fundamentals to advanced system design —
-                learn at your own pace.
+                projects. From beginner fundamentals to advanced system design.
               </p>
 
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-3">
-                  <svg
-                    className="w-4 h-4 mt-0.5 text-black"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-sm text-[#0a0a0a]/60">
-                    Curated learning paths for every level
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg
-                    className="w-4 h-4 mt-0.5 text-black"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-sm text-[#0a0a0a]/60">
-                    Interactive code playgrounds
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <svg
-                    className="w-4 h-4 mt-0.5 text-black"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-sm text-[#0a0a0a]/60">
-                    Progress tracking & certificates
-                  </span>
-                </li>
+              <ul className="space-y-4 mb-8">
+                {[
+                  'Curated learning paths for every level',
+                  'Interactive code playgrounds',
+                  'Progress tracking & certificates',
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#0004ff]/10 flex items-center justify-center shrink-0">
+                      <RiCheckLine className="w-3 h-3 text-[#0004ff]" />
+                    </div>
+                    <span className="text-sm text-black/60 font-['inter-rag']">
+                      {item}
+                    </span>
+                  </li>
+                ))}
               </ul>
 
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-black hover:gap-3 transition-all duration-200"
+                className="inline-flex items-center gap-2 text-sm font-['inter-semi'] text-[#0004ff] hover:gap-3 transition-all duration-200"
               >
                 <span>Start Learning</span>
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
+                <RiArrowRightLine className="w-4 h-4" />
               </a>
+            </div>
+
+            <div className="w-full lg:w-[55%] shrink-0">
+              <div className="relative rounded-2xl overflow-hidden border border-black/[0.06] shadow-xl shadow-black/5 bg-[#0a0a0a]">
+                <Image
+                  src="/learning-preview.png"
+                  alt="BuildIt Learning Platform Interface"
+                  width={700}
+                  height={438}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
