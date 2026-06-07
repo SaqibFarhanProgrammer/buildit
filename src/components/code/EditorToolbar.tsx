@@ -128,11 +128,6 @@ export default function EditorToolbar() {
           save code
         </button>
 
-
-
-        
-
-
         <button
           onClick={() => setTerminalOpen(!terminalOpen)}
           className={`w-40 h-8 rounded-lg flex items-center justify-center transition-all ${
