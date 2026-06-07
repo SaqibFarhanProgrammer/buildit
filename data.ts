@@ -1,9 +1,8 @@
-type LanguageT ={
+type LanguageT = {
   monaco: string;
   judge0: number;
   name: string;
-}
-
+};
 
 export const languagesMap: { [key: string]: LanguageT } = {
   assembly: {

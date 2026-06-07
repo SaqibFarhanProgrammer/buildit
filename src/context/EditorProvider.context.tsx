@@ -14,7 +14,9 @@ export default function EditorProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState('javascript');
   const [output, setOutput] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
-  const [ProjectDetiles, setProjectDetiles] = useState<ProjectType | null>(null);
+  const [ProjectDetiles, setProjectDetiles] = useState<ProjectType | null>(
+    null
+  );
 
   return (
     <EditorContext.Provider

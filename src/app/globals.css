@@ -52,16 +52,15 @@ body {
   src: url('../assets//fonts/inter.24pt-light.woff2') format('woff2');
 }
 
-
 /* Replace .terminal with the actual class name of your terminal element */
 .terminal {
-    &::-webkit-scrollbar {
-        display: none;
-    }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-    scrollbar-width: none;
+  scrollbar-width: none;
 
-    -ms-overflow-style: none; 
-    
-    overflow-y: auto; 
+  -ms-overflow-style: none;
+
+  overflow-y: auto;
 }

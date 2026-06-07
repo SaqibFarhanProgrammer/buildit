@@ -17,7 +17,6 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: {
@@ -39,7 +38,6 @@ export async function GET(req: NextRequest) {
       throw new AppError('Failed to get access token', 401);
     }
 
-
     const userRes = await fetch(
       'https://www.googleapis.com/oauth2/v2/userinfo',
       {
@@ -50,7 +48,6 @@ export async function GET(req: NextRequest) {
     );
 
     const googleUser = await userRes.json();
-
 
     let dbUser = await User.findOne({ email: googleUser.email });
 
@@ -64,11 +61,9 @@ export async function GET(req: NextRequest) {
       });
     }
 
-
     const token = jwt.sign({ userId: dbUser._id }, process.env.JWT_SECRET!, {
       expiresIn: '7d',
     });
-
 
     const response = NextResponse.redirect(
       new URL(`/auth/complete-profile`, req.url)

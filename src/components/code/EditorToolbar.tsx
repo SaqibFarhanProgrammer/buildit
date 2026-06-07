@@ -136,7 +136,9 @@ export default function EditorToolbar() {
               : 'text-white/60 hover:text-white hover:bg-white/[0.08]'
           }`}
         >
-          <span className="font-['inter-semi'] pt-1 text-[12px]">Open Terminal  / CTRL + J</span>
+          <span className="font-['inter-semi'] pt-1 text-[12px]">
+            Open Terminal / CTRL + J
+          </span>
         </button>
 
         <button

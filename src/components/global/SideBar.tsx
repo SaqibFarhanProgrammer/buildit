@@ -18,8 +18,7 @@ import {
 } from 'react-icons/ri';
 import { CgProfile } from 'react-icons/cg';
 import axios from 'axios';
-import { PiSidebarSimpleLight } from "react-icons/pi";
-
+import { PiSidebarSimpleLight } from 'react-icons/pi';
 
 const menuItems = [
   { name: 'Profile', href: '/profile', icon: CgProfile },
