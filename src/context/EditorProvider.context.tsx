@@ -8,6 +8,7 @@ const EditorContext = createContext<EditorContextType | null>(null);
 
 export default function EditorProvider({ children }: { children: ReactNode }) {
   const [terminalOpen, setTerminalOpen] = useState(true);
+  const [IsSaveCodeIsOpen, setIsSaveCodeIsOpen] = useState(false);
   const [zoom, setZoom] = useState(14);
   const [theme, setTheme] = useState('vs-dark');
   const [CodeValue, setCodeValue] = useState('');
@@ -24,6 +25,8 @@ export default function EditorProvider({ children }: { children: ReactNode }) {
         terminalOpen,
         setTerminalOpen,
         zoom,
+        IsSaveCodeIsOpen,
+        setIsSaveCodeIsOpen,
         setZoom,
         theme,
         setTheme,

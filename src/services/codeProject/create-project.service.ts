@@ -107,3 +107,28 @@ export async function GetProjectContent(id: string) {
     throw new AppError('Failed to fetch project content', 500);
   }
 }
+
+export async function SaveProjectContent(
+  code: string,
+  projectiD: string,
+  UseriD: string
+) {
+  try {
+    await connectDB();
+    const project = await Project.findById({ CreatedUserid: UseriD, _id: projectiD });
+
+    if (!project) {
+      throw new AppError('Project not found', 404);
+    }
+
+    project.content = code;
+    await project.save();
+
+    return {
+      message: 'Project content saved successfully',
+    };
+  } catch (error: unknown) {
+    if (error instanceof AppError) throw error;
+    throw new AppError('Failed to save project content', 500);
+  }
+}

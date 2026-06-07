@@ -16,5 +16,8 @@ export interface EditorContextType {
   isRunning: boolean;
   setIsRunning: (running: boolean) => void;
   ProjectDetiles: ProjectType | null;
+  setIsSaveCodeIsOpen: (open: boolean) => void;
+  IsSaveCodeIsOpen: boolean;
+  
   setProjectDetiles: (project: ProjectType | null) => void;
 }

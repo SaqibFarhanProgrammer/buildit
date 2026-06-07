@@ -1,16 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import {
   RiAddLine,
   RiSubtractLine,
-  RiDownloadLine,
   RiSaveLine,
   RiPlayLine,
   RiSparklingLine,
   RiMoonLine,
   RiSunLine,
+  RiTerminalLine,
+  RiMoreLine,
 } from 'react-icons/ri';
-import { FaLaptopCode } from 'react-icons/fa';
 import axios from 'axios';
 import { useEditor } from '@/context/EditorProvider.context';
 
@@ -26,12 +27,18 @@ export default function EditorToolbar() {
     language,
     ProjectDetiles,
     setOutput,
+    setIsSaveCodeIsOpen,
     setIsRunning,
   } = useEditor();
 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
   const handleZoomIn = () => setZoom(Math.min(zoom + 2, 24));
   const handleZoomOut = () => setZoom(Math.max(zoom - 2, 10));
-  const handleSave = () => {};
+
+  const handleSave = () => {
+    setIsSaveCodeIsOpen(true);
+  };
 
   const handleRun = async () => {
     if (!CodeValue.trim()) {
@@ -70,24 +77,24 @@ export default function EditorToolbar() {
 
   return (
     <div className="h-12 bg-[#0A0A0A] border-b border-white/[0.12] flex items-center justify-between px-4">
+
       {/* Left: Language Label */}
-      <div className="flex items-center gap-3 ml-10">
-        <h1 className="text-white/90 font-['inter-semi'] text-sm tracking-wide">
-          {ProjectDetiles?.language}
+      <div className="flex items-center gap-3 ml-10 shrink-0">
+        <h1 className="text-white/90 max-[620px]:hidden font-['inter-semi'] text-sm tracking-wide">
+          {ProjectDetiles?.name}
         </h1>
       </div>
-
-      {/* Center: Language Badge + Explain + Zoom */}
       <div className="flex items-center gap-2">
-        <div className="px-3 py-1.5 rounded-lg capitalize bg-white/[0.08] border border-white/[0.12] text-xs text-white/90 font-['inter-semi'] focus:outline-none focus:border-[#0004ff] transition-all cursor-pointer">
+        <div className="px-3 py-1.5 rounded-lg capitalize bg-white/[0.08] border border-white/[0.12] text-xs text-white/90 font-['inter-semi'] cursor-pointer">
           {language.toString()}
         </div>
 
-        <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0004ff]/15 text-[#4d6fff] hover:bg-[#0004ff]/25 transition-all">
+        <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0004ff]/15 text-[#4d6fff] hover:bg-[#0004ff]/25 transition-all shrink-0">
           <RiSparklingLine className="w-3.5 h-3.5" />
           <span className="font-['inter-semi'] text-[10px]">Explain</span>
         </button>
 
+        {/* Zoom Controls */}
         <div className="flex items-center gap-1 ml-2">
           <button
             onClick={handleZoomOut}
@@ -107,47 +114,138 @@ export default function EditorToolbar() {
         </div>
       </div>
 
-      {/* Right: Theme Toggle + Save + Terminal + Run */}
+      {/* Right: Desktop buttons (hidden on small) + Dropdown (visible on small) */}
       <div className="flex items-center gap-1">
-        <button
-          onClick={toggleTheme}
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.08] transition-all"
-        >
-          {theme === 'vs-dark' ? (
-            <RiSunLine className="w-4 h-4" />
-          ) : (
-            <RiMoonLine className="w-4 h-4" />
+        {/* Desktop only buttons */}
+        <div className="hidden md:flex items-center gap-1">
+          <button
+            onClick={toggleTheme}
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.08] transition-all"
+          >
+            {theme === 'vs-dark' ? (
+              <RiSunLine className="w-4 h-4" />
+            ) : (
+              <RiMoonLine className="w-4 h-4" />
+            )}
+          </button>
+
+          <button
+            onClick={handleSave}
+            className="h-8 px-3 rounded-lg gap-2 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.08] transition-all"
+          >
+            <RiSaveLine className="w-4 h-4" />
+            <span className="font-['inter-semi'] text-[11px]">Save</span>
+          </button>
+
+          <button
+            onClick={() => setTerminalOpen(!terminalOpen)}
+            className={`h-8 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+              terminalOpen
+                ? 'text-[#4d6fff] bg-[#0004ff]/15'
+                : 'text-white/60 hover:text-white hover:bg-white/[0.08]'
+            }`}
+          >
+            <RiTerminalLine className="w-4 h-4" />
+            <span className="font-['inter-semi'] text-[11px]">Terminal</span>
+          </button>
+
+          <button
+            onClick={handleRun}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#0004ff] text-white hover:bg-[#1a33ff] transition-all ml-2"
+          >
+            <RiPlayLine className="w-3.5 h-3.5" />
+            <span className="font-['inter-semi'] text-xs">Run</span>
+          </button>
+        </div>
+
+        {/* Mobile Dropdown */}
+        <div className="md:hidden relative">
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.08] transition-all"
+          >
+            <RiMoreLine className="w-5 h-5" />
+          </button>
+
+          {dropdownOpen && (
+            <>
+              {/* Backdrop */}
+              <div
+                className="fixed inset-0 z-[90]"
+                onClick={() => setDropdownOpen(false)}
+              />
+              {/* Dropdown Menu */}
+              <div className="absolute right-0 top-10 w-52 bg-[#141414] border border-white/[0.08] rounded-xl shadow-2xl z-[100] overflow-hidden">
+                {/* Theme Toggle */}
+                <button
+                  onClick={() => {
+                    toggleTheme();
+                    setDropdownOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/[0.05] transition-all text-left"
+                >
+                  {theme === 'vs-dark' ? (
+                    <RiSunLine className="w-4 h-4" />
+                  ) : (
+                    <RiMoonLine className="w-4 h-4" />
+                  )}
+                  <span className="font-['inter-semi'] text-[13px]">
+                    {theme === 'vs-dark' ? 'Light Mode' : 'Dark Mode'}
+                  </span>
+                </button>
+
+                {/* Save Code */}
+                <button
+                  onClick={() => {
+                    handleSave();
+                    setDropdownOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/[0.05] transition-all text-left"
+                >
+                  <RiSaveLine className="w-4 h-4" />
+                  <span className="font-['inter-semi'] text-[13px]">
+                    Save Code
+                  </span>
+                </button>
+
+                {/* Terminal Toggle */}
+                <button
+                  onClick={() => {
+                    setTerminalOpen(!terminalOpen);
+                    setDropdownOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 px-4 py-3 transition-all text-left ${
+                    terminalOpen
+                      ? 'text-[#4d6fff] bg-[#0004ff]/10'
+                      : 'text-white/70 hover:text-white hover:bg-white/[0.05]'
+                  }`}
+                >
+                  <RiTerminalLine className="w-4 h-4" />
+                  <span className="font-['inter-semi'] text-[13px]">
+                    {terminalOpen ? 'Close Terminal' : 'Open Terminal'}
+                  </span>
+                </button>
+
+                {/* Divider */}
+                <div className="h-px bg-white/[0.06] mx-3" />
+
+                {/* Run Button */}
+                <button
+                  onClick={() => {
+                    handleRun();
+                    setDropdownOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-[#0004ff] hover:bg-[#0004ff]/10 transition-all text-left"
+                >
+                  <RiPlayLine className="w-4 h-4" />
+                  <span className="font-['inter-semi'] text-[13px]">
+                    Run Code
+                  </span>
+                </button>
+              </div>
+            </>
           )}
-        </button>
-
-        <button
-          onClick={handleSave}
-          className="w-27 h-8 rounded-lg gap-2 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.08] transition-all"
-        >
-          <RiSaveLine className="w-4 h-4" />
-          save code
-        </button>
-
-        <button
-          onClick={() => setTerminalOpen(!terminalOpen)}
-          className={`w-40 h-8 rounded-lg flex items-center justify-center transition-all ${
-            terminalOpen
-              ? 'text-[#4d6fff] bg-[#0004ff]/15'
-              : 'text-white/60 hover:text-white hover:bg-white/[0.08]'
-          }`}
-        >
-          <span className="font-['inter-semi'] pt-1 text-[12px]">
-            Open Terminal / CTRL + J
-          </span>
-        </button>
-
-        <button
-          onClick={handleRun}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#0004ff] text-white hover:bg-[#1a33ff] transition-all ml-2"
-        >
-          <RiPlayLine className="w-3.5 h-3.5" />
-          <span className="font-['inter-semi'] text-xs">Run</span>
-        </button>
+        </div>
       </div>
     </div>
   );
