@@ -9,6 +9,7 @@ const EditorContext = createContext<EditorContextType | null>(null);
 export default function EditorProvider({ children }: { children: ReactNode }) {
   const [terminalOpen, setTerminalOpen] = useState(true);
   const [IsSaveCodeIsOpen, setIsSaveCodeIsOpen] = useState(false);
+  const [IsAiExplainWindowOpen, setIsAiExplainWindowOpen] = useState(false)
   const [zoom, setZoom] = useState(14);
   const [theme, setTheme] = useState('vs-dark');
   const [CodeValue, setCodeValue] = useState('');
@@ -22,6 +23,7 @@ export default function EditorProvider({ children }: { children: ReactNode }) {
   return (
     <EditorContext.Provider
       value={{
+
         terminalOpen,
         setTerminalOpen,
         zoom,
@@ -40,6 +42,9 @@ export default function EditorProvider({ children }: { children: ReactNode }) {
         setIsRunning,
         ProjectDetiles,
         setProjectDetiles,
+        IsAiExplainWindowOpen,
+        setIsAiExplainWindowOpen,
+        
       }}
     >
       {children}

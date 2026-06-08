@@ -2,6 +2,9 @@ import { ProjectType } from './code-edittor/projects/projects.types';
 
 export interface EditorContextType {
   terminalOpen: boolean;
+
+  setIsAiExplainWindowOpen: (open: boolean) => void;
+  IsAiExplainWindowOpen: boolean;
   setTerminalOpen: (open: boolean) => void;
   zoom: number;
   setZoom: (zoom: number) => void;

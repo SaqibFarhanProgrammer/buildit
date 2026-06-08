@@ -28,6 +28,7 @@ export default function EditorToolbar() {
     ProjectDetiles,
     setOutput,
     setIsSaveCodeIsOpen,
+    setIsAiExplainWindowOpen,
     setIsRunning,
   } = useEditor();
 
@@ -59,7 +60,7 @@ export default function EditorToolbar() {
       const output = response.data?.output ?? 'No output';
       const lines = output
         .toString()
-        .split(/\r?\n/)
+        
         .filter((line: string) => line.length > 0);
 
       setOutput(lines.length ? lines : ['No output']);
@@ -77,18 +78,25 @@ export default function EditorToolbar() {
 
   return (
     <div className="h-12 bg-[#0A0A0A] border-b border-white/[0.12] flex items-center justify-between px-4">
-      {/* Left: Language Label */}
+      {/* Left — Project Name */}
       <div className="flex items-center gap-3 ml-10 shrink-0">
         <h1 className="text-white/90 max-[620px]:hidden font-['inter-semi'] text-sm tracking-wide">
           {ProjectDetiles?.name}
         </h1>
       </div>
+
+      {/* Center */}
       <div className="flex items-center gap-2">
-        <div className="px-3 py-1.5 rounded-lg capitalize bg-white/[0.08] border border-white/[0.12] text-xs text-white/90 font-['inter-semi'] cursor-pointer">
+        {/* Language badge — hidden on small screens */}
+        <div className="hidden sm:flex px-3 py-1.5 rounded-lg capitalize bg-white/[0.08] border border-white/[0.12] text-xs text-white/90 font-['inter-semi'] cursor-pointer">
           {language.toString()}
         </div>
 
-        <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0004ff]/15 text-[#4d6fff] hover:bg-[#0004ff]/25 transition-all shrink-0">
+        {/* AI Explain — hidden on small screens */}
+        <button
+          onClick={() => setIsAiExplainWindowOpen(true)}
+          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0004ff]/15 text-[#4d6fff] hover:bg-[#0004ff]/25 transition-all shrink-0"
+        >
           <RiSparklingLine className="w-3.5 h-3.5" />
           <span className="font-['inter-semi'] text-[10px]">Explain</span>
         </button>
@@ -113,9 +121,9 @@ export default function EditorToolbar() {
         </div>
       </div>
 
-      {/* Right: Desktop buttons (hidden on small) + Dropdown (visible on small) */}
+      {/* Right */}
       <div className="flex items-center gap-1">
-        {/* Desktop only buttons */}
+        {/* Desktop buttons */}
         <div className="hidden md:flex items-center gap-1">
           <button
             onClick={toggleTheme}
@@ -148,6 +156,7 @@ export default function EditorToolbar() {
             <span className="font-['inter-semi'] text-[11px]">Terminal</span>
           </button>
 
+          {/* Run button — always visible on desktop */}
           <button
             onClick={handleRun}
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#0004ff] text-white hover:bg-[#1a33ff] transition-all ml-2"
@@ -157,7 +166,7 @@ export default function EditorToolbar() {
           </button>
         </div>
 
-        {/* Mobile Dropdown */}
+        {/* Mobile/Tablet Dropdown */}
         <div className="md:hidden relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -168,14 +177,30 @@ export default function EditorToolbar() {
 
           {dropdownOpen && (
             <>
-              {/* Backdrop */}
               <div
                 className="fixed inset-0 z-[90]"
                 onClick={() => setDropdownOpen(false)}
               />
-              {/* Dropdown Menu */}
               <div className="absolute right-0 top-10 w-52 bg-[#141414] border border-white/[0.08] rounded-xl shadow-2xl z-[100] overflow-hidden">
-                {/* Theme Toggle */}
+                {/* Language — mobile only */}
+                <div className="px-4 py-2.5 text-white/40 text-[11px] font-['inter-semi'] uppercase tracking-wider border-b border-white/[0.06]">
+                  {language.toString()}
+                </div>
+
+                {/* AI Explain — mobile only */}
+                <button
+                  onClick={() => {
+                    setIsAiExplainWindowOpen(true);
+                    setDropdownOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-[#4d6fff] hover:bg-[#0004ff]/10 transition-all text-left"
+                >
+                  <RiSparklingLine className="w-4 h-4" />
+                  <span className="font-['inter-semi'] text-[13px]">
+                    AI Explain
+                  </span>
+                </button>
+
                 <button
                   onClick={() => {
                     toggleTheme();
@@ -193,7 +218,6 @@ export default function EditorToolbar() {
                   </span>
                 </button>
 
-                {/* Save Code */}
                 <button
                   onClick={() => {
                     handleSave();
@@ -207,7 +231,6 @@ export default function EditorToolbar() {
                   </span>
                 </button>
 
-                {/* Terminal Toggle */}
                 <button
                   onClick={() => {
                     setTerminalOpen(!terminalOpen);
@@ -225,10 +248,8 @@ export default function EditorToolbar() {
                   </span>
                 </button>
 
-                {/* Divider */}
                 <div className="h-px bg-white/[0.06] mx-3" />
 
-                {/* Run Button */}
                 <button
                   onClick={() => {
                     handleRun();
