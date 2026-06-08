@@ -33,9 +33,7 @@ function EditorContent() {
       {/* Main Editor Area */}
       <div
         className={`flex flex-col transition-all duration-300 ${
-          IsAiExplainWindowOpen
-            ? 'hidden md:flex md:w-[60%]'
-            : 'w-full'
+          IsAiExplainWindowOpen ? 'hidden md:flex md:w-[60%]' : 'w-full'
         }`}
       >
         {IsSaveCodeIsOpen && <SaveCodePopup />}
