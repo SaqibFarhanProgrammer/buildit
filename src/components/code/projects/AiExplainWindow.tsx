@@ -12,7 +12,6 @@ import {
 import { useEditor } from '@/context/EditorProvider.context';
 import axios from 'axios';
 
-// AI रिस्पॉन्स के लिए सही इंटरफ़ेस (डेटा स्ट्रक्चर के अनुसार)
 interface Complexity {
   time: string;
   space: string;
@@ -21,9 +20,9 @@ interface Complexity {
 interface AIResponse {
   title: string;
   summary: string;
-  steps: string[]; // स्ट्रिंग्स का ऐरे
-  issues: string[]; // स्ट्रिंग्स का ऐरे
-  improvements: string[]; // स्ट्रिंग्स का ऐरे
+  steps: string[];
+  issues: string[];
+  improvements: string[]; 
   fixed_code: string;
   complexity: Complexity;
 }
@@ -35,7 +34,6 @@ export default function AIExplainWindow() {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<AIResponse | null>(null);
 
-  // क्लिपबोर्ड में कोड कॉपी करने के लिए फंक्शन
   const handleCopyCode = (text: string) => {
     navigator.clipboard.writeText(text);
     setCopiedCode(true);
@@ -96,7 +94,7 @@ export default function AIExplainWindow() {
 
   if (loading) {
     return (
-      
+
       <div className="h-full flex flex-col bg-[#0A0A0A]">
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
           <div className="flex items-center gap-3">
