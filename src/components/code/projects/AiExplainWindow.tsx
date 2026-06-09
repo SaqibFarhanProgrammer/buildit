@@ -22,7 +22,7 @@ interface AIResponse {
   summary: string;
   steps: string[];
   issues: string[];
-  improvements: string[]; 
+  improvements: string[];
   fixed_code: string;
   complexity: Complexity;
 }
@@ -54,20 +54,10 @@ export default function AIExplainWindow() {
 
       let responseData = res.data?.Response;
 
-      if (!responseData) {
-        throw new Error('AI returned empty response');
-      }
+      console.log(res);
+      
 
-      if (typeof responseData === 'object') {
-        setData(responseData);
-      } else {
-        const cleanJson = responseData
-          .replace(/^```json\s*/i, '')
-          .replace(/```$/, '')
-          .trim();
-
-        setData(cleanJson);
-      }
+      setData(responseData);
     } catch (err) {
       console.error('AI Explain Error:', err);
 
@@ -94,7 +84,6 @@ export default function AIExplainWindow() {
 
   if (loading) {
     return (
-
       <div className="h-full flex flex-col bg-[#0A0A0A]">
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
           <div className="flex items-center gap-3">
