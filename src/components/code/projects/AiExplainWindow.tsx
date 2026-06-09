@@ -190,7 +190,6 @@ export default function AIExplainWindow() {
   // 3. Success Structured UI Render Layout
   return (
     <div className="h-full terminal flex flex-col bg-[#0A0A0A] text-white">
-      {/* Dynamic Window Header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-[#0004ff]/15 flex items-center justify-center">
@@ -221,9 +220,7 @@ export default function AIExplainWindow() {
         </div>
       </div>
 
-      {/* Main Scrollable Body */}
       <div className="flex-1 terminal overflow-y-auto p-5 space-y-6 scrollbar-thin">
-        {/* Code Summary Section */}
         {data.summary && (
           <div>
             <h4 className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-2">
@@ -235,7 +232,6 @@ export default function AIExplainWindow() {
           </div>
         )}
 
-        {/* Complexities Section */}
         {data.complexity && (
           <div className="grid grid-cols-2 gap-3">
             <div className="p-3 bg-white/[0.02] border border-white/[0.04] rounded-lg">
@@ -257,7 +253,6 @@ export default function AIExplainWindow() {
           </div>
         )}
 
-        {/* Execution Steps */}
         {data.steps && data.steps.length > 0 && (
           <div>
             <h4 className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3">
@@ -283,7 +278,6 @@ export default function AIExplainWindow() {
           </div>
         )}
 
-        {/* Issues Found */}
         {data.issues && data.issues.length > 0 && (
           <div>
             <h4 className="text-xs font-semibold text-red-400/60 uppercase tracking-wider mb-3">
@@ -302,7 +296,6 @@ export default function AIExplainWindow() {
           </div>
         )}
 
-        {/* Suggested Improvements */}
         {data.improvements && data.improvements.length > 0 && (
           <div>
             <h4 className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3">
@@ -326,7 +319,6 @@ export default function AIExplainWindow() {
           </div>
         )}
 
-        {/* Optimized Code Block */}
         {data.fixed_code && (
           <div>
             <div
