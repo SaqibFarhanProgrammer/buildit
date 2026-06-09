@@ -41,10 +41,10 @@ export default function AIExplainWindow() {
   };
 
   const FetchAiExplain = async () => {
-    setLoading(true);
-    setError(null);
-
     try {
+      setLoading(true);
+      setError(null);
+
       const res = await axios.post('/api/aiexplain/aiedittor', {
         coding_experince: '2 years',
         coding_level: 'intermediate',
@@ -52,12 +52,26 @@ export default function AIExplainWindow() {
         userid: ProjectDetiles?.CreatedUserid,
       });
 
-      let responseData = res.data?.Response;
+      console.log('FULL RESPONSE:', res.data);
 
-      console.log(res);
-      
+      const responseData = res.data?.response;
 
-      setData(responseData);
+      if (!responseData) {
+        throw new Error('Empty AI response');
+      }
+
+      if (typeof responseData === 'object') {
+        setData(responseData);
+      } else {
+        const cleanJson = responseData
+          .replace(/^```json\s*/i, '')
+          .replace(/```$/i, '')
+          .trim();
+
+        const parsedData = JSON.parse(cleanJson);
+
+        setData(parsedData);
+      }
     } catch (err) {
       console.error('AI Explain Error:', err);
 
@@ -72,7 +86,7 @@ export default function AIExplainWindow() {
         errorMessage = err.message;
       }
 
-      setError(errorMessage.split('*')[0]);
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
