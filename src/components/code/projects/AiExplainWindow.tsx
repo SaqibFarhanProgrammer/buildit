@@ -96,6 +96,7 @@ export default function AIExplainWindow() {
 
   if (loading) {
     return (
+      
       <div className="h-full flex flex-col bg-[#0A0A0A]">
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
           <div className="flex items-center gap-3">
@@ -136,7 +137,6 @@ export default function AIExplainWindow() {
     );
   }
 
-  // 2. Exception/Fail Fallback Screen State
   if (error) {
     return (
       <div className="h-full terminal flex flex-col bg-[#0A0A0A]">
