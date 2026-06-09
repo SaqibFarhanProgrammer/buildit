@@ -51,7 +51,6 @@ export async function POST(request: NextRequest) {
   } catch (error: unknown) {
     console.error('AI_EXPLAIN_ERROR:', error);
     console.log(error);
-    
 
     let message = 'Internal Server Error';
     let statusCode = 500;
