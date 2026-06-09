@@ -54,7 +54,7 @@ body {
 
 /* Replace .terminal with the actual class name of your terminal element */
 .terminal {
-  &::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     display: none;
   }
 
@@ -63,4 +63,5 @@ body {
   -ms-overflow-style: none;
 
   overflow-y: auto;
+  overflow-x: auto;
 }

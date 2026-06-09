@@ -1,49 +1,221 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   RiCloseLine,
   RiSparklingLine,
   RiFileCopyLine,
   RiCheckLine,
-  RiCodeLine,
-  RiRobot2Line,
+  RiLoader4Line,
+  RiErrorWarningLine,
 } from 'react-icons/ri';
-import { GoHubot } from 'react-icons/go';
-
 import { useEditor } from '@/context/EditorProvider.context';
+import axios from 'axios';
+
+// AI रिस्पॉन्स के लिए सही इंटरफ़ेस (डेटा स्ट्रक्चर के अनुसार)
+interface Complexity {
+  time: string;
+  space: string;
+}
+
+interface AIResponse {
+  title: string;
+  summary: string;
+  steps: string[]; // स्ट्रिंग्स का ऐरे
+  issues: string[]; // स्ट्रिंग्स का ऐरे
+  improvements: string[]; // स्ट्रिंग्स का ऐरे
+  fixed_code: string;
+  complexity: Complexity;
+}
 
 export default function AIExplainWindow() {
-  const { setIsAiExplainWindowOpen } = useEditor();
-  const [copied, setCopied] = useState(false);
+  const { setIsAiExplainWindowOpen, CodeValue } = useEditor();
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<AIResponse | null>(null);
 
-  const handleCopy = () => {
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+  // क्लिपबोर्ड में कोड कॉपी करने के लिए फंक्शन
+  const handleCopyCode = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 1500);
   };
 
+  useEffect(() => {
+    // अगर एडिटर खाली है तो इनपुट वैलिडेशन चेक
+    if (!CodeValue || CodeValue.trim() === '') {
+      setError('Please write or paste some code in the editor first.');
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setData(null);
+
+    axios
+      .post('/api/aiexplain/aiedittor', {
+        coding_experince: '2 years',
+        coding_level: 'intermediate',
+        code: CodeValue,
+      })
+      .then((res) => {
+        // AI रिस्पॉन्स हैंडलिंग
+        let responseData = res.data?.Response || res.data;
+
+        if (!responseData) {
+          throw new Error('AI returned an empty response template.');
+        }
+
+        if (typeof responseData === 'object') {
+          setData(responseData);
+        } else {
+          // अगर स्ट्रिंग में ```json ... ``` आ रहा है तो उसे हटाना
+          let cleanJson = responseData
+            .replace(/^```json\s*/i, '')
+            .replace(/```$/, '')
+            .trim();
+
+          setData(JSON.parse(cleanJson));
+        }
+
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('AI Explain Error:', err);
+        let message = 'Something went wrong while communicating with AI';
+
+        if (axios.isAxiosError(err)) {
+          message =
+            err.response?.data?.error ||
+            err.response?.data?.message ||
+            err.message;
+        } else if (err instanceof Error) {
+          message = `Parsing Error: ${err.message}`;
+        }
+
+        setError(message);
+        setLoading(false);
+      });
+  }, []);
+
+  // 1. Loading UI Screen State
+  if (loading) {
+    return (
+      <div className="h-full flex flex-col bg-[#0A0A0A]">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-[#0004ff]/15 flex items-center justify-center">
+              <RiSparklingLine className="w-4 h-4 text-[#0004ff]" />
+            </div>
+            <div>
+              <h3 className="text-white/90 font-['inter-semi'] text-sm">
+                BuildIt AI
+              </h3>
+              <p className="text-white/30 text-[10px] font-['inter-rag']">
+                Code Explainer
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setIsAiExplainWindowOpen(false)}
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+          >
+            <RiCloseLine className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="flex-1 flex flex-col items-center justify-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-[#0004ff]/10 flex items-center justify-center">
+            <RiLoader4Line className="w-6 h-6 text-[#0004ff] animate-spin" />
+          </div>
+          <div className="text-center">
+            <p className="text-white/60 font-['inter-semi'] text-sm">
+              Analyzing your code...
+            </p>
+            <p className="text-white/30 font-['inter-rag'] text-xs mt-1">
+              This may take a few seconds
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 2. Exception/Fail Fallback Screen State
+  if (error) {
+    return (
+      <div className="h-full terminal flex flex-col bg-[#0A0A0A]">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-[#0004ff]/15 flex items-center justify-center">
+              <RiSparklingLine className="w-4 h-4 text-[#0004ff]" />
+            </div>
+            <div>
+              <h3 className="text-white/90 font-['inter-semi'] text-sm">
+                BuildIt AI
+              </h3>
+              <p className="text-white/30 text-[10px] font-['inter-rag']">
+                Code Explainer
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setIsAiExplainWindowOpen(false)}
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
+          >
+            <RiCloseLine className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="flex-1 flex flex-col items-center justify-center gap-4 px-6">
+          <div className="w-12 h-12 rounded-2xl bg-red-500/10 flex items-center justify-center">
+            <RiErrorWarningLine className="w-6 h-6 text-red-400" />
+          </div>
+          <div className="text-center">
+            <p className="text-white/60 font-['inter-semi'] text-sm">
+              Failed to analyze code
+            </p>
+            <p className="text-white/30 font-['inter-rag'] text-xs mt-1 max-w-[280px] break-words">
+              {error}
+            </p>
+          </div>
+          <button
+            onClick={() => setIsAiExplainWindowOpen(false)}
+            className="mt-2 px-4 py-2 rounded-lg bg-[#0004ff] text-white text-xs font-['inter-semi'] hover:bg-[#1a33ff] transition-all"
+          >
+            Close Window
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) return null;
+
+  // 3. Success Structured UI Render Layout
   return (
-    <div className="h-full flex flex-col bg-[#0A0A0A]">
-      {/* Header */}
+    <div className="h-full terminal flex flex-col bg-[#0A0A0A] text-white">
+      {/* Dynamic Window Header */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-[#0004ff]/15 flex items-center justify-center">
             <RiSparklingLine className="w-4 h-4 text-[#0004ff]" />
           </div>
           <div>
-            <h3 className="text-white/90 font-[inter-semi] text-sm">
-              BuildIt AI
+            <h3 className="text-white/90 font-['inter-semi'] text-sm truncate max-w-[180px]">
+              {data.title || 'Analysis Result'}
             </h3>
-            <p className="text-white/30 text-[10px] font-[inter-rag]">
+            <p className="text-white/30 text-[10px] font-['inter-rag']">
               Code Explainer
             </p>
           </div>
         </div>
-
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04]">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
-            <span className="text-[10px] text-white/40 font-[\'inter-semi\']">
+            <span className="text-[10px] text-white/40 font-['inter-semi']">
               Online
             </span>
           </div>
@@ -56,83 +228,143 @@ export default function AIExplainWindow() {
         </div>
       </div>
 
-      {/* Explanation Content — Scrollable, No Chat */}
-      <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5 scrollbar-hide">
-        {/* Code Block */}
-        <div className="rounded-xl bg-[#111111] border border-white/[0.06] overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.04]">
-            <div className="flex items-center gap-2">
-              <RiCodeLine className="w-3.5 h-3.5 text-white/30" />
-              <span className="text-[10px] text-white/30 font-[\'inter-semi\'] uppercase tracking-wider">
-                typescript
-              </span>
-            </div>
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 text-white/30 hover:text-white/60 transition-all"
-            >
-              {copied ? (
-                <RiCheckLine className="w-3.5 h-3.5 text-green-400" />
-              ) : (
-                <RiFileCopyLine className="w-3.5 h-3.5" />
-              )}
-              <span className="text-[10px] font-[\'inter-semi\']">
-                {copied ? 'Copied' : 'Copy'}
-              </span>
-            </button>
-          </div>
-          <pre className="px-4 py-3 text-[11px] text-white/60 font-mono leading-relaxed overflow-x-auto">
-            {`const handleSave = () => {
-  setIsSaveCodeIsOpen(true);
-};
-
-const handleRun = async () => {
-  if (!CodeValue.trim()) {
-    setOutput([\'No code to run.\']);
-    return;
-  }
-  setIsRunning(true);
-  // ...
-};`}
-          </pre>
-        </div>
-
-        {/* AI Explanation */}
-        <div className="flex gap-3">
-          <div className="w-7 h-7 rounded-lg bg-[#0004ff]/15 flex items-center justify-center shrink-0">
-            <GoHubot className="w-3.5 h-3.5 text-[#0004ff]" />
-          </div>
-          <div className="flex-1 px-4 py-3 rounded-2xl bg-white/[0.04] text-white/70 text-sm font-[inter-rag] leading-relaxed space-y-3">
-            <p>This code defines two functions for a code editor toolbar:</p>
-            <div className="space-y-2">
-              <p>
-                <span className="text-white font-[\'inter-semi\']">
-                  handleSave
-                </span>{' '}
-                — Opens a save confirmation popup by setting the save modal
-                state to true.
-              </p>
-              <p>
-                <span className="text-white font-[\'inter-semi\']">
-                  handleRun
-                </span>{' '}
-                — Validates code input, sets loading state, and executes the
-                code through an API call.
-              </p>
-            </div>
-            <p>
-              Both functions use React state setters from the editor context to
-              manage UI state.
+      {/* Main Scrollable Body */}
+      <div className="flex-1 terminal overflow-y-auto p-5 space-y-6 scrollbar-thin">
+        {/* Code Summary Section */}
+        {data.summary && (
+          <div>
+            <h4 className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-2">
+              Summary
+            </h4>
+            <p className="text-sm text-white/80 leading-relaxed bg-white/[0.02] p-3 rounded-lg border border-white/[0.04]">
+              {data.summary}
             </p>
           </div>
-        </div>
-      </div>
+        )}
 
-      {/* Bottom Bar — No Input, Just Status */}
-      <div className="px-5 py-3 border-t border-white/[0.06] shrink-0">
-        <p className="text-center text-[10px] text-white/15 font-[\'inter-rag\']">
-          AI can make mistakes. Verify important information.
-        </p>
+        {/* Complexities Section */}
+        {data.complexity && (
+          <div className="grid grid-cols-2 gap-3">
+            <div className="p-3 bg-white/[0.02] border border-white/[0.04] rounded-lg">
+              <span className="text-[10px] text-white/40 block">
+                Time Complexity
+              </span>
+              <span className="text-sm font-mono text-[#0004ff] font-semibold">
+                {data.complexity.time || 'O(1)'}
+              </span>
+            </div>
+            <div className="p-3 bg-white/[0.02] border border-white/[0.04] rounded-lg">
+              <span className="text-[10px] text-white/40 block">
+                Space Complexity
+              </span>
+              <span className="text-sm font-mono text-[#0004ff] font-semibold">
+                {data.complexity.space || 'O(1)'}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Execution Steps */}
+        {data.steps && data.steps.length > 0 && (
+          <div>
+            <h4 className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3">
+              How it works
+            </h4>
+            <div className="space-y-3">
+              {data.steps.map((stepText, index) => (
+                <div
+                  key={index}
+                  className="flex gap-3 items-start bg-white/[0.01] p-3 rounded-lg border border-white/[0.02]"
+                >
+                  <span className="w-5 h-5 rounded-full bg-white/[0.06] text-xs flex items-center justify-center shrink-0 mt-0.5 text-white/60 font-mono">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="text-xs text-white/80 leading-relaxed">
+                      {stepText}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Issues Found */}
+        {data.issues && data.issues.length > 0 && (
+          <div>
+            <h4 className="text-xs font-semibold text-red-400/60 uppercase tracking-wider mb-3">
+              Issues Found
+            </h4>
+            <ul className="space-y-2 bg-red-500/[0.02] border border-red-500/10 p-3 rounded-lg list-disc pl-5">
+              {data.issues.map((issue, index) => (
+                <li
+                  key={index}
+                  className="text-xs text-red-200/70 leading-relaxed"
+                >
+                  {issue}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Suggested Improvements */}
+        {data.improvements && data.improvements.length > 0 && (
+          <div>
+            <h4 className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3">
+              Suggested Improvements
+            </h4>
+            <div className="space-y-3">
+              {data.improvements.map((improvementText, index) => (
+                <div
+                  key={index}
+                  className="bg-white/[0.01] p-3 rounded-lg border border-white/[0.02] flex gap-3"
+                >
+                  <span className="text-xs text-white/40 font-mono mt-0.5">
+                    •
+                  </span>
+                  <p className="text-xs text-white/70 leading-relaxed">
+                    {improvementText}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Optimized Code Block */}
+        {data.fixed_code && (
+          <div>
+            <div
+              className="flex items-center 
+            terminal
+            justify-between mb-3"
+            >
+              <h4 className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+                Optimized Code
+              </h4>
+              <button
+                onClick={() => handleCopyCode(data.fixed_code)}
+                className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white transition-all bg-white/[0.04] px-2.5 py-1 rounded border border-white/[0.04]"
+              >
+                {copiedCode ? (
+                  <RiCheckLine className="w-3.5 h-3.5 text-green-400" />
+                ) : (
+                  <RiFileCopyLine className="w-3.5 h-3.5" />
+                )}
+                <span>{copiedCode ? 'Copied' : 'Copy'}</span>
+              </button>
+            </div>
+            <pre
+              className="p-4 bg-black border 
+            terminal
+            border-white/[0.04] rounded-lg overflow-x-auto text-xs font-mono text-white/80 leading-relaxed"
+            >
+              <code>{data.fixed_code}</code>
+            </pre>
+          </div>
+        )}
       </div>
     </div>
   );
