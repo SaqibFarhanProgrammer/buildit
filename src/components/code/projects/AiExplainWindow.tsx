@@ -54,7 +54,7 @@ export default function AIExplainWindow() {
         userid: ProjectDetiles?.CreatedUserid,
       });
 
-      let responseData = res.data?.Response || res.data;
+      let responseData = res.data?.Response;
 
       if (!responseData) {
         throw new Error('AI returned empty response');
@@ -68,7 +68,7 @@ export default function AIExplainWindow() {
           .replace(/```$/, '')
           .trim();
 
-        setData(JSON.parse(cleanJson));
+        setData(cleanJson);
       }
     } catch (err) {
       console.error('AI Explain Error:', err);

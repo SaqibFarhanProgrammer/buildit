@@ -34,7 +34,7 @@ export async function EdittorAI(
       throw new AppError('AI returned empty response', 502);
     }
 
-    return response.text;
+    return JSON.parse(response.text);
   } catch (error: any) {
     if (error instanceof AppError) {
       throw error;
