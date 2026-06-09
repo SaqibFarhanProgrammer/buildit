@@ -42,68 +42,58 @@ export default function AIExplainWindow() {
     setTimeout(() => setCopiedCode(false), 1500);
   };
 
-  useEffect(() => {
-    // अगर एडिटर खाली है तो इनपुट वैलिडेशन चेक
-    if (!CodeValue || CodeValue.trim() === '') {
-      setError('Please write or paste some code in the editor first.');
-      setLoading(false);
-      return;
-    }
-
+  const FetchAiExplain = async () => {
     setLoading(true);
     setError(null);
-    setData(null);
 
-    axios
-      .post('/api/aiexplain/aiedittor', {
+    try {
+      const res = await axios.post('/api/aiexplain/aiedittor', {
         coding_experince: '2 years',
         coding_level: 'intermediate',
         code: CodeValue,
         userid: ProjectDetiles?.CreatedUserid,
-      })
-      .then((res) => {
-        // AI रिस्पॉन्स हैंडलिंग
-        let responseData = res.data?.Response || res.data;
-
-        if (!responseData) {
-          throw new Error('AI returned an empty response template.');
-        }
-
-        if (typeof responseData === 'object') {
-          setData(responseData);
-        } else {
-          // अगर स्ट्रिंग में ```json ... ``` आ रहा है तो उसे हटाना
-          let cleanJson = responseData
-            .replace(/^```json\s*/i, '')
-            .replace(/```$/, '')
-            .trim();
-
-          setData(JSON.parse(cleanJson));
-        }
-
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('AI Explain Error:', err);
-        let message = 'Something went wrong while communicating with AI';
-
-        if (axios.isAxiosError(err)) {
-          message =
-            err.response?.data?.error ||
-            err.response?.data?.message ||
-            err.message;
-        } else if (err instanceof Error) {
-          message = `Parsing Error: ${err.message}`;
-        }
-        const messageJson = JSON.parse(message);
-
-
-        setError(messageJson.error.message.split('*')[0]);
-        setLoading(false);
       });
+
+      let responseData = res.data?.Response || res.data;
+
+      if (!responseData) {
+        throw new Error('AI returned empty response');
+      }
+
+      if (typeof responseData === 'object') {
+        setData(responseData);
+      } else {
+        const cleanJson = responseData
+          .replace(/^```json\s*/i, '')
+          .replace(/```$/, '')
+          .trim();
+
+        setData(JSON.parse(cleanJson));
+      }
+    } catch (err) {
+      console.error('AI Explain Error:', err);
+
+      let errorMessage = 'Something went wrong while communicating with AI';
+
+      if (axios.isAxiosError(err)) {
+        errorMessage =
+          err.response?.data?.error?.message ||
+          err.response?.data?.message ||
+          err.message;
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage.split('*')[0]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    FetchAiExplain();
   }, []);
 
-  // 1. Loading UI Screen State
   if (loading) {
     return (
       <div className="h-full flex flex-col bg-[#0A0A0A]">

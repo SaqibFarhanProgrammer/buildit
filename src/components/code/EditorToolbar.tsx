@@ -59,7 +59,8 @@ export default function EditorToolbar() {
 
       const output = response.data?.output ?? 'No output';
       const lines = output
-        .toString().split('\n')
+        .toString()
+        .split('\n')
         .filter((line: string) => line.length > 0);
 
       setOutput(lines.length ? lines : ['No output']);

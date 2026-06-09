@@ -2,10 +2,7 @@ import { GoogleGenAI } from '@google/genai';
 import { SystemInstrutionsCodeEdittor } from '@/utils/SystemInstrutionsCodeEdittor';
 import { AppError } from '../AppError';
 
-const models = [
-  'gemini-2.5-flash',
-  'gemini-2.5-flash-lite',
-];
+const models = ['gemini-2.5-flash', 'gemini-2.5-flash-lite'];
 
 const ai = new GoogleGenAI({
   apiKey: process.env.CODE_EDITTOR_API_KEY,
@@ -21,8 +18,9 @@ export async function EdittorAI(
       throw new AppError('Code snippet is required', 400);
     }
 
+    const random = Math.floor(Math.random() * 2);
     const response = await ai.models.generateContent({
-      model: models[1],
+      model: models[random],
       contents: codeSnippet,
       config: {
         systemInstruction: SystemInstrutionsCodeEdittor(
