@@ -2,7 +2,11 @@ import { GoogleGenAI } from '@google/genai';
 import { SystemInstrutionsCodeEdittor } from '@/utils/SystemInstrutionsCodeEdittor';
 import { AppError } from '../AppError';
 
-// Verified Gemini SDK client initialize karein
+const models = [
+  'gemini-2.5-flash',
+  'gemini-2.5-flash-lite',
+];
+
 const ai = new GoogleGenAI({
   apiKey: process.env.CODE_EDITTOR_API_KEY,
 });
@@ -13,18 +17,14 @@ export async function EdittorAI(
   codeSnippet: string
 ) {
   try {
-    // 1. Input ko check aur sanitize karein
-
     if (!codeSnippet || codeSnippet.trim().length === 0) {
       throw new AppError('Code snippet is required', 400);
     }
 
-    // 2. Content generate karein (Corrected SDK Structure)
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-lite',
-      contents: codeSnippet, 
+      model: models[1],
+      contents: codeSnippet,
       config: {
-        // ERROR FIX: systemInstruction ko sahi spelling aur config ke andar pass kiya
         systemInstruction: SystemInstrutionsCodeEdittor(
           user_Experince,
           userCodingLevel
@@ -32,7 +32,6 @@ export async function EdittorAI(
       },
     });
 
-    // 3. Response se text safely nikalien
     if (!response || !response.text) {
       throw new AppError('AI returned empty response', 502);
     }

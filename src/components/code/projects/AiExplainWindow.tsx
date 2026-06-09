@@ -29,7 +29,7 @@ interface AIResponse {
 }
 
 export default function AIExplainWindow() {
-  const { setIsAiExplainWindowOpen, CodeValue } = useEditor();
+  const { setIsAiExplainWindowOpen, CodeValue, ProjectDetiles } = useEditor();
   const [copiedCode, setCopiedCode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -59,6 +59,7 @@ export default function AIExplainWindow() {
         coding_experince: '2 years',
         coding_level: 'intermediate',
         code: CodeValue,
+        userid: ProjectDetiles?.CreatedUserid,
       })
       .then((res) => {
         // AI रिस्पॉन्स हैंडलिंग
@@ -94,8 +95,10 @@ export default function AIExplainWindow() {
         } else if (err instanceof Error) {
           message = `Parsing Error: ${err.message}`;
         }
+        const messageJson = JSON.parse(message);
 
-        setError(message);
+
+        setError(messageJson.error.message.split('*')[0]);
         setLoading(false);
       });
   }, []);
