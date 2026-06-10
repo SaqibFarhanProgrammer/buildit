@@ -43,6 +43,7 @@ export default function AIExplainWindow() {
   const FetchAiExplain = async () => {
     try {
       setLoading(true);
+
       
       setError(null);
 
