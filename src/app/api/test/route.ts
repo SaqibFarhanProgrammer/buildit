@@ -1,13 +1,25 @@
-// make simpel route jsut return greadthign eessage make function then call and return the response a funcitonjsut return hello
+import { NextResponse } from 'next/server';
 
-import { NextRequest, NextResponse } from 'next/server';
+const cache = new Map();
+const cacheKey = 'limit';
 
-function greetingFunction() {
-  return 'Hello, world!';
-}
+export async function GET() {
+  let currentLimit = cache.get(cacheKey) || 0;
 
-export async function GET(request: NextRequest) {
-  const res = greetingFunction();
+  console.log(currentLimit);
 
-  return NextResponse.json({ message: res });
+  if (currentLimit >= 3) {
+    return NextResponse.json({
+      messgae: 'limit ',
+    });
+  }
+
+  console.log(cache.get(cacheKey));
+
+  currentLimit++;
+  cache.set(cacheKey, currentLimit);
+
+  return NextResponse.json({
+    message: 'Hello World',
+  });
 }
