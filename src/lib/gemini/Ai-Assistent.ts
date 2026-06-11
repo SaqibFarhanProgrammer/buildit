@@ -1,8 +1,8 @@
 import { CodingLevel, UserRole } from '@/types';
 import { Mistral } from '@mistralai/mistralai';
 
-type UserinfoT = {
-  userExpreince: number;
+export type UserinfoT = {
+  userExpreince: string;
   CodingLevel: CodingLevel;
   ROle: UserRole;
 };

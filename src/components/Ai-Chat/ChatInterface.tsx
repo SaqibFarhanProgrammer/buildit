@@ -6,8 +6,8 @@ import ChatInput from './ChatInput';
 
 import type { ChatMessage } from '@/types/ai/chat.types';
 import axios from 'axios';
-import { AppError } from '@/lib/AppError';
-import { UserDataT } from '@/types';
+import { UserDataT } from '@/utils/GetProfiledata';
+import { UserinfoT } from '@/lib/gemini/Ai-Assistent';
 
 const initialMessages: ChatMessage[] = [
   {
@@ -23,22 +23,30 @@ const initialMessages: ChatMessage[] = [
   },
 ];
 
-export default function ChatInterface({ profile }: UserDataT) {
+type propT = {
+  profile: UserDataT;
+};
+
+export default function ChatInterface({ profile }: propT) {
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const userinfo: UserinfoT = {
+    userExpreince: profile.profile.experience,
+    CodingLevel: profile.profile.codingLevel,
+    ROle: profile.profile.role,
   };
 
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const handleSend = async (content: string) => {
-    // 1. User Message State mein save karein
+   const handleSend = async (content: string) => {
     const userMsg: ChatMessage = {
       id: Date.now(),
       role: 'user',
@@ -53,24 +61,18 @@ export default function ChatInterface({ profile }: UserDataT) {
     setIsTyping(true);
 
     try {
-      // 2. Real API Route ko Call karein
+      // 1. Axios patch request syntax error ko fix kiya gaya hai
       const response = await axios.patch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          querry: content,
-          userinfo: userInfo,
-        }),
+        querry: content,
+        userinfo: userinfo,
       });
 
-      if (response.data.success === 200 && response.data) {
-        // 3. AI ka structured JSON object string banakar message content mein store karein
+      // 2. Response parsing condition ko tight aur accurate kiya
+      if (response.data && response.data.data) {
         const aiMsg: ChatMessage = {
           id: Date.now() + 1,
           role: 'assistant',
-          content: JSON.stringify(response.data.data), // data wrapper json string banega
+          content: JSON.stringify(response.data.data),
           timestamp: new Date().toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
@@ -79,11 +81,12 @@ export default function ChatInterface({ profile }: UserDataT) {
         setMessages((prev) => [...prev, aiMsg]);
       }
     } catch (error: any) {
+      // Axios error ya general error handling snippet
       const errorMsg: ChatMessage = {
         id: Date.now() + 1,
         role: 'assistant',
         content: JSON.stringify({
-          answer: `Sorry, an error occurred: ${error?.message || 'Something went wrong.'}`,
+          answer: `Sorry, an error occurred: ${error?.response?.data?.error || error?.message || 'Something went wrong.'}`,
           code_example: '',
           difficulty: 'Error',
         }),
@@ -101,6 +104,7 @@ export default function ChatInterface({ profile }: UserDataT) {
       <div className="flex-1 overflow-y-auto px-6 lg:px-8 py-6 space-y-6">
         <ChatMessages messages={messages} />
 
+        {/* Typing Indicator */}
         {isTyping && (
           <div className="flex items-start gap-3">
             <div className="w-7 h-7 rounded-lg bg-[#0004ff] flex items-center justify-center shrink-0 mt-1">

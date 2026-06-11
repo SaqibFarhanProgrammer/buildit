@@ -1,18 +1,11 @@
-export type CodingLevel = 'Beginner' | 'Intermediate' | 'Advanced';
-export type UserRole =
-  | 'Frontend'
-  | 'Backend'
-  | 'Fullstack'
-  | 'DevOps'
-  | 'Mobile';
-export type AppTheme = 'Light' | 'Dark' | 'System';
+import { CodingLevel, ThemeType, UserRole } from "@/models/User.model";
 
 export type UserProfileT = {
   codingLevel: CodingLevel;
   experience: string; // Kyunki data mein "1" string format mein hai
   programmingLanguage: string;
   role: UserRole;
-  theme: AppTheme;
+  theme: ThemeType;
 };
 
 // 3. Main User Schema type
