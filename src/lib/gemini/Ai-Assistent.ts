@@ -97,7 +97,10 @@ export async function mistralai(querry: string, userinfo: UserinfoT) {
         error.response?.data?.error?.message ||
         error.message;
 
-      throw new AppError(message || 'AI service failed', error.response?.status || 500);
+      throw new AppError(
+        message || 'AI service failed',
+        error.response?.status || 500
+      );
     }
 
     throw new AppError('AI service failed', 500);

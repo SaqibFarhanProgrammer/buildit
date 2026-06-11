@@ -59,9 +59,8 @@ export default function EditorToolbar() {
       });
 
       console.log(response);
-      
 
-      const output = response.data?.output ;
+      const output = response.data?.output;
       const lines = output
         .toString()
         .split('\n')

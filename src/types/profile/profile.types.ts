@@ -1,4 +1,4 @@
-import { CodingLevel, ThemeType, UserRole } from "@/models/User.model";
+import { CodingLevel, ThemeType, UserRole } from '@/models/User.model';
 
 export type UserProfileT = {
   codingLevel: CodingLevel;

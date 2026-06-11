@@ -26,7 +26,9 @@ type propT = {
 };
 
 export default function ChatInterface({ profile }: propT) {
-  const [messages, setMessages] = useState<ChatMessage[]>([getWelcomeMessage()]);
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    getWelcomeMessage(),
+  ]);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 

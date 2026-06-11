@@ -8,7 +8,7 @@ function toPlainUserData(user: Record<string, unknown>): UserDataT {
   return JSON.parse(JSON.stringify(user)) as UserDataT;
 }
 
-import { CodingLevel, ThemeType, UserRole } from "@/models/User.model";
+import { CodingLevel, ThemeType, UserRole } from '@/models/User.model';
 
 export type UserProfileT = {
   codingLevel: CodingLevel;
@@ -25,7 +25,6 @@ export interface UserDataT {
   name: string;
   profile: UserProfileT;
 }
-
 
 function getUserIdFromToken(token: string): string | null {
   try {
