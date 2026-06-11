@@ -1,4 +1,10 @@
-export default function ChatHeader() {
+'use client';
+
+type ChatHeaderProps = {
+  onClearChat?: () => void;
+};
+
+export default function ChatHeader({ onClearChat }: ChatHeaderProps) {
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-[#0a0a0a]/5">
       <div className="max-w-3xl mx-auto px-6 lg:px-8 h-14 flex items-center justify-between">
@@ -29,7 +35,11 @@ export default function ChatHeader() {
         </div>
 
         <div className="flex items-center gap-2">
-          <button className="w-8 h-8 rounded-lg hover:bg-[#0a0a0a]/5 flex items-center justify-center text-[#0a0a0a]/30 hover:text-[#0a0a0a] transition-all">
+          <button
+            type="button"
+            className="w-8 h-8 rounded-lg hover:bg-[#0a0a0a]/5 flex items-center justify-center text-[#0a0a0a]/30 hover:text-[#0a0a0a] transition-all"
+            title="Settings"
+          >
             <svg
               className="w-4 h-4"
               fill="none"
@@ -44,7 +54,12 @@ export default function ChatHeader() {
               />
             </svg>
           </button>
-          <button className="w-8 h-8 rounded-lg hover:bg-[#0a0a0a]/5 flex items-center justify-center text-[#0a0a0a]/30 hover:text-[#0a0a0a] transition-all">
+          <button
+            type="button"
+            onClick={onClearChat}
+            className="w-8 h-8 rounded-lg hover:bg-[#0a0a0a]/5 flex items-center justify-center text-[#0a0a0a]/30 hover:text-[#0a0a0a] transition-all"
+            title="Clear chat"
+          >
             <svg
               className="w-4 h-4"
               fill="none"

@@ -22,7 +22,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
 
   return (
     <div className="relative">
-      <div className="flex fixed  bottom-2 left-100 w-[50vw] items-end gap-3 p-4 sm:p-5 rounded-2xl bg-[#0A0A0A] border border-white/10 focus-within:border-[#0004ff] focus-within:ring-1 focus-within:ring-[#0004ff]/20 transition-all shadow-xl shadow-black/20">
+      <div className="flex items-end gap-3 p-4 sm:p-5 rounded-2xl bg-[#0A0A0A] border border-white/10 focus-within:border-[#0004ff] focus-within:ring-1 focus-within:ring-[#0004ff]/20 transition-all shadow-xl shadow-black/10">
         <button
           type="button"
           className="w-9 h-9 rounded-lg flex items-center justify-center text-white/20 hover:text-white/40 hover:bg-white/5 transition-all shrink-0"
@@ -43,7 +43,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
 
         <div className="hidden sm:flex items-center gap-1 text-white/10 shrink-0 mr-1">
           <RiCommandLine className="w-3 h-3" />
-          <span className="font-['inter-light'] text-[10px]">K</span>
+          <span className="font-['inter-light'] text-[10px]">Enter</span>
         </div>
 
         <button
@@ -55,7 +55,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
         </button>
       </div>
 
-      <p className="font-['inter-light'] text-[10px] text-white/10 text-center mt-3">
+      <p className="font-['inter-light'] text-[10px] text-[#0a0a0a]/30 text-center mt-3">
         BuildIt AI may produce inaccurate information. Verify important code.
       </p>
     </div>

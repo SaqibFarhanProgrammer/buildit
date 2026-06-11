@@ -2,7 +2,11 @@ import { connectDB } from '@/core/db/DbConnection';
 import { User } from '@/models/User.model';
 import jwt from 'jsonwebtoken';
 
-const cache = new Map<string, Record<string, unknown>>();
+const cache = new Map<string, UserDataT>();
+
+function toPlainUserData(user: Record<string, unknown>): UserDataT {
+  return JSON.parse(JSON.stringify(user)) as UserDataT;
+}
 
 import { CodingLevel, ThemeType, UserRole } from "@/models/User.model";
 
@@ -58,10 +62,12 @@ export async function getUserProfile(token: string) {
 
   if (!user) return null;
 
-  cache.set(cacheKey, user);
+  const plainUser = toPlainUserData(user as Record<string, unknown>);
+
+  cache.set(cacheKey, plainUser);
 
   return {
     source: 'db' as const,
-    data: JSON.parse(user),
+    data: plainUser,
   };
 }

@@ -1,12 +1,45 @@
-import { RiFileCopyLine, RiRefreshLine, RiThumbUpLine } from 'react-icons/ri';
-import type { ChatMessage } from '@/types/ai/chat.types';
+'use client';
 
-export default function MessageBubble({ message }: { message: ChatMessage }) {
+import { useState } from 'react';
+import {
+  RiFileCopyLine,
+  RiRefreshLine,
+  RiThumbUpLine,
+  RiCheckLine,
+} from 'react-icons/ri';
+import type { AiChatResponse, ChatMessage } from '@/types/ai/chat.types';
+
+function parseAiContent(content: string): AiChatResponse | null {
+  try {
+    return JSON.parse(content) as AiChatResponse;
+  } catch {
+    return null;
+  }
+}
+
+export default function MessageBubble({
+  message,
+  userInitials = 'You',
+}: {
+  message: ChatMessage;
+  userInitials?: string;
+}) {
   const isUser = message.role === 'user';
+  const [copied, setCopied] = useState(false);
+  const aiData = !isUser ? parseAiContent(message.content) : null;
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  const copyText = aiData
+    ? [aiData.answer, aiData.code_example].filter(Boolean).join('\n\n')
+    : message.content;
 
   return (
     <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
-      {/* Avatar + Name Row */}
       <div
         className={`flex items-center gap-2 mb-2 ${isUser ? 'flex-row-reverse' : ''}`}
       >
@@ -17,7 +50,7 @@ export default function MessageBubble({ message }: { message: ChatMessage }) {
         >
           {isUser ? (
             <span className="font-['inter-semi'] text-[10px] text-white">
-              AC
+              {userInitials}
             </span>
           ) : (
             <svg
@@ -47,7 +80,6 @@ export default function MessageBubble({ message }: { message: ChatMessage }) {
         </span>
       </div>
 
-      {/* Message Content */}
       <div
         className={`max-w-[85%] sm:max-w-[75%] p-4 sm:p-5 rounded-2xl ${
           isUser
@@ -55,20 +87,44 @@ export default function MessageBubble({ message }: { message: ChatMessage }) {
             : 'bg-[#0004ff]/4 text-[#0a0a0a] border border-[#0004ff]/10 rounded-tl-sm'
         }`}
       >
-        <div
-          className={`font-['inter-rag'] text-sm leading-relaxed whitespace-pre-wrap ${
-            isUser ? 'text-white/90' : 'text-[#0a0a0a]/80'
-          }`}
-        >
-          {message.content}
-        </div>
+        {isUser ? (
+          <div className="font-['inter-rag'] text-sm leading-relaxed whitespace-pre-wrap text-white/90">
+            {message.content}
+          </div>
+        ) : aiData ? (
+          <div className="space-y-3">
+            {aiData.difficulty && (
+              <span className="inline-block px-2 py-0.5 rounded-full bg-[#0004ff]/10 text-[#0004ff] font-['inter-semi'] text-[10px] uppercase tracking-wider">
+                {aiData.difficulty}
+              </span>
+            )}
+            <p className="font-['inter-rag'] text-sm leading-relaxed whitespace-pre-wrap text-[#0a0a0a]/80">
+              {aiData.answer}
+            </p>
+            {aiData.code_example && (
+              <pre className="p-3 bg-[#0a0a0a] border border-[#0a0a0a]/10 rounded-lg overflow-x-auto text-xs font-mono text-white/80 leading-relaxed">
+                <code>{aiData.code_example}</code>
+              </pre>
+            )}
+          </div>
+        ) : (
+          <div className="font-['inter-rag'] text-sm leading-relaxed whitespace-pre-wrap text-[#0a0a0a]/80">
+            {message.content}
+          </div>
+        )}
       </div>
 
-      {/* Action Buttons (only for AI) — React Icons */}
       {!isUser && (
         <div className="flex items-center gap-1 mt-2 ml-1">
-          <button className="w-7 h-7 rounded-lg hover:bg-[#0004ff]/5 flex items-center justify-center text-[#0a0a0a]/20 hover:text-[#0004ff] transition-all">
-            <RiFileCopyLine className="w-3.5 h-3.5" />
+          <button
+            onClick={() => handleCopy(copyText)}
+            className="w-7 h-7 rounded-lg hover:bg-[#0004ff]/5 flex items-center justify-center text-[#0a0a0a]/20 hover:text-[#0004ff] transition-all"
+          >
+            {copied ? (
+              <RiCheckLine className="w-3.5 h-3.5 text-green-500" />
+            ) : (
+              <RiFileCopyLine className="w-3.5 h-3.5" />
+            )}
           </button>
           <button className="w-7 h-7 rounded-lg hover:bg-[#0004ff]/5 flex items-center justify-center text-[#0a0a0a]/20 hover:text-[#0004ff] transition-all">
             <RiRefreshLine className="w-3.5 h-3.5" />
