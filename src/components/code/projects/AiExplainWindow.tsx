@@ -44,7 +44,6 @@ export default function AIExplainWindow() {
     try {
       setLoading(true);
 
-      
       setError(null);
 
       const res = await axios.post('/api/aiexplain/aiedittor', {

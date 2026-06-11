@@ -1,6 +1,6 @@
 import { ProjectProvider } from '@/context/Project.context';
 import './globals.css';
-import { main } from '@/lib/gemini/Edittor-Ai';
+import { mistralai } from '@/lib/gemini/Ai-Assistent';
 
 export default async function RootLayout({
   children,

@@ -14,6 +14,7 @@ import {
 } from 'react-icons/ri';
 import axios from 'axios';
 import { useEditor } from '@/context/EditorProvider.context';
+import { log } from 'util';
 
 export default function EditorToolbar() {
   const {
@@ -57,7 +58,10 @@ export default function EditorToolbar() {
         language,
       });
 
-      const output = response.data?.output ?? 'No output';
+      console.log(response);
+      
+
+      const output = response.data?.output ;
       const lines = output
         .toString()
         .split('\n')

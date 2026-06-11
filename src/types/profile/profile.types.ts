@@ -1,11 +1,26 @@
-export interface ProfileUser {
-  name: string;
-  username: string;
+export type CodingLevel = 'Beginner' | 'Intermediate' | 'Advanced';
+export type UserRole =
+  | 'Frontend'
+  | 'Backend'
+  | 'Fullstack'
+  | 'DevOps'
+  | 'Mobile';
+export type AppTheme = 'Light' | 'Dark' | 'System';
+
+export type UserProfileT = {
+  codingLevel: CodingLevel;
+  experience: string; // Kyunki data mein "1" string format mein hai
+  programmingLanguage: string;
+  role: UserRole;
+  theme: AppTheme;
+};
+
+// 3. Main User Schema type
+export interface UserDataT {
   email: string;
-  image?: string;
-  role: string;
-  avatar: string;
-  joinDate: string;
+  image: string;
+  name: string;
+  profile: UserProfileT;
 }
 
 export interface WorkflowItem {

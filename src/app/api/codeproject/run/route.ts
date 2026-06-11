@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
       response.data.stderr ||
       response.data.compile_output ||
       response.data.message ||
-      'No output';
+      'Somthing Went Wrong in Code';
 
     return Response.json({
       output,
