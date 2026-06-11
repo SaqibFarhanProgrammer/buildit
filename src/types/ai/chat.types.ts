@@ -1,3 +1,9 @@
+export interface AiChatResponse {
+  answer: string;
+  code_example: string;
+  difficulty: string;
+}
+
 export interface ChatMessage {
   id: number;
   role: 'user' | 'assistant';
