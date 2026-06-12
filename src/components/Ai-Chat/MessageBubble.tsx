@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import {
   RiFileCopyLine,
   RiRefreshLine,
@@ -98,18 +99,21 @@ export default function MessageBubble({
                 {aiData.difficulty}
               </span>
             )}
-            <p className="font-['inter-rag'] text-sm leading-relaxed whitespace-pre-wrap text-[#0a0a0a]/80">
-              {aiData.answer}
-            </p>
+
+            {/* ReactMarkdown is used here to render bold text, lists, and headings properly */}
+            <div className="font-['inter-rag'] text-sm leading-relaxed text-[#0a0a0a]/80 [&>ul]:list-disc [&>ul]:ml-4 [&>ol]:list-decimal [&>ol]:ml-4 [&>h3]:font-bold [&>h3]:mt-2">
+              <ReactMarkdown>{aiData.answer}</ReactMarkdown>
+            </div>
+
             {aiData.code_example && (
-              <pre className="p-3 bg-[#0a0a0a] border border-[#0a0a0a]/10 rounded-lg overflow-x-auto text-xs font-mono text-white/80 leading-relaxed">
+              <pre className="mt-3 p-3 bg-[#0a0a0a] border border-[#0a0a0a]/10 rounded-lg overflow-x-auto text-xs font-mono text-white/80 leading-relaxed">
                 <code>{aiData.code_example}</code>
               </pre>
             )}
           </div>
         ) : (
-          <div className="font-['inter-rag'] text-sm leading-relaxed whitespace-pre-wrap text-[#0a0a0a]/80">
-            {message.content}
+          <div className="font-['inter-rag'] text-sm leading-relaxed text-[#0a0a0a]/80 [&>ul]:list-disc [&>ul]:ml-4 [&>ol]:list-decimal [&>ol]:ml-4">
+            <ReactMarkdown>{message.content}</ReactMarkdown>
           </div>
         )}
       </div>

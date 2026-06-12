@@ -29,6 +29,8 @@ export async function mistralai(querry: string, userinfo: UserinfoT) {
     Coding Level: ${userinfo.CodingLevel}.
     Role: ${userinfo.ROle}.
     Provide a concise, direct, and structured answer.
+    
+    IMPORTANT: You must respond ONLY with a valid JSON object matching the provided schema. Do not include any extra text, markdown formatting outside of the JSON, or explanations.
   `;
 
   const jsonSchema = {
