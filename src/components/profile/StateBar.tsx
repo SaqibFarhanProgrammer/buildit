@@ -1,4 +1,4 @@
-import type { StatItem } from '@/types/profile/profile.types';
+import type { StatItem } from '@/types/profile/types';
 
 export default function StatsBar({ stats }: { stats: StatItem[] }) {
   return (
