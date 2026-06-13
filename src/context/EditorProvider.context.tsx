@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode } from 'react';
-import type { EditorContextType } from '@/types/editor.types';
+import type { EditorContextType } from '@/types/code-edittor/types';
 import { ProjectType } from '@/types';
 
 const EditorContext = createContext<EditorContextType | null>(null);

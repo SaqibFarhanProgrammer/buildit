@@ -1,4 +1,4 @@
-import type { WorkflowItem } from '@/types/profile/profile.types';
+import type { WorkflowItem } from '@/types/profile/types';
 
 const typeColors: Record<string, string> = {
   ai: 'bg-[#0004ff]/5 text-[#0004ff] border-[#0004ff]/10',
