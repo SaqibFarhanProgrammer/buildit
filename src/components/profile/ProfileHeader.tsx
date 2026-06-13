@@ -1,11 +1,11 @@
 'use client';
-import type { ProfileUser } from '@/types/profile/profile.types';
+import { IUser } from '@/models/User.model';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-export default function ProfileHeader({ user }: { user: ProfileUser }) {
+export default function ProfileHeader({ user }: { user: IUser }) {
   const router = useRouter();
 
   async function logout() {
@@ -32,7 +32,7 @@ export default function ProfileHeader({ user }: { user: ProfileUser }) {
               <Image src={user.image} alt={user.name} width={96} height={96} />
             ) : (
               <span className="font-['inter-bold'] text-3xl sm:text-4xl text-white">
-                {user.avatar}
+                {user.image}
               </span>
             )}
           </div>
@@ -44,17 +44,17 @@ export default function ProfileHeader({ user }: { user: ProfileUser }) {
                 {user.name}
               </h1>
               <span className="font-['inter-rag'] text-sm text-white/40">
-                {user.username}
+                {user.name}
               </span>
             </div>
 
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <span className="font-['inter-semi'] text-[10px] text-white/40 uppercase tracking-wider px-2 py-1 rounded bg-white/5 border border-white/10">
-                {user.role}
+                {user.profile.role}
               </span>
               <span className="font-['inter-light'] text-xs text-white/30 flex items-center gap-1.5">
                 <span className="w-1 h-1 rounded-full bg-white/20" />
-                Joined {user.joinDate}
+                Joined {user.createdAt && ''}
               </span>
             </div>
           </div>
