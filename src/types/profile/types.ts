@@ -13,7 +13,7 @@ export interface UserDataT {
   email: string;
   image?: string;
   name: string;
-  createdAt?: Date | string,
+  createdAt?: Date | string;
   profile: UserProfileT;
 }
 

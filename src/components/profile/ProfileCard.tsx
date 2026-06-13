@@ -1,4 +1,4 @@
-import { IUser } from "@/models/User.model";
+import { IUser } from '@/models/User.model';
 
 export default function ProfileCard({ user }: { user: IUser }) {
   return (
@@ -34,7 +34,7 @@ export default function ProfileCard({ user }: { user: IUser }) {
         <div className="flex items-center gap-3">
           <div className="w-1 h-1 rounded-full bg-[#0a0a0a]/20" />
           <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/40">
-            Joined {user.createdAt && ""}
+            Joined {user.createdAt && ''}
           </span>
         </div>
       </div>

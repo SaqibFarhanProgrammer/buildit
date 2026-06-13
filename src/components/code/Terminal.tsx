@@ -48,7 +48,7 @@ export default function Terminal() {
           </div>
         ) : (
           <>
-            {output.map((line:string, i:number | string) => (
+            {output.map((line: string, i: number | string) => (
               <div
                 key={i}
                 className={`font-['inter-rag'] text-xs leading-relaxed ${

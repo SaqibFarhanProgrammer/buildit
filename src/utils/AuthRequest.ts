@@ -12,10 +12,7 @@ export async function IsUserAuthenticate(req: NextRequest) {
       throw new AppError('Unauthorized', 401);
     }
 
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET!
-    ) as {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
       userId: string;
     };
 
@@ -34,10 +31,7 @@ export async function GetUseridByToken() {
     redirect('/auth/login');
   }
 
-  const decoded = jwt.verify(
-    token,
-    process.env.JWT_SECRET!
-  ) as {
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
     userId: string;
   };
 

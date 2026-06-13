@@ -18,8 +18,8 @@ function toProfileUser(user: UserDataT) {
     name: user.name,
     email: user.email,
     image: user.image ? user.image : '',
-    createdAt : joinDate,
-    profile:user.profile
+    createdAt: joinDate,
+    profile: user.profile,
   };
 }
 
@@ -37,7 +37,7 @@ export default async function ProfilePage() {
     redirect('/auth/login');
   }
 
-  const profileUser = toProfileUser(result.data as UserDataT );
+  const profileUser = toProfileUser(result.data as UserDataT);
 
   return (
     <div className="min-h-screen bg-white">
