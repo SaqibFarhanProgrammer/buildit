@@ -10,6 +10,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@dnd-kit/react": "^0.5.0",
     "@google/genai": "^2.8.0",
     "@hookform/resolvers": "^5.4.0",
     "@mistralai/mistralai": "^2.2.5",
