@@ -1,13 +1,13 @@
-import type { ProfileUser } from '@/types/profile/profile.types';
+import { IUser } from "@/models/User.model";
 
-export default function ProfileCard({ user }: { user: ProfileUser }) {
+export default function ProfileCard({ user }: { user: IUser }) {
   return (
     <div className="p-6 sm:p-7 rounded-2xl border border-[#0a0a0a]/5 bg-[#f9fafb]">
       {/* Avatar */}
       <div className="flex items-center gap-4 mb-6">
         <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#0a0a0a] flex items-center justify-center shrink-0">
           <span className="font-['inter-bold'] text-xl sm:text-2xl text-white">
-            {user.avatar}
+            {user.image}
           </span>
         </div>
         <div>
@@ -15,7 +15,7 @@ export default function ProfileCard({ user }: { user: ProfileUser }) {
             {user.name}
           </h2>
           <p className="font-['inter-rag'] text-sm text-[#0a0a0a]/40">
-            {user.username}
+            {user.name}
           </p>
         </div>
       </div>
@@ -25,7 +25,7 @@ export default function ProfileCard({ user }: { user: ProfileUser }) {
         <div className="flex items-center gap-3">
           <div className="w-1 h-1 rounded-full bg-[#0004ff]" />
           <span className="font-['inter-semi'] text-xs text-[#0a0a0a]/60 uppercase tracking-wider">
-            {user.role}
+            {user.profile.role}
           </span>
         </div>
         <div className="flex items-center gap-3">
@@ -34,7 +34,7 @@ export default function ProfileCard({ user }: { user: ProfileUser }) {
         <div className="flex items-center gap-3">
           <div className="w-1 h-1 rounded-full bg-[#0a0a0a]/20" />
           <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/40">
-            Joined {user.joinDate}
+            Joined {user.createdAt && ""}
           </span>
         </div>
       </div>
