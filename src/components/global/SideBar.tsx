@@ -21,10 +21,11 @@ import axios from 'axios';
 import { PiSidebarSimpleLight } from 'react-icons/pi';
 
 const menuItems = [
+
   { name: 'Profile', href: '/profile', icon: CgProfile },
   { name: 'AI Chat', href: '/ai', icon: RiMessage3Line },
   { name: 'Code Editor', href: '/code', icon: RiCodeBoxLine },
-  { name: 'Project Tracking', href: '/projects', icon: RiKanbanView2 },
+  { name: 'Project Tracking', href: '/projectmanage', icon: RiKanbanView2 },
   { name: 'Problems', href: '/problems', icon: RiTrophyLine },
   { name: 'Dashboard', href: '/dashboard', icon: RiDashboardLine },
   { name: 'Learning', href: '/learning', icon: RiBookOpenLine },

@@ -1,4 +1,4 @@
-import type { Challenge } from '@/types/problems/problem.types';
+import type { Challenge } from '@/types/problems/types';
 
 const difficultyStyles: Record<string, string> = {
   Easy: 'text-emerald-400 border-emerald-400/20 bg-emerald-400/10',

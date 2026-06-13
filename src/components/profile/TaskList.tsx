@@ -1,4 +1,4 @@
-import type { TaskItem } from '@/types/profile/profile.types';
+import type { TaskItem } from '@/types/profile/types';
 
 const priorityColors: Record<string, string> = {
   high: 'bg-red-50 text-red-600 border-red-100',

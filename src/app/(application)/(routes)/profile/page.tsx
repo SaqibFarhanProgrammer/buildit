@@ -2,19 +2,20 @@ import ProfileHeader from '@/components/profile/ProfileHeader';
 import StatsBar from '@/components/profile/StateBar';
 import WorkflowCard from '@/components/profile/WorkflowList';
 import TaskList from '@/components/profile/TaskList';
-import type { ProfileUser } from '@/types/profile/profile.types';
 import { cookies } from 'next/headers';
 import { getUserProfile } from '@/utils/GetProfiledata';
 import { redirect } from 'next/navigation';
+import { IUser, UserProfile } from '@/models/User.model';
+import { UserRole } from '@/types';
 type DbProfileUser = {
   name: string;
   email: string;
   image?: string;
   createdAt?: Date | string;
-  profile?: { role?: string };
+  profile?: { role?: UserRole };
 };
 
-function toProfileUser(user: DbProfileUser): ProfileUser {
+function toProfileUser(user: DbProfileUser) {
   const joinDate = user.createdAt
     ? new Date(user.createdAt).toLocaleDateString('en-US', {
         month: 'short',
@@ -24,10 +25,9 @@ function toProfileUser(user: DbProfileUser): ProfileUser {
 
   return {
     name: user.name,
-    username: user.email.split('@')[0],
     email: user.email,
-    image: user.image,
-    role: user.profile?.role ?? 'Member',
+    image: user.image ? user.image : '',
+    role: user.profile?.role ? user.profile.role : 'FrontEnd',
     avatar: user.name.charAt(0).toUpperCase(),
     joinDate,
   };

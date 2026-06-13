@@ -1,5 +1,5 @@
 import ChallengeCard from './ChallengeCard';
-import type { Challenge } from '@/types/problems/problem.types';
+import type { Challenge } from '@/types/problems/types';
 
 export default function ChallengeGrid({
   challenges,

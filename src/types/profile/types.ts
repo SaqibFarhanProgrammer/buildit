@@ -11,7 +11,7 @@ export type UserProfileT = {
 // 3. Main User Schema type
 export interface UserDataT {
   email: string;
-  image: string;
+  image?: string;
   name: string;
   profile: UserProfileT;
 }

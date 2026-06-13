@@ -1,4 +1,4 @@
-import { Language } from '@/types/learning/learning.types';
+import { Language } from '@/types/learning/types';
 
 export const languages: Language[] = [
   {

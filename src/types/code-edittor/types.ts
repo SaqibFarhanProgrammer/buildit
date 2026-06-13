@@ -1,4 +1,4 @@
-import { ProjectType } from './code-edittor/projects/projects.types';
+import { ProjectType } from './code-edittor/projects/types';
 
 export interface EditorContextType {
   terminalOpen: boolean;

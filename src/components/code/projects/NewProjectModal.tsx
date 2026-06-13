@@ -1,6 +1,6 @@
 'use client';
 
-import { ProjectType } from '@/types/code-edittor/projects/projects.types';
+import { ProjectType } from '@/types/code-edittor/projects/types';
 import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
 import { languagesMap } from '../../../../data';
