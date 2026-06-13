@@ -5,12 +5,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+
+
 export default function ProfileHeader({ user }: { user: UserDataT }) {
   const router = useRouter();
 
   async function logout() {
     await axios.post('/api/auth/logout');
-
     router.push('/auth/login');
   }
   return (

@@ -18,8 +18,8 @@ function toProfileUser(user: UserDataT) {
     name: user.name,
     email: user.email,
     image: user.image ? user.image : '',
-    role: user.profile?.role ? user.profile.role : 'FrontEnd',
     createdAt : joinDate,
+    profile:user.profile
   };
 }
 
