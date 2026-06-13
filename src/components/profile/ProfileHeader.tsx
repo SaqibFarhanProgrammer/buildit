@@ -1,11 +1,11 @@
 'use client';
-import { IUser } from '@/models/User.model';
+import { UserDataT } from '@/types';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-export default function ProfileHeader({ user }: { user: IUser }) {
+export default function ProfileHeader({ user }: { user: UserDataT }) {
   const router = useRouter();
 
   async function logout() {
@@ -15,9 +15,7 @@ export default function ProfileHeader({ user }: { user: IUser }) {
   }
   return (
     <div className="relative bg-[#0a0a0a] text-white">
-      {/* Top bar */}
       <div className="max-w-6xl mx-auto px-6 lg:px-8 pt-8 pb-16 sm:pt-12 sm:pb-20">
-        {/* Breadcrumb */}
         <div className="flex items-center gap-3 mb-8 sm:mb-10">
           <div className="w-6 h-px bg-white/20" />
           <span className="font-['inter4-medium'] text-[10px] text-white/40 uppercase tracking-[0.2em]">
@@ -26,7 +24,6 @@ export default function ProfileHeader({ user }: { user: IUser }) {
         </div>
 
         <div className="flex flex-col sm:flex-row items-start gap-6 sm:gap-8">
-          {/* Large Avatar */}
           <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#0004ff] flex items-center justify-center shrink-0 border-2 border-white/10">
             {user.image ? (
               <Image src={user.image} alt={user.name} width={96} height={96} />
@@ -37,7 +34,6 @@ export default function ProfileHeader({ user }: { user: IUser }) {
             )}
           </div>
 
-          {/* Info */}
           <div className="flex-1 min-w-0">
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3">
               <h1 className="font-['inter-bold'] text-2xl sm:text-3xl lg:text-4xl tracking-tight">
@@ -59,7 +55,6 @@ export default function ProfileHeader({ user }: { user: IUser }) {
             </div>
           </div>
 
-          {/* Actions */}
           <div className="flex items-center gap-3 shrink-0">
             <Link href="/settings">
               <button className="font-['inter-semi'] text-xs bg-white text-[#0a0a0a] px-5 py-2.5 rounded-full hover:bg-white/90 transition-all">
@@ -97,7 +92,6 @@ export default function ProfileHeader({ user }: { user: IUser }) {
         </div>
       </div>
 
-      {/* Bottom curve */}
       <div className="absolute bottom-0 left-0 right-0 h-8 bg-white rounded-t-2xl" />
     </div>
   );

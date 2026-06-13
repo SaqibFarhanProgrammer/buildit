@@ -5,17 +5,8 @@ import TaskList from '@/components/profile/TaskList';
 import { cookies } from 'next/headers';
 import { getUserProfile } from '@/utils/GetProfiledata';
 import { redirect } from 'next/navigation';
-import { IUser, UserProfile } from '@/models/User.model';
-import { UserRole } from '@/types';
-type DbProfileUser = {
-  name: string;
-  email: string;
-  image?: string;
-  createdAt?: Date | string;
-  profile?: { role?: UserRole };
-};
-
-function toProfileUser(user: DbProfileUser) {
+import { UserDataT } from '@/types';
+function toProfileUser(user: UserDataT) {
   const joinDate = user.createdAt
     ? new Date(user.createdAt).toLocaleDateString('en-US', {
         month: 'short',
@@ -28,8 +19,7 @@ function toProfileUser(user: DbProfileUser) {
     email: user.email,
     image: user.image ? user.image : '',
     role: user.profile?.role ? user.profile.role : 'FrontEnd',
-    avatar: user.name.charAt(0).toUpperCase(),
-    joinDate,
+    createdAt : joinDate,
   };
 }
 
@@ -47,7 +37,7 @@ export default async function ProfilePage() {
     redirect('/auth/login');
   }
 
-  const profileUser = toProfileUser(result.data as DbProfileUser);
+  const profileUser = toProfileUser(result.data as UserDataT );
 
   return (
     <div className="min-h-screen bg-white">
