@@ -4,9 +4,6 @@ import { AppError } from '@/lib/AppError';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/dist/client/components/navigation';
 
-const cookieStore = await cookies();
-const token = cookieStore.get('token')?.value;
-
 export async function IsUserAuthenticate(req: NextRequest) {
   try {
     const token = req.cookies.get('token')?.value;
@@ -26,6 +23,9 @@ export async function IsUserAuthenticate(req: NextRequest) {
 }
 
 export async function GetUseridByToken() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value;
+
   if (!token) {
     redirect('/auth/login');
   }
@@ -33,8 +33,6 @@ export async function GetUseridByToken() {
   const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
     userId: string;
   };
-
-  console.log(decoded.userId);
 
   return decoded.userId;
 }
