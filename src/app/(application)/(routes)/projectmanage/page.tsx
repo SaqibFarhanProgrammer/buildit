@@ -14,7 +14,8 @@ async function getProjects(token: string) {
     {
       _id: 'proj_1',
       title: 'E-Commerce Platform',
-      description: 'Full-stack e-commerce application with payment integration and admin dashboard.',
+      description:
+        'Full-stack e-commerce application with payment integration and admin dashboard.',
       state: 'active',
       IsAdmin: true,
       YourhwereAdded: true,

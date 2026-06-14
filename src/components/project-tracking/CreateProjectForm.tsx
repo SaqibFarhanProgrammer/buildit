@@ -1,10 +1,15 @@
 'use client';
 
-import { FiX, FiFolder, FiUsers, FiAlignLeft, FiCheckCircle, FiPlus } from 'react-icons/fi';
-
+import {
+  FiX,
+  FiFolder,
+  FiUsers,
+  FiAlignLeft,
+  FiCheckCircle,
+  FiPlus,
+} from 'react-icons/fi';
 
 export default function CreateProjectModal() {
-
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -38,9 +43,7 @@ export default function CreateProjectModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-[#0a0a0a]/20 backdrop-blur-sm"
-      />
+      <div className="absolute inset-0 bg-[#0a0a0a]/20 backdrop-blur-sm" />
 
       {/* Modal */}
       <div className="relative w-full max-w-lg bg-white rounded-2xl border border-[#0a0a0a]/5 shadow-2xl shadow-[#0a0a0a]/5 overflow-hidden">
@@ -54,9 +57,7 @@ export default function CreateProjectModal() {
               Start a new project and invite your team
             </p>
           </div>
-          <button
-            className="w-8 h-8 rounded-lg bg-[#f9fafb] flex items-center justify-center text-[#0a0a0a]/30 hover:text-[#0a0a0a] hover:bg-[#0a0a0a]/5 transition-all"
-          >
+          <button className="w-8 h-8 rounded-lg bg-[#f9fafb] flex items-center justify-center text-[#0a0a0a]/30 hover:text-[#0a0a0a] hover:bg-[#0a0a0a]/5 transition-all">
             <FiX size={16} />
           </button>
         </div>
@@ -164,9 +165,7 @@ export default function CreateProjectModal() {
 
         {/* Footer */}
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-[#0a0a0a]/5">
-          <button
-            className="px-5 py-2.5 rounded-xl text-sm font-['inter-semi'] text-[#0a0a0a]/50 hover:text-[#0a0a0a] hover:bg-[#f9fafb] transition-all"
-          >
+          <button className="px-5 py-2.5 rounded-xl text-sm font-['inter-semi'] text-[#0a0a0a]/50 hover:text-[#0a0a0a] hover:bg-[#f9fafb] transition-all">
             Cancel
           </button>
           <button className="px-5 py-2.5 rounded-xl bg-[#0004FF] text-white text-sm font-['inter-semi'] hover:bg-[#0004FF]/90 transition-all flex items-center gap-2">

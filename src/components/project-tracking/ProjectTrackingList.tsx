@@ -1,7 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { FiSearch, FiPlus, FiFolder, FiUsers, FiCheckCircle, FiClock } from 'react-icons/fi';
+import {
+  FiSearch,
+  FiPlus,
+  FiFolder,
+  FiUsers,
+  FiCheckCircle,
+  FiClock,
+} from 'react-icons/fi';
 import Link from 'next/link';
 import { ProjectTrackingT } from '@/types/project tracking/types';
 import CreateProjectModal from './CreateProjectForm';
@@ -11,7 +18,6 @@ import CreateProjectModal from './CreateProjectForm';
 type PropType = {
   projectsData: ProjectTrackingT[];
 };
-
 
 const filters = [
   { id: 'all', label: 'All Projects' },
@@ -25,12 +31,14 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filteredProjects = projectsData.filter((p) => {
-    const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch =
+      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.description.toLowerCase().includes(searchQuery.toLowerCase());
 
     if (activeFilter === 'all') return matchesSearch;
     if (activeFilter === 'active') return p.state === 'active' && matchesSearch;
-    if (activeFilter === 'archive') return p.state === 'archive' && matchesSearch;
+    if (activeFilter === 'archive')
+      return p.state === 'archive' && matchesSearch;
     if (activeFilter === 'my') return p.YourhwereAdded && matchesSearch;
     return matchesSearch;
   });
@@ -42,7 +50,7 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
 
   return (
     <div className="max-w-6xl mx-auto px-6 lg:px-8 py-8 sm:py-12">
-      <CreateProjectModal/>
+      <CreateProjectModal />
       <div className="mb-8 sm:mb-10">
         <div className="flex items-center gap-3 mb-6 sm:mb-8">
           <div className="w-6 h-px bg-[#0a0a0a]/20" />
@@ -54,7 +62,8 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
           Your <span className="text-[#0004FF]">Projects</span>
         </h1>
         <p className="font-['inter-rag'] text-sm text-[#0a0a0a]/50 leading-relaxed max-w-xl">
-          Manage project tasks, track progress across teams, and stay organized with your development workflow.
+          Manage project tasks, track progress across teams, and stay organized
+          with your development workflow.
         </p>
       </div>
 

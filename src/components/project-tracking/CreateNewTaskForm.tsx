@@ -28,7 +28,7 @@ const columnColors: Record<string, string> = {
 };
 
 export default function AddTaskModal({
-    columnId,
+  columnId,
   members = [
     { id: 'user_1', name: 'Ali Huzaifa' },
     { id: 'user_2', name: 'Saqib Farhan' },
@@ -36,7 +36,6 @@ export default function AddTaskModal({
     { id: 'user_4', name: 'Umer Farooq' },
   ],
 }: AddTaskModalProps) {
-
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -62,9 +61,7 @@ export default function AddTaskModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div
-        className="absolute inset-0 bg-[#0a0a0a]/20 backdrop-blur-sm"
-      />
+      <div className="absolute inset-0 bg-[#0a0a0a]/20 backdrop-blur-sm" />
 
       <div className="relative w-full max-w-lg bg-white rounded-2xl border border-[#0a0a0a]/5 shadow-2xl shadow-[#0a0a0a]/5 overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#0a0a0a]/5">
@@ -76,17 +73,12 @@ export default function AddTaskModal({
               Create a new task for this project
             </p>
           </div>
-          <button
-            className="w-8 h-8 rounded-lg bg-[#f9fafb] flex items-center justify-center text-[#0a0a0a]/30 hover:text-[#0a0a0a] hover:bg-[#0a0a0a]/5 transition-all"
-          >
+          <button className="w-8 h-8 rounded-lg bg-[#f9fafb] flex items-center justify-center text-[#0a0a0a]/30 hover:text-[#0a0a0a] hover:bg-[#0a0a0a]/5 transition-all">
             <FiX size={16} />
           </button>
         </div>
 
         <div className="px-6 py-5 space-y-5">
-       
-      
-
           <div>
             <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
               Title
@@ -156,9 +148,7 @@ export default function AddTaskModal({
         </div>
 
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-[#0a0a0a]/5">
-          <button
-            className="px-5 py-2.5 rounded-xl text-sm font-['inter-semi'] text-[#0a0a0a]/50 hover:text-[#0a0a0a] hover:bg-[#f9fafb] transition-all"
-          >
+          <button className="px-5 py-2.5 rounded-xl text-sm font-['inter-semi'] text-[#0a0a0a]/50 hover:text-[#0a0a0a] hover:bg-[#f9fafb] transition-all">
             Cancel
           </button>
           <button className="px-5 py-2.5 rounded-xl bg-[#0004FF] text-white text-sm font-['inter-semi'] hover:bg-[#0004FF]/90 transition-all flex items-center gap-2">

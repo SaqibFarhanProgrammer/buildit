@@ -15,11 +15,9 @@ export default async function ProjectPage({
     redirect('/auth/login');
   }
 
-
-
   return (
     <div className="min-h-screen bg-white">
-      <ProjectBoard  />
+      <ProjectBoard />
     </div>
   );
 }
