@@ -10,6 +10,7 @@ import {
   FiMoreHorizontal,
   FiFilter,
 } from 'react-icons/fi';
+import AddTaskModal from './CreateNewTaskForm';
 
 // Types
 type TaskT = {
@@ -379,6 +380,7 @@ export default function ProjectBoard() {
 
   return (
     <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8 sm:py-12">
+        <AddTaskModal />
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
         <div>
           <div className="flex items-center gap-3 mb-4">
