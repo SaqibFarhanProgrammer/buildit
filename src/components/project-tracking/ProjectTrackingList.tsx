@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { FiSearch, FiPlus, FiFolder, FiUsers, FiCheckCircle, FiClock } from 'react-icons/fi';
 import Link from 'next/link';
 import { ProjectTrackingT } from '@/types/project tracking/types';
+import CreateProjectModal from './CreateProjectForm';
 
 // Types
 
@@ -41,7 +42,7 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
 
   return (
     <div className="max-w-6xl mx-auto px-6 lg:px-8 py-8 sm:py-12">
-      {/* Page Header */}
+      <CreateProjectModal/>
       <div className="mb-8 sm:mb-10">
         <div className="flex items-center gap-3 mb-6 sm:mb-8">
           <div className="w-6 h-px bg-[#0a0a0a]/20" />
@@ -57,7 +58,6 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
         </p>
       </div>
 
-      {/* Search & Actions */}
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-8 sm:mb-10">
         <div className="relative w-full lg:w-80">
           <FiSearch
@@ -79,7 +79,6 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
         </button>
       </div>
 
-      {/* Stats Bar */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-10">
         <div className="group p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-[#0004FF] border border-white/5 hover:shadow-lg hover:shadow-[#0a0a0a]/3 transition-all duration-300">
           <div className="flex items-center justify-between mb-3">
@@ -130,7 +129,6 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
         </div>
       </div>
 
-      {/* Filter Tabs */}
       <div className="flex items-center gap-1 p-1.5 rounded-xl bg-[#f9fafb] border border-[#0a0a0a]/5 w-fit mb-8 sm:mb-10 overflow-x-auto">
         {filters.map((filter) => {
           const counts: Record<string, number> = {
@@ -164,7 +162,6 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
         })}
       </div>
 
-      {/* Projects Grid */}
       {filteredProjects.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20">
           <div className="w-16 h-16 rounded-2xl bg-[#f9fafb] border border-[#0a0a0a]/5 flex items-center justify-center mb-4">
@@ -191,7 +188,6 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
               className="block"
             >
               <div className="group relative p-5 rounded-xl bg-white border border-[#0a0a0a]/5 hover:border-[#0004ff]/30 hover:bg-[#f9fafb] transition-all duration-300">
-                {/* State Badge */}
                 <div className="absolute top-4 right-4">
                   <span
                     className={`text-[10px] font-['inter-semi'] px-2 py-1 rounded-md border ${
@@ -204,7 +200,6 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
                   </span>
                 </div>
 
-                {/* Admin Badge */}
                 {project.IsAdmin && (
                   <div className="mb-3">
                     <span className="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-['inter-semi'] bg-[#0004ff]/5 text-[#0004ff] border border-[#0004ff]/10">
@@ -213,17 +208,14 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
                   </div>
                 )}
 
-                {/* Title */}
                 <h3 className="font-['inter-semi'] text-base text-[#0a0a0a] mb-1.5 group-hover:text-[#0004ff] transition-colors pr-20">
                   {project.title}
                 </h3>
 
-                {/* Description */}
                 <p className="font-['inter-rag'] text-xs text-[#0a0a0a]/40 leading-relaxed mb-4 line-clamp-2">
                   {project.description}
                 </p>
 
-                {/* Meta Row */}
                 <div className="flex items-center gap-4 pt-3 border-t border-[#0a0a0a]/5">
                   <span className="flex items-center gap-1.5 text-[10px] text-[#0a0a0a]/30 font-['inter-rag']">
                     <FiCheckCircle size={12} />
@@ -235,7 +227,6 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
                   </span>
                 </div>
 
-                {/* Created By */}
                 <div className="flex items-center gap-2 mt-3">
                   {project.createdByUserImage ? (
                     <img
@@ -255,7 +246,6 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
                   </span>
                 </div>
 
-                {/* Hover Arrow */}
                 <div className="absolute bottom-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity">
                   <span className="text-[#0004ff] text-lg">→</span>
                 </div>
@@ -265,7 +255,6 @@ export default function ProjectTrackingList({ projectsData }: PropType) {
         </div>
       )}
 
-      {/* Footer */}
       <div className="mt-12 pt-6 border-t border-[#0a0a0a]/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <p className="font-['inter-rag'] text-xs text-[#0a0a0a]/30">
           Showing {filteredProjects.length} of {projectsData.length} projects
