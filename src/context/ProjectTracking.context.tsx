@@ -34,8 +34,8 @@ type ProjectTrackingContextType = {
   closeTaskModal: () => void;
 };
 
-export const ProjectTrackingContext =
-  createContext<ProjectTrackingContextType>({
+export const ProjectTrackingContext = createContext<ProjectTrackingContextType>(
+  {
     projects: [],
     isCreateModalOpen: false,
     openCreateModal: () => {},
@@ -54,7 +54,8 @@ export const ProjectTrackingContext =
     openCreateTaskModal: () => {},
     openEditTaskModal: () => {},
     closeTaskModal: () => {},
-  });
+  }
+);
 
 export const ProjectTrackingProvider = ({
   children,
@@ -102,9 +103,7 @@ export const ProjectTrackingProvider = ({
     setTasks((prev) => [task, ...prev]);
     setProjects((prev) =>
       prev.map((p) =>
-        p._id === task.projectid
-          ? { ...p, tasks: [...p.tasks, task._id] }
-          : p
+        p._id === task.projectid ? { ...p, tasks: [...p.tasks, task._id] } : p
       )
     );
     closeTaskModal();

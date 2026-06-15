@@ -17,11 +17,8 @@ export async function DELETE(request: NextRequest) {
 
     const token = request.cookies.get('token')?.value;
     if (!token) {
-      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
-      ;
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
-
-
 
     // return NextResponse.json({ message: result.message });
   } catch (error) {

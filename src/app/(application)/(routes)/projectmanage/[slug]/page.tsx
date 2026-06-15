@@ -16,13 +16,11 @@ export default async function ProjectPage({
     redirect('/auth/login');
   }
 
-    const response = await GetProjectTrackingProject(slug, token);
+  const response = await GetProjectTrackingProject(slug, token);
 
-
-    return (
-      <div className="min-h-screen bg-white">
-        <ProjectBoardShell projectData={response.data} />
-      </div>
-    );
-  } 
-
+  return (
+    <div className="min-h-screen bg-white">
+      <ProjectBoardShell projectData={response.data} />
+    </div>
+  );
+}

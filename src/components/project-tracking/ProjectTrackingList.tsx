@@ -55,8 +55,6 @@ export default function ProjectTrackingList() {
           <FiPlus size={16} />
           New Project
         </button>
-
-        
       </div>
 
       <ProjectTrackingStats projects={projects} />

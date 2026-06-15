@@ -4,12 +4,7 @@ import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
 import { TaskState, TaskT } from '@/types/project tracking/types';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import {
-  FiX,
-  FiCheckCircle,
-  FiCalendar,
-  FiAlignLeft,
-} from 'react-icons/fi';
+import { FiX, FiCheckCircle, FiCalendar, FiAlignLeft } from 'react-icons/fi';
 import { getAvatarColor, getInitials } from './utils';
 
 const columnLabels: Record<string, string> = {
@@ -26,12 +21,7 @@ const columnColors: Record<string, string> = {
   completed: 'bg-emerald-50 text-emerald-600',
 };
 
-const STATES: TaskState[] = [
-  'not started',
-  'in progress',
-  'hold',
-  'completed',
-];
+const STATES: TaskState[] = ['not started', 'in progress', 'hold', 'completed'];
 
 type ErrorState = Record<string, string>;
 
@@ -198,8 +188,7 @@ export default function CreateNewTaskForm() {
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
-                if (errors.title)
-                  setErrors((prev) => ({ ...prev, title: '' }));
+                if (errors.title) setErrors((prev) => ({ ...prev, title: '' }));
               }}
               placeholder="Enter task title..."
               className="w-full px-4 py-2.5 rounded-xl bg-[#f9fafb] border border-[#0a0a0a]/5 text-sm font-['inter-rag'] text-[#0a0a0a] placeholder:text-[#0a0a0a]/20 focus:outline-none focus:border-[#0004FF]/50 focus:bg-white transition-all"
@@ -265,9 +254,7 @@ export default function CreateNewTaskForm() {
                       key={member.id}
                       type="button"
                       onClick={() =>
-                        setAssignToMemberId(
-                          isSelected ? '' : member.id
-                        )
+                        setAssignToMemberId(isSelected ? '' : member.id)
                       }
                       className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-all text-left ${
                         isSelected

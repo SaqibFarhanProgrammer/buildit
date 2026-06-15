@@ -1,10 +1,6 @@
 import mongoose, { Document, Schema, Model, model } from 'mongoose';
 
-export type TaskState =
-  | 'not started'
-  | 'in progress'
-  | 'hold'
-  | 'completed';
+export type TaskState = 'not started' | 'in progress' | 'hold' | 'completed';
 
 export interface ITaskTracking extends Document {
   title: string;

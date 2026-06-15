@@ -1,11 +1,7 @@
 'use client';
 
 import { ProjectTrackingT } from '@/types/project tracking/types';
-import {
-  FiFolder,
-  FiUsers,
-  FiCheckCircle,
-} from 'react-icons/fi';
+import { FiFolder, FiUsers, FiCheckCircle } from 'react-icons/fi';
 
 type Props = {
   projects: ProjectTrackingT[];

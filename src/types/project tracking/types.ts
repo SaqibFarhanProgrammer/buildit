@@ -1,8 +1,4 @@
-export type TaskState =
-  | 'not started'
-  | 'in progress'
-  | 'hold'
-  | 'completed';
+export type TaskState = 'not started' | 'in progress' | 'hold' | 'completed';
 
 export type TaskT = {
   _id: string;
