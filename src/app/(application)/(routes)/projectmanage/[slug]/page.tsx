@@ -1,6 +1,7 @@
-import ProjectBoard from '@/components/project-tracking/ProjectBoard';
+import ProjectBoardShell from '@/components/project-tracking/ProjectBoardShell';
+import { GetProjectTrackingProject } from '@/services/projectTracking/project-tracking.service';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 export default async function ProjectPage({
   params,
@@ -15,9 +16,13 @@ export default async function ProjectPage({
     redirect('/auth/login');
   }
 
-  return (
-    <div className="min-h-screen bg-white">
-      <ProjectBoard />
-    </div>
-  );
-}
+    const response = await GetProjectTrackingProject(slug, token);
+
+
+    return (
+      <div className="min-h-screen bg-white">
+        <ProjectBoardShell projectData={response.data} />
+      </div>
+    );
+  } 
+
