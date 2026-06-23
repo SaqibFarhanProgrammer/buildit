@@ -16,7 +16,8 @@ export default async function ProjectsPage() {
 
   try {
     const response = await GetProjectTrackingProjects(token);
-    projects = response.data;
+
+    projects = response;
   } catch (error) {
     console.error('Failed to load project tracking projects:', error);
   }

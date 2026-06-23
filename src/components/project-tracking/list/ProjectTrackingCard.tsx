@@ -24,7 +24,7 @@ export default function ProjectTrackingCard({ project }: Props) {
           </span>
         </div>
 
-        {project.IsAdmin && (
+        {project.isAdmin && (
           <div className="mb-3">
             <span className="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-['inter-semi'] bg-[#0004ff]/5 text-[#0004ff] border border-[#0004ff]/10">
               Admin
@@ -52,19 +52,11 @@ export default function ProjectTrackingCard({ project }: Props) {
         </div>
 
         <div className="flex items-center gap-2 mt-3">
-          {project.createdByUserImage ? (
-            <img
-              src={project.createdByUserImage}
-              alt={project.createdByUserName}
-              className="w-5 h-5 rounded-full object-cover"
-            />
-          ) : (
-            <div className="w-5 h-5 rounded-full bg-[#0004ff]/10 flex items-center justify-center">
-              <span className="text-[8px] font-['inter-semi'] text-[#0004ff]">
-                {project.createdByUserName.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          )}
+          <div className="w-5 h-5 rounded-full bg-[#0004ff]/10 flex items-center justify-center">
+            <span className="text-[8px] font-['inter-semi'] text-[#0004ff]">
+              {project.createdByUserName?.toString().charAt(0).toUpperCase()}
+            </span>
+          </div>
           <span className="font-['inter-rag'] text-[10px] text-[#0a0a0a]/30">
             {project.createdByUserName}
           </span>

@@ -24,19 +24,14 @@ export type MemberDetailT = {
 };
 
 export type ProjectTrackingT = {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
   state: 'active' | 'archive';
-  IsAdmin: boolean;
-  YourhwereAdded: boolean;
+  createdByUserId: string;
+  createdByUserName: string;
   members: string[];
   tasks: string[];
-  createdByUserName: string;
-  createdByUserImage?: string;
-};
-
-export type ProjectDetailT = Omit<ProjectTrackingT, 'tasks'> & {
-  tasks: TaskT[];
-  memberDetails: MemberDetailT[];
+  isAdmin: boolean;
+  createdAt: Date;
 };

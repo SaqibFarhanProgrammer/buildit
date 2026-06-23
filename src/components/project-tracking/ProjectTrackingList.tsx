@@ -9,13 +9,14 @@ import ProjectTrackingStats from './list/ProjectTrackingStats';
 import ProjectTrackingFilters from './list/ProjectTrackingFilters';
 import ProjectTrackingCard from './list/ProjectTrackingCard';
 import ProjectTrackingEmptyState from './list/ProjectTrackingEmptyState';
+import { ProjectTrackingT } from '@/types/project tracking/types';
 
 export default function ProjectTrackingList() {
   const { projects, openCreateModal } = useProjectTrackingContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
 
-  const filteredProjects = projects.filter((p) => {
+  const filteredProjects = projects.filter((p: ProjectTrackingT) => {
     const matchesSearch =
       p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -24,7 +25,7 @@ export default function ProjectTrackingList() {
     if (activeFilter === 'active') return p.state === 'active' && matchesSearch;
     if (activeFilter === 'archive')
       return p.state === 'archive' && matchesSearch;
-    if (activeFilter === 'my') return p.YourhwereAdded && matchesSearch;
+    if (activeFilter === 'my') return p.isAdmin && matchesSearch;
     return matchesSearch;
   });
 
