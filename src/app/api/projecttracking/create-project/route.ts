@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    // const result = await CreateProjectTracking(request);
+    const result = await CreateProjectTracking(request);
 
     return NextResponse.json({
       message: 'Project created successfully',

@@ -59,14 +59,6 @@ export default function CreateProjectForm() {
     return colors[Math.abs(hash) % colors.length];
   };
 
-  const toggleMember = (memberId: string) => {
-    setSelectedMembers((prev) =>
-      prev.includes(memberId)
-        ? prev.filter((id) => id !== memberId)
-        : [...prev, memberId]
-    );
-  };
-
   const resetForm = () => {
     setTitle('');
     setDescription('');
@@ -101,7 +93,6 @@ export default function CreateProjectForm() {
         description: description.trim(),
         state,
         members: selectedMembers,
-        inviteEmail: inviteEmail.trim() || undefined,
       });
 
       if (!res.data.project) {
@@ -217,7 +208,6 @@ export default function CreateProjectForm() {
                   <button
                     key={member.id}
                     type="button"
-                    onClick={() => toggleMember(member.id)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-all text-left ${
                       isSelected
                         ? 'bg-[#0004ff]/5 border-[#0004ff]/30'
