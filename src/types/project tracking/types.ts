@@ -36,7 +36,6 @@ export type ProjectTrackingT = {
   createdAt: Date;
 };
 
-
 export interface ITaskCard {
   taskId: string;
   title: string;
@@ -44,5 +43,5 @@ export interface ITaskCard {
   dueDate: string | null;
   assignToMemberId: string | null;
   state: TaskState;
-  createdAt:string
+  createdAt: string;
 }

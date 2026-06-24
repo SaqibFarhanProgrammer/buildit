@@ -157,13 +157,10 @@ export async function GetProjectTrackingProject(
   }
 }
 
-
-export async function GetProjectTasks(
-  projectId: string
-): Promise<ITaskCard[]> {
+export async function GetProjectTasks(projectId: string): Promise<ITaskCard[]> {
   try {
     if (!projectId) {
-      throw new AppError("Project id is required", 400);
+      throw new AppError('Project id is required', 400);
     }
 
     const tasks = await TaskTracking.find(
@@ -175,7 +172,7 @@ export async function GetProjectTasks(
         dueDate: 1,
         assignToMemberId: 1,
         state: 1,
-        createdAt:1
+        createdAt: 1,
       }
     ).lean();
 
@@ -183,20 +180,18 @@ export async function GetProjectTasks(
       taskId: task.taskId,
       title: task.title,
       summary: task.summary,
-      dueDate: task.dueDate
-        ? new Date(task.dueDate).toISOString()
-        : null,
+      dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null,
       assignToMemberId: task.assignToMemberId || null,
       state: task.state,
-      createdAt:task.createdAt.toString()
+      createdAt: task.createdAt.toString(),
     }));
   } catch (error) {
-    console.error("GetProjectTasks Error:", error);
+    console.error('GetProjectTasks Error:', error);
 
     if (error instanceof AppError) {
       throw error;
     }
 
-    throw new AppError("Failed to fetch project tasks", 500);
+    throw new AppError('Failed to fetch project tasks', 500);
   }
 }

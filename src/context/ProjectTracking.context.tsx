@@ -63,7 +63,8 @@ export const ProjectTrackingProvider = ({
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const [currentProject, setCurrentProjectState] =
-    useState<ProjectTrackingT | null>(initialProject ?? null);``
+    useState<ProjectTrackingT | null>(initialProject ?? null);
+  ``;
 
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [taskModalMode, setTaskModalMode] = useState<TaskModalMode>('create');
@@ -72,17 +73,14 @@ export const ProjectTrackingProvider = ({
     useState<TaskState>('not started');
 
   function openCreateModal() {
-
     setIsCreateModalOpen(true);
   }
 
   function closeCreateModal() {
-
     setIsCreateModalOpen(false);
   }
 
   function addProject(project: ProjectTrackingT) {
-
     setProjects((prev) => [project, ...prev]);
     closeCreateModal();
   }
@@ -90,8 +88,6 @@ export const ProjectTrackingProvider = ({
   function setCurrentProject(project: ProjectTrackingT) {
     setCurrentProjectState(project);
   }
-
-
 
   function openCreateTaskModal(columnId?: TaskState) {
     setTaskModalMode('create');

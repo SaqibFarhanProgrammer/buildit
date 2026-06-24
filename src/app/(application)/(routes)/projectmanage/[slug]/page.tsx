@@ -1,5 +1,8 @@
 import ProjectBoardShell from '@/components/project-tracking/ProjectBoardShell';
-import { GetProjectTasks, GetProjectTrackingProject } from '@/services/projectTracking/project-tracking.service';
+import {
+  GetProjectTasks,
+  GetProjectTrackingProject,
+} from '@/services/projectTracking/project-tracking.service';
 import { cookies } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
@@ -17,7 +20,7 @@ export default async function ProjectPage({
   }
 
   const response = await GetProjectTrackingProject(slug, token);
-  const tasks = await GetProjectTasks(slug)
+  const tasks = await GetProjectTasks(slug);
 
   return (
     <div className="min-h-screen bg-white">

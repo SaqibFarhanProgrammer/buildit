@@ -6,10 +6,10 @@ import ProjectBoard from './ProjectBoard';
 
 type PropType = {
   projectData: ProjectTrackingT;
-  tasks:ITaskCard[]
+  tasks: ITaskCard[];
 };
 
-export default function ProjectBoardShell({ projectData,tasks }: PropType) {
+export default function ProjectBoardShell({ projectData, tasks }: PropType) {
   return (
     <ProjectTrackingProvider initialProject={projectData}>
       <ProjectBoard tasks={tasks} />

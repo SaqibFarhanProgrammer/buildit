@@ -43,7 +43,6 @@ async function LoginUser(body: LoginBody) {
     throw new Error('Email or password is incorrect');
   }
 
-
   const userId = user._id.toString();
   return {
     _id: userId,

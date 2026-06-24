@@ -6,7 +6,7 @@ import { getAvatarColor, getInitials } from '../utils';
 
 type Props = {
   title: string;
-  members:string[]
+  members: string[];
   searchQuery: string;
   onSearchChange: (query: string) => void;
 };
@@ -15,11 +15,8 @@ export default function BoardHeader({
   title,
   searchQuery,
   onSearchChange,
-  members
+  members,
 }: Props) {
-
-  
-
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
       <div>

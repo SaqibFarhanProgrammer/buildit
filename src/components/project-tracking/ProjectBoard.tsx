@@ -9,17 +9,13 @@ import BoardHeader from './board/BoardHeader';
 import BoardColumn from './board/BoardColumn';
 import { BOARD_COLUMNS } from './utils';
 
-type projectBoardpropsType= {
-  tasks:ITaskCard[]
-}
+type projectBoardpropsType = {
+  tasks: ITaskCard[];
+};
 
-
-export default function ProjectBoard({tasks}:projectBoardpropsType) {
-  const {
-    currentProject,
-    openCreateTaskModal,
-    openEditTaskModal,
-  } = useProjectTrackingContext();
+export default function ProjectBoard({ tasks }: projectBoardpropsType) {
+  const { currentProject, openCreateTaskModal, openEditTaskModal } =
+    useProjectTrackingContext();
 
   const [searchQuery, setSearchQuery] = useState('');
 
