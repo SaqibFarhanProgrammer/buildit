@@ -1,26 +1,24 @@
 'use client';
 
-import { ITaskCard, TaskState, TaskT } from '@/types/project tracking/types';
+import {  TaskT } from '@/types/project tracking/types';
 import { FiPlus } from 'react-icons/fi';
 import { BOARD_COLUMNS } from '../utils';
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
+import TaskCard from './TaskCard';
 
 type ColumnConfig = (typeof BOARD_COLUMNS)[number];
 
 type Props = {
   column: ColumnConfig;
-  tasks: ITaskCard[];
+  tasks: TaskT[];
   isAdmin: boolean;
   onEditTask: (task: TaskT) => void;
   onDeleteTask: (taskId: string) => void;
 };
 
-export default function BoardColumn({
-  column,
-  isAdmin,
-  onDeleteTask,
-}: Props) {
+export default function BoardColumn({ column, isAdmin, tasks }: Props) {
   const { openCreateTaskModal } = useProjectTrackingContext();
+  const states = ['TO DO', 'IN PROGRESS', 'HOLD', 'DONE'];
 
   return (
     <div className="flex flex-col">
@@ -38,14 +36,16 @@ export default function BoardColumn({
         </span>
       </div>
 
-      <div className={`flex-1 rounded-2xl p-3 ${column.color} min-h-[400px]`}>
-       
-          
-          <div className="space-y-3">
-            {/* {tasks.map((task) => (
-              <TaskCard key={task.taskId} task={task} onDelete={onDeleteTask} />
-            ))} */}
-          </div>
+      <div
+        className={`flex-1 rounded-2xl p-3 overflow-y-scroll ${column.color} max-h-[500px]`}
+      >
+        <div className="space-y-3">
+          {tasks
+            .filter((task) => task.state === column.id)
+            .map((task, i) => (
+              <TaskCard key={i} task={task} />
+            ))}
+        </div>
 
         {isAdmin && (
           <button

@@ -1,7 +1,7 @@
 'use client';
 
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
-import { ITaskCard, TaskState } from '@/types/project tracking/types';
+import {  TaskT,  } from '@/types/project tracking/types';
 import axios from 'axios';
 import { useState } from 'react';
 import CreateNewTaskForm from './CreateNewTaskForm';
@@ -10,14 +10,13 @@ import BoardColumn from './board/BoardColumn';
 import { BOARD_COLUMNS } from './utils';
 
 type projectBoardpropsType = {
-  tasks: ITaskCard[];
+  tasks: TaskT[];
 };
 
 export default function ProjectBoard({ tasks }: projectBoardpropsType) {
   const { currentProject, openCreateTaskModal, openEditTaskModal } =
     useProjectTrackingContext();
 
-  const [searchQuery, setSearchQuery] = useState('');
 
   if (!currentProject) {
     return (
@@ -29,14 +28,7 @@ export default function ProjectBoard({ tasks }: projectBoardpropsType) {
     );
   }
 
-  const getTasksByState = (state: TaskState) => {
-    return tasks.filter(
-      (t) =>
-        t.state === state &&
-        (t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          t.summary.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
-  };
+  
 
   const handleDeleteTask = async (taskId: string) => {
     try {
@@ -54,15 +46,13 @@ export default function ProjectBoard({ tasks }: projectBoardpropsType) {
 
       <BoardHeader
         title={currentProject.title}
-        searchQuery={searchQuery}
-        members={currentProject.members}
-        onSearchChange={setSearchQuery}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {BOARD_COLUMNS.map((column) => (
           <BoardColumn
             key={column.id}
+            tasks={tasks}
             column={column}
             isAdmin={currentProject.isAdmin}
             onEditTask={openEditTaskModal}

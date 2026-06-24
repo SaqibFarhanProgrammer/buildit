@@ -1,4 +1,4 @@
-export type TaskState = 'not started' | 'in progress' | 'hold' | 'completed';
+import { TaskState } from '@/models/project traccking/task-tracking.models';
 
 export type TaskT = {
   _id: string;

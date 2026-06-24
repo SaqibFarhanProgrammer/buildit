@@ -12,6 +12,9 @@ export default function ProfileHeader({ user }: { user: UserDataT }) {
     await axios.post('/api/auth/logout');
     router.push('/auth/login');
   }
+
+  console.log(user.image);
+  
   return (
     <div className="relative bg-[#0a0a0a] text-white">
       <div className="max-w-6xl mx-auto px-6 lg:px-8 pt-8 pb-16 sm:pt-12 sm:pb-20">
@@ -23,7 +26,7 @@ export default function ProfileHeader({ user }: { user: UserDataT }) {
         </div>
 
         <div className="flex flex-col sm:flex-row items-start gap-6 sm:gap-8">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#0004ff] flex items-center justify-center shrink-0 border-2 border-white/10">
+          <div className="w-20 overflow-hidden h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#0004ff] flex items-center justify-center shrink-0 border-2 border-white/10">
             {user.image ? (
               <Image src={user.image} alt={user.name} width={96} height={96} />
             ) : (

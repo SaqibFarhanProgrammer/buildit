@@ -10,6 +10,8 @@ export interface ITaskTracking extends Document {
   state: TaskState;
   assignToMemberId?: string;
   dueDate?: Date;
+  createdByUserName: string;
+  createdByUserNameAvatar: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -26,6 +28,8 @@ const TaskTrackingSchema: Schema<ITaskTracking> = new Schema(
       default: 'TO DO',
     },
     assignToMemberId: { type: String },
+    createdByUserName: { type: String },
+    createdByUserNameAvatar: String,
     dueDate: { type: Date },
   },
   { timestamps: true }

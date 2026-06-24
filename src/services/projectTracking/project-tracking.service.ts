@@ -5,6 +5,7 @@ import { TaskTracking } from '@/models/project traccking/task-tracking.models';
 import { ITaskCard } from '@/types/project tracking/types';
 import { GetUseridByToken, IsUserAuthenticate } from '@/utils/AuthRequest';
 import { VerifyToken } from '@/utils/EncodeEmail';
+import { getUserProfile } from '@/utils/GetProfiledata';
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 
@@ -155,43 +156,7 @@ export async function GetProjectTrackingProject(
   }
 }
 
-export async function GetProjectTasks(projectId: string) {
-  try {
-    if (!projectId) {
-      throw new AppError('Project id is required', 400);
-    }
 
-    const tasks = await TaskTracking.find(
-      { projectid: projectId },
-      {
-        taskId: 1,
-        title: 1,
-        summary: 1,
-        dueDate: 1,
-        assignToMemberId: 1,
-        state: 1,
-        createdAt: 1,
-      }
-    ).lean();
-
-    return tasks.map((task) => ({
-      title: task.title,
-      summary: task.summary,
-      dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null,
-      assignToMemberId: task.assignToMemberId || null,
-      state: task.state,
-      createdAt: task.createdAt.toString(),
-    }));
-  } catch (error) {
-    console.error('GetProjectTasks Error:', error);
-
-    if (error instanceof AppError) {
-      throw error;
-    }
-
-    throw new AppError('Failed to fetch project tasks', 500);
-  }
-}
 
 export async function CreateProjectTrackingTask(request: NextRequest) {
   try {
@@ -220,7 +185,10 @@ export async function CreateProjectTrackingTask(request: NextRequest) {
 
     await connectDB();
 
-    console.log(state);
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value;
+
+    const profileData = await getUserProfile(token!);
 
     const task = await TaskTracking.create({
       projectid: projectId,
@@ -230,6 +198,8 @@ export async function CreateProjectTrackingTask(request: NextRequest) {
       createdUserid: useriD,
       assignToMemberId: assignToMemberId || undefined,
       dueDate: dueDate || undefined,
+      createdByUserName: profileData?.data.name,
+      createdByUserNameAvatar: profileData?.data.image,
     });
 
     return {
@@ -245,5 +215,39 @@ export async function CreateProjectTrackingTask(request: NextRequest) {
     }
 
     throw new AppError('Failed to create task', 500);
+  }
+}
+
+export async function GetAllTasks(projectId: string) {
+  try {
+    if (!projectId?.trim()) {
+      throw new AppError('Project id is required', 400);
+    }
+
+    await connectDB();
+
+    const tasks = await TaskTracking.find({
+      projectid: projectId,
+    }).lean();
+
+    return tasks.map((task) => ({
+      _id: task._id.toString(),
+      title: task.title,
+      summary: task.summary,
+      state: task.state,
+      assignToMemberId: task.assignToMemberId || null,
+      dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null,
+      createdAt: task.createdAt.toString(),
+      createdByUserName:task.createdByUserName,
+      createdByUserImage:task.createdByUserNameAvatar
+    }));
+  } catch (error) {
+    console.error('GetAllTasks Error:', error);
+
+    if (error instanceof AppError) {
+      throw error;
+    }
+
+    throw new AppError('Failed to fetch tasks', 500);
   }
 }
