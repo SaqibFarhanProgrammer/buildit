@@ -1,10 +1,12 @@
 'use client';
 
-import {  TaskT } from '@/types/project tracking/types';
+import { TaskT } from '@/types/project tracking/types';
 import { FiPlus } from 'react-icons/fi';
 import { BOARD_COLUMNS } from '../utils';
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
 import TaskCard from './TaskCard';
+import { useState } from 'react';
+import TaskPreview from '../TaskPreview';
 
 type ColumnConfig = (typeof BOARD_COLUMNS)[number];
 
@@ -18,10 +20,24 @@ type Props = {
 
 export default function BoardColumn({ column, isAdmin, tasks }: Props) {
   const { openCreateTaskModal } = useProjectTrackingContext();
-  const states = ['TO DO', 'IN PROGRESS', 'HOLD', 'DONE'];
+  const [isTaskPreviewOpen, setisTaskPreviewOpen] = useState(false);
+  const [TaskDetiales, setTaskDetiales] = useState<TaskT>();
+
+  function HandleTaskPreview(task: TaskT) {
+    setisTaskPreviewOpen(true);
+    setTaskDetiales(task);
+  }
 
   return (
     <div className="flex flex-col">
+      {isTaskPreviewOpen && (
+        <TaskPreview
+          onClose={() => setisTaskPreviewOpen(false)}
+          isOpen={isTaskPreviewOpen}
+          task={TaskDetiales!}
+        />
+      )}
+
       <div className="flex items-center justify-between mb-3 px-1">
         <div className="flex items-center gap-2">
           <span className={`w-2 h-2 rounded-full ${column.dotColor}`} />
@@ -43,7 +59,11 @@ export default function BoardColumn({ column, isAdmin, tasks }: Props) {
           {tasks
             .filter((task) => task.state === column.id)
             .map((task, i) => (
-              <TaskCard key={i} task={task} />
+              <TaskCard
+                handletaskpreview={HandleTaskPreview}
+                key={i}
+                task={task}
+              />
             ))}
         </div>
 

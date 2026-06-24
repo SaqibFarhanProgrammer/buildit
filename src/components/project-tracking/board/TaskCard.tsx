@@ -13,11 +13,13 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { TaskT } from '@/types/project tracking/types';
+import TaskPreview from '../TaskPreview';
 
 export type TaskState = 'not started' | 'in progress' | 'hold' | 'completed';
 
 interface TaskCardProps {
   task: TaskT;
+  handletaskpreview: (tasl: TaskT) => void;
 }
 
 function getInitials(name?: string) {
@@ -47,7 +49,7 @@ function getAvatarColor(name?: string) {
   return colors[Math.abs(hash) % colors.length];
 }
 
-export default function TaskCard({ task }: TaskCardProps) {
+export default function TaskCard({ task, handletaskpreview }: TaskCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -76,7 +78,12 @@ export default function TaskCard({ task }: TaskCardProps) {
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date();
 
   return (
-    <div className="group bg-white rounded-xl border border-[#0a0a0a]/5 hover:border-[#0004ff]/20 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03] transition-all duration-200 p-4 cursor-pointer">
+    <div
+      onClick={() => {
+        handletaskpreview(task);
+      }}
+      className="group bg-white rounded-xl border border-[#0a0a0a]/5 hover:border-[#0004ff]/20 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03] transition-all duration-200 p-4 cursor-pointer"
+    >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#f9fafb] border border-[#0a0a0a]/5">
@@ -180,16 +187,7 @@ export default function TaskCard({ task }: TaskCardProps) {
           </div>
         </div>
 
-        {
-          task.assignToMemberId ? 
-          <div>
-
-          </div>
-          :
-          null
-        }
-
-   
+        {task.assignToMemberId ? <div></div> : null}
       </div>
     </div>
   );
