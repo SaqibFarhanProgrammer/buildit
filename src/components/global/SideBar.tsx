@@ -43,7 +43,7 @@ export default function Sidebar() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed  top-1 left-1 z-160 **:w-10 h-10 bg-[#0a0a0a] text-white rounded-lg flex items-center justify-center hover:bg-[#0a0a0a]/90 transition-all shadow-lg"
+          className="fixed  top-1 left-1 z-160 **:w-10 h-10 bg-[#0a0a0a] text-white rounded-lg flex items-center justify-center hover:bg-[#0a0a0a]/90 transition-all "
         >
           <PiSidebarSimpleLight className="w-5 h-5" />
         </button>
