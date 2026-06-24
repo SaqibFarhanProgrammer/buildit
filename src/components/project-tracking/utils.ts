@@ -25,7 +25,7 @@ export function getAvatarColor(name: string) {
 
 export const BOARD_COLUMNS = [
   {
-    id: 'not started' as const,
+    id: 'TO DO' as const,
     label: 'TO DO',
     color: 'bg-[#0a0a0a]/[0.03]',
     headerColor: 'bg-[#0a0a0a]/[0.06]',
@@ -34,7 +34,7 @@ export const BOARD_COLUMNS = [
     borderColor: 'border-[#0a0a0a]/5',
   },
   {
-    id: 'in progress' as const,
+    id: 'IN PROGRESS' as const,
     label: 'IN PROGRESS',
     color: 'bg-[#0004ff]/[0.03]',
     headerColor: 'bg-[#0004ff]/[0.06]',
@@ -43,7 +43,7 @@ export const BOARD_COLUMNS = [
     borderColor: 'border-[#0004ff]/10',
   },
   {
-    id: 'hold' as const,
+    id: 'HOLD' as const,
     label: 'HOLD',
     color: 'bg-amber-50/[0.5]',
     headerColor: 'bg-amber-100/[0.5]',
@@ -52,7 +52,7 @@ export const BOARD_COLUMNS = [
     borderColor: 'border-amber-200/50',
   },
   {
-    id: 'completed' as const,
+    id: 'DONE' as const,
     label: 'DONE',
     color: 'bg-emerald-50/[0.5]',
     headerColor: 'bg-emerald-100/[0.5]',

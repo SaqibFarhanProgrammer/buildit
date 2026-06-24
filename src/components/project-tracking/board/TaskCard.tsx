@@ -14,11 +14,10 @@ import { getAvatarColor, getInitials } from '../utils';
 
 type Props = {
   task: ITaskCard;
-  onEdit: (task: ITaskCard) => void;
   onDelete: (taskId: string) => void;
 };
 
-export default function TaskCard({ task, onEdit, onDelete }: Props) {
+export default function TaskCard({ task, onDelete }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -47,7 +46,6 @@ export default function TaskCard({ task, onEdit, onDelete }: Props) {
   return (
     <div
       className="group bg-white rounded-xl border border-[#0a0a0a]/5 border-[#0004ff]/20 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03] transition-all duration-200 p-4 cursor-pointer"
-      onClick={() => onEdit(task)}
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
@@ -74,7 +72,6 @@ export default function TaskCard({ task, onEdit, onDelete }: Props) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setMenuOpen(false);
-                  onEdit(task);
                 }}
                 className="w-full flex items-center gap-2 px-3 py-2 text-xs font-['inter-rag'] text-[#0a0a0a]/60 hover:bg-[#f9fafb]"
               >

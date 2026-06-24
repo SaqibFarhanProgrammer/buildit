@@ -29,54 +29,28 @@ export default function CreateNewTaskForm() {
   const {
     isTaskModalOpen,
     taskModalMode,
+    setIsTaskModalOpen,
     editingTask,
     taskModalColumn,
     currentProject,
     closeTaskModal,
-    addTask,
-    updateTask,
   } = useProjectTrackingContext();
 
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
-  const [state, setState] = useState<TaskState>('not started');
   const [assignToMemberId, setAssignToMemberId] = useState<string>('');
   const [dueDate, setDueDate] = useState('');
   const [errors, setErrors] = useState<ErrorState>({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const members = currentProject?.memberDetails ?? [];
+  const members = currentProject?.members ?? [];
   const isEdit = taskModalMode === 'edit';
-
-  useEffect(() => {
-    if (!isTaskModalOpen) return;
-
-    if (isEdit && editingTask) {
-      setTitle(editingTask.title);
-      setSummary(editingTask.summary);
-      setState(editingTask.state);
-      setAssignToMemberId(editingTask.assignToMemberId ?? '');
-      setDueDate(
-        editingTask.dueDate
-          ? new Date(editingTask.dueDate).toISOString().split('T')[0]
-          : ''
-      );
-    } else {
-      setTitle('');
-      setSummary('');
-      setState(taskModalColumn);
-      setAssignToMemberId('');
-      setDueDate('');
-    }
-    setErrors({});
-  }, [isTaskModalOpen, isEdit, editingTask, taskModalColumn]);
 
   if (!isTaskModalOpen || !currentProject) return null;
 
   const resetForm = () => {
     setTitle('');
     setSummary('');
-    setState('not started');
     setAssignToMemberId('');
     setDueDate('');
     setErrors({});
@@ -101,40 +75,18 @@ export default function CreateNewTaskForm() {
     setIsLoading(true);
 
     try {
-      if (isEdit && editingTask) {
-        const res = await axios.patch('/api/projecttracking/update-task', {
-          taskId: editingTask._id,
-          projectId: currentProject._id,
-          title: title.trim(),
-          summary: summary.trim(),
-          state,
-          assignToMemberId: assignToMemberId || null,
-          dueDate: dueDate || null,
-        });
+      const res = await axios.post('/api/projecttracking/create-task', {
+        projectId: currentProject._id,
+        title: title.trim(),
+        summary: summary.trim(),
+        state: taskModalColumn,
+        assignToMemberId: assignToMemberId || undefined,
+        dueDate: dueDate || undefined,
+      });
 
-        if (!res.data.task) {
-          throw new Error('No task returned from API');
-        }
+      setIsTaskModalOpen(false);
 
-        updateTask(res.data.task as TaskT);
-        resetForm();
-      } else {
-        const res = await axios.post('/api/projecttracking/create-task', {
-          projectId: currentProject._id,
-          title: title.trim(),
-          summary: summary.trim(),
-          state,
-          assignToMemberId: assignToMemberId || undefined,
-          dueDate: dueDate || undefined,
-        });
-
-        if (!res.data.task) {
-          throw new Error('No task returned from API');
-        }
-
-        addTask(res.data.task as TaskT);
-        resetForm();
-      }
+      resetForm();
     } catch (error) {
       console.error('TASK_FORM_ERROR:', error);
       setErrors({
@@ -224,11 +176,10 @@ export default function CreateNewTaskForm() {
               Status
             </label>
             <div className="flex flex-wrap items-center gap-2">
-              {STATES.map((s) => (
+              {/* {STATES.map((s) => (
                 <button
                   key={s}
                   type="button"
-                  onClick={() => setState(s)}
                   className={`inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-['inter-semi'] border transition-all ${
                     state === s
                       ? columnColors[s]
@@ -237,7 +188,7 @@ export default function CreateNewTaskForm() {
                 >
                   {columnLabels[s]}
                 </button>
-              ))}
+              ))} */}
             </div>
           </div>
 

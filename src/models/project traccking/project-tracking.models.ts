@@ -6,7 +6,6 @@ export interface IProjectTracking extends Document {
   state: 'active' | 'archive';
   createdByUserId: string;
   members: string[];
-  tasks: string[];
   isAdmin: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -23,7 +22,6 @@ const ProjectTrackingSchema: Schema<IProjectTracking> = new Schema(
     },
     createdByUserId: { type: String, required: true },
     members: [{ type: String }],
-    tasks: [{ type: String }],
     isAdmin: { type: Boolean, default: true },
   },
 

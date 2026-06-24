@@ -64,9 +64,7 @@ export default function ProjectBoard({ tasks }: projectBoardpropsType) {
           <BoardColumn
             key={column.id}
             column={column}
-            tasks={getTasksByState(column.id)}
             isAdmin={currentProject.isAdmin}
-            onCreateTask={openCreateTaskModal}
             onEditTask={openEditTaskModal}
             onDeleteTask={handleDeleteTask}
           />

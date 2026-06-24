@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, Model, model } from 'mongoose';
 
-export type TaskState = 'not started' | 'in progress' | 'hold' | 'completed';
+export type TaskState = 'TO DO' | 'IN PROGRESS' | 'HOLD' | 'DONE';
 
 export interface ITaskTracking extends Document {
   title: string;
@@ -10,7 +10,6 @@ export interface ITaskTracking extends Document {
   state: TaskState;
   assignToMemberId?: string;
   dueDate?: Date;
-  taskId: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -23,12 +22,11 @@ const TaskTrackingSchema: Schema<ITaskTracking> = new Schema(
     projectid: { type: String, required: true },
     state: {
       type: String,
-      enum: ['not started', 'in progress', 'hold', 'completed'],
-      default: 'not started',
+      enum: ['TO DO', 'IN PROGRESS', 'HOLD', 'DONE'],
+      default: 'TO DO',
     },
     assignToMemberId: { type: String },
     dueDate: { type: Date },
-    taskId: { type: String, required: true },
   },
   { timestamps: true }
 );

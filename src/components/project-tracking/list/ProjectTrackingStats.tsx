@@ -9,7 +9,7 @@ type Props = {
 
 export default function ProjectTrackingStats({ projects }: Props) {
   const activeCount = projects.filter((p) => p.state === 'active').length;
-  const myCount = projects.filter((p) => p.YourhwereAdded).length;
+  const myCount = projects.filter((p) => p.isAdmin).length;
   const totalTasks = projects.reduce((acc, p) => acc + p.tasks.length, 0);
 
   return (

@@ -1,12 +1,9 @@
 'use client';
 
 import { AppError } from '@/lib/AppError';
-import {
-  ProjectTrackingT,
-  TaskState,
-  TaskT,
-} from '@/types/project tracking/types';
-import { createContext, useContext, useState } from 'react';
+import { TaskState } from '@/models/project traccking/task-tracking.models';
+import { ProjectTrackingT, TaskT } from '@/types/project tracking/types';
+import React, { createContext, useContext, useState } from 'react';
 
 type TaskModalMode = 'create' | 'edit';
 
@@ -16,7 +13,7 @@ type ProjectTrackingContextType = {
   openCreateModal: () => void;
   closeCreateModal: () => void;
   addProject: (project: ProjectTrackingT) => void;
-
+  setIsTaskModalOpen: React.Dispatch<boolean>;
   currentProject: ProjectTrackingT | null;
   setCurrentProject: (project: ProjectTrackingT) => void;
 
@@ -41,10 +38,11 @@ export const ProjectTrackingContext = createContext<ProjectTrackingContextType>(
     isTaskModalOpen: false,
     taskModalMode: 'create',
     editingTask: null,
-    taskModalColumn: 'not started',
+    taskModalColumn: 'TO DO',
     openCreateTaskModal: () => {},
     openEditTaskModal: () => {},
     closeTaskModal: () => {},
+    setIsTaskModalOpen: () => {},
   }
 );
 
@@ -69,8 +67,7 @@ export const ProjectTrackingProvider = ({
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [taskModalMode, setTaskModalMode] = useState<TaskModalMode>('create');
   const [editingTask, setEditingTask] = useState<TaskT | null>(null);
-  const [taskModalColumn, setTaskModalColumn] =
-    useState<TaskState>('not started');
+  const [taskModalColumn, setTaskModalColumn] = useState<TaskState>('TO DO');
 
   function openCreateModal() {
     setIsCreateModalOpen(true);
@@ -92,14 +89,15 @@ export const ProjectTrackingProvider = ({
   function openCreateTaskModal(columnId?: TaskState) {
     setTaskModalMode('create');
     setEditingTask(null);
-    setTaskModalColumn(columnId ?? 'not started');
     setIsTaskModalOpen(true);
+    if (columnId) {
+      setTaskModalColumn(columnId);
+    }
   }
 
   function openEditTaskModal(task: TaskT) {
     setTaskModalMode('edit');
     setEditingTask(task);
-    setTaskModalColumn(task.state);
     setIsTaskModalOpen(true);
   }
 
@@ -113,6 +111,7 @@ export const ProjectTrackingProvider = ({
     projects,
     isCreateModalOpen,
     openCreateModal,
+    setIsTaskModalOpen,
     closeCreateModal,
     addProject,
     currentProject,

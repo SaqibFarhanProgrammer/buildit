@@ -1,12 +1,11 @@
 import { connectDB } from '@/core/db/DbConnection';
 import { AppError } from '@/lib/AppError';
-import { Project } from '@/models/codeEdittor/Project.model';
 import { ProjectTracking } from '@/models/project traccking/project-tracking.models';
 import { TaskTracking } from '@/models/project traccking/task-tracking.models';
 import { ITaskCard } from '@/types/project tracking/types';
-import { IsUserAuthenticate } from '@/utils/AuthRequest';
+import { GetUseridByToken, IsUserAuthenticate } from '@/utils/AuthRequest';
 import { VerifyToken } from '@/utils/EncodeEmail';
-import { getUserProfile } from '@/utils/GetProfiledata';
+import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 
 export async function GetProjectTrackingProjects(token: string) {
@@ -31,7 +30,6 @@ export async function GetProjectTrackingProjects(token: string) {
       createdByUserId: project.createdByUserId?.toString(),
       members:
         project.members?.map((memberId: any) => memberId.toString()) || [],
-      tasks: project.tasks?.map((taskId: any) => taskId.toString()) || [],
       createdAt: project.createdAt
         ? new Date(project.createdAt).toISOString()
         : null,
@@ -81,6 +79,7 @@ export async function CreateProjectTracking(request: NextRequest) {
       title: title.trim(),
       description: description.trim(),
       state: 'active',
+
       members: members || [],
       createdByUserId: userid,
       isAdmin: true,
@@ -141,7 +140,6 @@ export async function GetProjectTrackingProject(
         _id: project._id.toString(),
         createdByUserId: project.createdByUserId?.toString(),
         members: project.members?.map((member: any) => member.toString()) || [],
-        tasks: project.tasks?.map((task: any) => task.toString()) || [],
         createdAt: project.createdAt?.toISOString(),
         updatedAt: project.updatedAt?.toISOString(),
       },
@@ -157,7 +155,7 @@ export async function GetProjectTrackingProject(
   }
 }
 
-export async function GetProjectTasks(projectId: string): Promise<ITaskCard[]> {
+export async function GetProjectTasks(projectId: string) {
   try {
     if (!projectId) {
       throw new AppError('Project id is required', 400);
@@ -177,7 +175,6 @@ export async function GetProjectTasks(projectId: string): Promise<ITaskCard[]> {
     ).lean();
 
     return tasks.map((task) => ({
-      taskId: task.taskId,
       title: task.title,
       summary: task.summary,
       dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null,
@@ -193,5 +190,60 @@ export async function GetProjectTasks(projectId: string): Promise<ITaskCard[]> {
     }
 
     throw new AppError('Failed to fetch project tasks', 500);
+  }
+}
+
+export async function CreateProjectTrackingTask(request: NextRequest) {
+  try {
+    const body = await request.json();
+
+    const { projectId, title, summary, state, assignToMemberId, dueDate } =
+      body;
+
+    const useriD = await GetUseridByToken();
+
+    if (!projectId) {
+      throw new AppError('Project id is required', 400);
+    }
+
+    if (!title?.trim()) {
+      throw new AppError('Title is required', 400);
+    }
+
+    if (!summary?.trim()) {
+      throw new AppError('Summary is required', 400);
+    }
+
+    if (!state) {
+      throw new AppError('State is required', 400);
+    }
+
+    await connectDB();
+
+    console.log(state);
+
+    const task = await TaskTracking.create({
+      projectid: projectId,
+      title: title.trim(),
+      summary: summary.trim(),
+      state,
+      createdUserid: useriD,
+      assignToMemberId: assignToMemberId || undefined,
+      dueDate: dueDate || undefined,
+    });
+
+    return {
+      success: true,
+      message: 'Task created successfully',
+      data: task,
+    };
+  } catch (error) {
+    console.error('CreateProjectTrackingTask Error:', error);
+
+    if (error instanceof AppError) {
+      throw error;
+    }
+
+    throw new AppError('Failed to create task', 500);
   }
 }
