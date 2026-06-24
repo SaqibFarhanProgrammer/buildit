@@ -17,7 +17,6 @@ type UserType = {
   confirmPassword: string;
 };
 
-// 7 days in milliseconds
 const COOKIE_EXPIRY_DAYS = 7;
 const COOKIE_MAX_AGE = COOKIE_EXPIRY_DAYS * 24 * 60 * 60;
 
@@ -33,20 +32,17 @@ async function LoginUser(body: LoginBody) {
     throw new Error('Password must be at least 8 characters long');
   }
 
-  // Find user in database by email
   const user = await User.findOne({ email });
 
   if (!user) {
     throw new Error('User not found');
   }
 
-  // Verify password (in production, compare hashed password)
   const hashedPassword = bcrypt.compare(password, user.password);
   if (!hashedPassword) {
     throw new Error('Email or password is incorrect');
   }
 
-  // Set authentication cookies for 7 days
 
   const userId = user._id.toString();
   return {
@@ -60,28 +56,23 @@ async function LoginUser(body: LoginBody) {
 async function RegisterUser(body: UserType) {
   const { name, email, password, confirmPassword } = body;
 
-  // Validate name
   if (!name || name.trim().length === 0) {
     throw new AppError('Name is required', 400);
   }
 
-  // Validate email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
     throw new AppError('Invalid email address', 400);
   }
 
-  // Validate password
   if (!password || password.length < 8) {
     throw new AppError('Password must be at least 8 characters long', 400);
   }
 
-  // Confirm password check
   if (password !== confirmPassword) {
     throw new AppError('Passwords do not match', 400);
   }
 
-  // Check existing user
   const existingUser = await User.findOne({ email });
 
   if (existingUser && existingUser?.isVerified) {
@@ -110,7 +101,6 @@ async function RegisterUser(body: UserType) {
       status: 200,
     };
   }
-  // Hash password (CRITICAL FIX)
   const hashedPassword = await bcrypt.hash(password, 12);
 
   const verificationCode = GenerateVerificationCOde();
@@ -120,7 +110,6 @@ async function RegisterUser(body: UserType) {
     Date.now() + EMAIL_VERIFICATION_EXPIRY_MINUTES * 60 * 1000
   );
 
-  // Create user
   await User.create({
     name,
     email,

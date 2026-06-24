@@ -14,7 +14,8 @@ import { ProjectTrackingT } from '@/types/project tracking/types';
 export default function ProjectTrackingList() {
   const { projects, openCreateModal } = useProjectTrackingContext();
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('all');
+
+  const [activeFilter, setActiveFilter] = useState('active');
 
   const filteredProjects = projects.filter((p: ProjectTrackingT) => {
     const matchesSearch =

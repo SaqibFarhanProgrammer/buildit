@@ -1,23 +1,25 @@
 'use client';
 
-import { MemberDetailT } from '@/types/project tracking/types';
 import { FiSearch, FiFilter } from 'react-icons/fi';
 import Link from 'next/link';
 import { getAvatarColor, getInitials } from '../utils';
 
 type Props = {
   title: string;
-  members: MemberDetailT[];
+  members:string[]
   searchQuery: string;
   onSearchChange: (query: string) => void;
 };
 
 export default function BoardHeader({
   title,
-  members,
   searchQuery,
   onSearchChange,
+  members
 }: Props) {
+
+  
+
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
       <div>

@@ -1,17 +1,18 @@
 'use client';
 
 import { ProjectTrackingProvider } from '@/context/ProjectTracking.context';
-import { ProjectDetailT } from '@/types/project tracking/types';
+import { ITaskCard, ProjectTrackingT } from '@/types/project tracking/types';
 import ProjectBoard from './ProjectBoard';
 
 type PropType = {
-  projectData: ProjectDetailT;
+  projectData: ProjectTrackingT;
+  tasks:ITaskCard[]
 };
 
-export default function ProjectBoardShell({ projectData }: PropType) {
+export default function ProjectBoardShell({ projectData,tasks }: PropType) {
   return (
     <ProjectTrackingProvider initialProject={projectData}>
-      <ProjectBoard />
+      <ProjectBoard tasks={tasks} />
     </ProjectTrackingProvider>
   );
 }

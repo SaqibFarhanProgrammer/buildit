@@ -1,6 +1,6 @@
 'use client';
 
-import { TaskState, TaskT } from '@/types/project tracking/types';
+import { ITaskCard, TaskState, TaskT } from '@/types/project tracking/types';
 import { FiPlus } from 'react-icons/fi';
 import TaskCard from './TaskCard';
 import { BOARD_COLUMNS } from '../utils';
@@ -9,7 +9,7 @@ type ColumnConfig = (typeof BOARD_COLUMNS)[number];
 
 type Props = {
   column: ColumnConfig;
-  tasks: TaskT[];
+  tasks: ITaskCard[];
   isAdmin: boolean;
   onCreateTask: (columnId: TaskState) => void;
   onEditTask: (task: TaskT) => void;
@@ -51,7 +51,7 @@ export default function BoardColumn({
           <div className="space-y-3">
             {tasks.map((task) => (
               <TaskCard
-                key={task._id}
+                key={task.taskId}
                 task={task}
                 onEdit={onEditTask}
                 onDelete={onDeleteTask}

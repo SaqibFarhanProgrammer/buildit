@@ -1,7 +1,7 @@
 'use client';
 
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
-import { TaskState } from '@/types/project tracking/types';
+import { ITaskCard, TaskState } from '@/types/project tracking/types';
 import axios from 'axios';
 import { useState } from 'react';
 import CreateNewTaskForm from './CreateNewTaskForm';
@@ -9,13 +9,16 @@ import BoardHeader from './board/BoardHeader';
 import BoardColumn from './board/BoardColumn';
 import { BOARD_COLUMNS } from './utils';
 
-export default function ProjectBoard() {
+type projectBoardpropsType= {
+  tasks:ITaskCard[]
+}
+
+
+export default function ProjectBoard({tasks}:projectBoardpropsType) {
   const {
     currentProject,
-    tasks,
     openCreateTaskModal,
     openEditTaskModal,
-    removeTask,
   } = useProjectTrackingContext();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -44,7 +47,6 @@ export default function ProjectBoard() {
       await axios.delete(
         `/api/projecttracking/delete-task?taskId=${taskId}&projectId=${currentProject._id}`
       );
-      removeTask(taskId);
     } catch (error) {
       console.error('DELETE_TASK_ERROR:', error);
     }
@@ -56,8 +58,8 @@ export default function ProjectBoard() {
 
       <BoardHeader
         title={currentProject.title}
-        members={currentProject.memberDetails}
         searchQuery={searchQuery}
+        members={currentProject.members}
         onSearchChange={setSearchQuery}
       />
 
@@ -67,7 +69,7 @@ export default function ProjectBoard() {
             key={column.id}
             column={column}
             tasks={getTasksByState(column.id)}
-            isAdmin={currentProject.YourhwereAdded}
+            isAdmin={currentProject.isAdmin}
             onCreateTask={openCreateTaskModal}
             onEditTask={openEditTaskModal}
             onDeleteTask={handleDeleteTask}

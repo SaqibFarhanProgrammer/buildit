@@ -1,4 +1,5 @@
 import { AppError } from '@/lib/AppError';
+import { CreateProjectTracking } from '@/services/projectTracking/project-tracking.service';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
@@ -7,7 +8,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       message: 'Project created successfully',
-      // project: result.project,
+      project: result,
     });
   } catch (error) {
     console.error('CREATE_PROJECT_TRACKING_ERROR:', error);

@@ -35,3 +35,14 @@ export type ProjectTrackingT = {
   isAdmin: boolean;
   createdAt: Date;
 };
+
+
+export interface ITaskCard {
+  taskId: string;
+  title: string;
+  summary: string;
+  dueDate: string | null;
+  assignToMemberId: string | null;
+  state: TaskState;
+  createdAt:string
+}

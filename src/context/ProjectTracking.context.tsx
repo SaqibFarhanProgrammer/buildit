@@ -2,7 +2,6 @@
 
 import { AppError } from '@/lib/AppError';
 import {
-  ProjectDetailT,
   ProjectTrackingT,
   TaskState,
   TaskT,
@@ -18,12 +17,8 @@ type ProjectTrackingContextType = {
   closeCreateModal: () => void;
   addProject: (project: ProjectTrackingT) => void;
 
-  currentProject: ProjectDetailT | null;
-  setCurrentProject: (project: ProjectDetailT) => void;
-  tasks: TaskT[];
-  addTask: (task: TaskT) => void;
-  updateTask: (task: TaskT) => void;
-  removeTask: (taskId: string) => void;
+  currentProject: ProjectTrackingT | null;
+  setCurrentProject: (project: ProjectTrackingT) => void;
 
   isTaskModalOpen: boolean;
   taskModalMode: TaskModalMode;
@@ -43,10 +38,6 @@ export const ProjectTrackingContext = createContext<ProjectTrackingContextType>(
     addProject: () => {},
     currentProject: null,
     setCurrentProject: () => {},
-    tasks: [],
-    addTask: () => {},
-    updateTask: () => {},
-    removeTask: () => {},
     isTaskModalOpen: false,
     taskModalMode: 'create',
     editingTask: null,
@@ -64,7 +55,7 @@ export const ProjectTrackingProvider = ({
 }: {
   children: React.ReactNode;
   initialProjects?: ProjectTrackingT[];
-  initialProject?: ProjectDetailT | null;
+  initialProject?: ProjectTrackingT | null;
 }) => {
   const [projects, setProjects] = useState<ProjectTrackingT[]>(
     initialProjects ?? []
@@ -72,8 +63,7 @@ export const ProjectTrackingProvider = ({
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const [currentProject, setCurrentProjectState] =
-    useState<ProjectDetailT | null>(initialProject ?? null);
-  const [tasks, setTasks] = useState<TaskT[]>(initialProject?.tasks ?? []);
+    useState<ProjectTrackingT | null>(initialProject ?? null);``
 
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [taskModalMode, setTaskModalMode] = useState<TaskModalMode>('create');
@@ -82,51 +72,26 @@ export const ProjectTrackingProvider = ({
     useState<TaskState>('not started');
 
   function openCreateModal() {
+
     setIsCreateModalOpen(true);
   }
 
   function closeCreateModal() {
+
     setIsCreateModalOpen(false);
   }
 
   function addProject(project: ProjectTrackingT) {
+
     setProjects((prev) => [project, ...prev]);
     closeCreateModal();
   }
 
-  function setCurrentProject(project: ProjectDetailT) {
+  function setCurrentProject(project: ProjectTrackingT) {
     setCurrentProjectState(project);
-    setTasks(project.tasks);
   }
 
-  function addTask(task: TaskT) {
-    setTasks((prev) => [task, ...prev]);
-    setProjects((prev) =>
-      prev.map((p) =>
-        p._id === task.projectid ? { ...p, tasks: [...p.tasks, task._id] } : p
-      )
-    );
-    closeTaskModal();
-  }
 
-  function updateTask(task: TaskT) {
-    setTasks((prev) => prev.map((t) => (t._id === task._id ? task : t)));
-    closeTaskModal();
-  }
-
-  function removeTask(taskId: string) {
-    const task = tasks.find((t) => t._id === taskId);
-    setTasks((prev) => prev.filter((t) => t._id !== taskId));
-    if (task) {
-      setProjects((prev) =>
-        prev.map((p) =>
-          p._id === task.projectid
-            ? { ...p, tasks: p.tasks.filter((id) => id !== taskId) }
-            : p
-        )
-      );
-    }
-  }
 
   function openCreateTaskModal(columnId?: TaskState) {
     setTaskModalMode('create');
@@ -156,10 +121,6 @@ export const ProjectTrackingProvider = ({
     addProject,
     currentProject,
     setCurrentProject,
-    tasks,
-    addTask,
-    updateTask,
-    removeTask,
     isTaskModalOpen,
     taskModalMode,
     editingTask,

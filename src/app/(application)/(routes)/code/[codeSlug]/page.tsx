@@ -1,6 +1,4 @@
 import EditorLayout from '@/components/code/EditorLayout';
-import { VerifyToken } from '@/utils/EncodeEmail';
-import { cookies } from 'next/headers';
 
 export default async function EditorPage({
   params,

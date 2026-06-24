@@ -1,6 +1,6 @@
 'use client';
 
-import { TaskT } from '@/types/project tracking/types';
+import { ITaskCard, TaskT } from '@/types/project tracking/types';
 import {
   FiCheckCircle,
   FiClock,
@@ -13,8 +13,8 @@ import { useState, useRef, useEffect } from 'react';
 import { getAvatarColor, getInitials } from '../utils';
 
 type Props = {
-  task: TaskT;
-  onEdit: (task: TaskT) => void;
+  task: ITaskCard;
+  onEdit: (task: ITaskCard) => void;
   onDelete: (taskId: string) => void;
 };
 
@@ -85,7 +85,7 @@ export default function TaskCard({ task, onEdit, onDelete }: Props) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setMenuOpen(false);
-                  onDelete(task._id);
+                  onDelete(task.taskId);
                 }}
                 className="w-full flex items-center gap-2 px-3 py-2 text-xs font-['inter-rag'] text-red-500 hover:bg-red-50"
               >
@@ -115,12 +115,12 @@ export default function TaskCard({ task, onEdit, onDelete }: Props) {
           </span>
         </div>
 
-        {task.assignToMemberName ? (
+        {task.assignToMemberId ? (
           <div
             className={`w-6 h-6 rounded-full flex items-center justify-center text-[8px] font-['inter-semi'] ${getAvatarColor(task.assignToMemberName)}`}
-            title={task.assignToMemberName}
+            title={task.assignToMemberId}
           >
-            {getInitials(task.assignToMemberName)}
+            {getInitials(task.assignToMemberId)}
           </div>
         ) : (
           <div className="w-6 h-6 rounded-full bg-[#f9fafb] border border-dashed border-[#0a0a0a]/10 flex items-center justify-center">
