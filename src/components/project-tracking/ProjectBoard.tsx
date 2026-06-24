@@ -1,7 +1,7 @@
 'use client';
 
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
-import {  TaskT,  } from '@/types/project tracking/types';
+import { TaskT } from '@/types/project tracking/types';
 import axios from 'axios';
 import { useState } from 'react';
 import CreateNewTaskForm from './CreateNewTaskForm';
@@ -17,7 +17,6 @@ export default function ProjectBoard({ tasks }: projectBoardpropsType) {
   const { currentProject, openCreateTaskModal, openEditTaskModal } =
     useProjectTrackingContext();
 
-
   if (!currentProject) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -27,8 +26,6 @@ export default function ProjectBoard({ tasks }: projectBoardpropsType) {
       </div>
     );
   }
-
-  
 
   const handleDeleteTask = async (taskId: string) => {
     try {
@@ -44,9 +41,7 @@ export default function ProjectBoard({ tasks }: projectBoardpropsType) {
     <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8 sm:py-12">
       <CreateNewTaskForm />
 
-      <BoardHeader
-        title={currentProject.title}
-      />
+      <BoardHeader title={currentProject.title} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {BOARD_COLUMNS.map((column) => (

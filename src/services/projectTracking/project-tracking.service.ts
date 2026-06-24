@@ -156,8 +156,6 @@ export async function GetProjectTrackingProject(
   }
 }
 
-
-
 export async function CreateProjectTrackingTask(request: NextRequest) {
   try {
     const body = await request.json();
@@ -238,8 +236,8 @@ export async function GetAllTasks(projectId: string) {
       assignToMemberId: task.assignToMemberId || null,
       dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null,
       createdAt: task.createdAt.toString(),
-      createdByUserName:task.createdByUserName,
-      createdByUserImage:task.createdByUserNameAvatar
+      createdByUserName: task.createdByUserName,
+      createdByUserImage: task.createdByUserNameAvatar,
     }));
   } catch (error) {
     console.error('GetAllTasks Error:', error);

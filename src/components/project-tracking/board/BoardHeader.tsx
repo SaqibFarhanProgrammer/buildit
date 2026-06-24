@@ -8,9 +8,7 @@ type Props = {
   title: string;
 };
 
-export default function BoardHeader({
-  title,
-}: Props) {
+export default function BoardHeader({ title }: Props) {
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
       <div>

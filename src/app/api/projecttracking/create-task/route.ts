@@ -1,21 +1,16 @@
 import { connectDB } from '@/core/db/DbConnection';
 import { AppError } from '@/lib/AppError';
-import { CreateProjectTracking, CreateProjectTrackingTask } from '@/services/projectTracking/project-tracking.service';
+import {
+  CreateProjectTracking,
+  CreateProjectTrackingTask,
+} from '@/services/projectTracking/project-tracking.service';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    await connectDB();
 
-
-    await connectDB()
-
-    const result = await CreateProjectTrackingTask(request)
-
-
-    
-
-
-
+    const result = await CreateProjectTrackingTask(request);
 
     return NextResponse.json({
       message: result.message,

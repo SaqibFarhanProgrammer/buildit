@@ -1,7 +1,11 @@
 'use client';
 
 import { ProjectTrackingProvider } from '@/context/ProjectTracking.context';
-import { ITaskCard, ProjectTrackingT, TaskT } from '@/types/project tracking/types';
+import {
+  ITaskCard,
+  ProjectTrackingT,
+  TaskT,
+} from '@/types/project tracking/types';
 import ProjectBoard from './ProjectBoard';
 
 type PropType = {
