@@ -49,8 +49,8 @@ export default function BoardHeader({
 
   const { slug } = params;
 
-  if(!slug){
-    throw new AppError("slug not found in params", 401)
+  if (!slug) {
+    throw new AppError('slug not found in params', 401);
   }
 
   const handleImageError = (memberId: string) => {

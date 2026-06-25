@@ -108,7 +108,6 @@ export default function TaskPreview({
         <div className="flex items-start justify-between px-8 py-6 border-b border-[#0a0a0a]/5">
           <div className="flex-1 pr-8">
             <div className="flex items-center gap-3 mb-3">
-           
               <span
                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-['inter-semi'] border ${config.color}`}
               >

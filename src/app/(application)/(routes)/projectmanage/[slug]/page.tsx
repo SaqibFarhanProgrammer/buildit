@@ -23,7 +23,6 @@ export default async function ProjectPage({
   const response = await GetProjectTrackingProject(slug, token);
   const tasks = await GetAllTasks(slug);
 
-
   return (
     <div className="min-h-screen bg-white">
       <ProjectBoardShell tasks={tasks} projectData={response.data} />
