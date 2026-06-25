@@ -98,22 +98,17 @@ export default function TaskPreview({
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed  inset-0 z-50 flex items-center justify-center p-4">
       <div
         className="absolute inset-0 bg-[#0a0a0a]/20 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      <div className="relative w-[70%] max-w-4xl bg-white rounded-2xl border border-[#0a0a0a]/5 shadow-2xl shadow-[#0a0a0a]/5 overflow-hidden max-h-[90vh] overflow-y-auto">
+      <div className="relative hide-scrollBar w-[70%] max-w-4xl bg-white rounded-2xl border border-[#0a0a0a]/5 shadow-2xl shadow-[#0a0a0a]/5 overflow-hidden max-h-[90vh] overflow-y-auto">
         <div className="flex items-start justify-between px-8 py-6 border-b border-[#0a0a0a]/5">
           <div className="flex-1 pr-8">
             <div className="flex items-center gap-3 mb-3">
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#f9fafb] border border-[#0a0a0a]/5">
-                <FiHash size={10} className="text-[#0004ff]" />
-                <span className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/40">
-                  {task.taskId}
-                </span>
-              </div>
+           
               <span
                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-['inter-semi'] border ${config.color}`}
               >

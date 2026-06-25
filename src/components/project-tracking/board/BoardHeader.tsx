@@ -12,6 +12,8 @@ import Link from 'next/link';
 import { getAvatarColor, getInitials } from '../utils';
 import { CgAdd } from 'react-icons/cg';
 import AddMemberModal from '../AddMemberForm';
+import { useParams } from 'next/navigation';
+import { AppError } from '@/lib/AppError';
 
 type Member = {
   id: string;
@@ -43,15 +45,13 @@ export default function BoardHeader({
   const menuRef = useRef<HTMLDivElement>(null);
   const [isAddMemberFormIsOpen, setisAddMemberFormIsOpen] = useState(false);
 
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setMenuOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  const params = useParams();
+
+  const { slug } = params;
+
+  if(!slug){
+    throw new AppError("slug not found in params", 401)
+  }
 
   const handleImageError = (memberId: string) => {
     setImageErrors((prev) => ({ ...prev, [memberId]: true }));
@@ -61,6 +61,7 @@ export default function BoardHeader({
     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
       {isAddMemberFormIsOpen && (
         <AddMemberModal
+          projectid={slug?.toString()}
           isOpen={isAddMemberFormIsOpen}
           onClose={() => setisAddMemberFormIsOpen(false)}
         />

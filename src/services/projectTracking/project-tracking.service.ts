@@ -131,6 +131,8 @@ export async function GetProjectTrackingProject(
       createdByUserId: payload.userId,
     }).lean();
 
+    console.log( project?.members);
+    
     if (!project) {
       throw new AppError('Project not found', 404);
     }
@@ -314,4 +316,26 @@ export async function AddMember(request: NextRequest) {
 
     throw new AppError('Failed to add member', 500);
   }
+}
+
+
+export async function GetProjectMembers(request:NextRequest) {
+try {
+  const body = await request.json()
+  const {projectid} = body
+
+  const project = await ProjectTracking.findOne({
+    _id:projectid
+  })  
+
+  const Memberlistids = project?.members
+  console.log(Memberlistids);
+  
+   
+
+
+
+} catch (error) {
+  
+}
 }

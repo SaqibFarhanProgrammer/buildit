@@ -4,13 +4,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import {
-  FiX,
-  FiMail,
-  FiPlus,
-  FiCheckCircle,
-  FiUserPlus,
-} from 'react-icons/fi';
+import { FiX, FiMail, FiPlus, FiCheckCircle, FiUserPlus } from 'react-icons/fi';
+import axios from 'axios';
 
 export type MemberRole = 'admin' | 'member' | 'viewer';
 
@@ -23,6 +18,7 @@ type MemberFormData = z.infer<typeof memberSchema>;
 
 interface AddMemberModalProps {
   isOpen: boolean;
+  projectid: string;
   onClose: () => void;
   onSubmit?: (data: MemberFormData) => void;
 }
@@ -48,15 +44,16 @@ const roleConfig = {
 export default function AddMemberModal({
   isOpen,
   onClose,
+  projectid,
 }: AddMemberModalProps) {
   const [showSuccess, setShowSuccess] = useState(false);
+  const [UiError, setUiError] = useState('');
 
   const {
     register,
     handleSubmit,
     watch,
     setValue,
-    reset,
     formState: { errors },
   } = useForm<MemberFormData>({
     resolver: zodResolver(memberSchema),
@@ -68,31 +65,39 @@ export default function AddMemberModal({
 
   const selectedRole = watch('role');
 
-  const handleFormSubmit = (data: MemberFormData) => {
+  async function handleFormSubmit(data: MemberFormData) {
     setShowSuccess(true);
-    console.log(data);
-    
-    setTimeout(() => {
-      setShowSuccess(false);
-      reset();
-      onClose();
-    }, 1500);
-  };
+
+    try {
+      const res = await axios.post('/api/projecttracking/addmember', {
+        projectiD: projectid,
+        UserEmail: data.email,
+        MemberRole: data.role,
+      });
+    } catch (error) {
+      let message = 'Something went wrong';
+
+      if (axios.isAxiosError(error)) {
+        message =
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          error.message;
+      }
+
+      setUiError(message);
+    }
+  }
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-[#0a0a0a]/20 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      {/* Modal */}
       <div className="relative w-full max-w-md bg-white rounded-2xl border border-[#0a0a0a]/5 shadow-2xl shadow-[#0a0a0a]/5 overflow-hidden">
-
-        {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#0a0a0a]/5">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-[#0004ff]/10 flex items-center justify-center">
@@ -115,9 +120,10 @@ export default function AddMemberModal({
           </button>
         </div>
 
-        {/* Body */}
-        <form onSubmit={handleSubmit(handleFormSubmit)} className="px-6 py-5 space-y-5">
-          {/* Success Message */}
+        <form
+          onSubmit={handleSubmit(handleFormSubmit)}
+          className="px-6 py-5 space-y-5"
+        >
           {showSuccess && (
             <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-emerald-50 border border-emerald-100">
               <FiCheckCircle size={14} className="text-emerald-500 shrink-0" />
@@ -127,7 +133,6 @@ export default function AddMemberModal({
             </div>
           )}
 
-          {/* Email Input */}
           <div>
             <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
               Email Address
@@ -148,6 +153,7 @@ export default function AddMemberModal({
                 }`}
               />
             </div>
+            <p className="text-red-400 pt-2 font-[inter-rag]">{UiError}</p>
             {errors.email && (
               <p className="font-['inter-rag'] text-xs text-red-500 mt-1.5">
                 {errors.email.message}
@@ -155,7 +161,6 @@ export default function AddMemberModal({
             )}
           </div>
 
-          {/* Role Selection */}
           <div>
             <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
               Role
@@ -172,14 +177,15 @@ export default function AddMemberModal({
                       : 'bg-[#f9fafb] border-[#0a0a0a]/5 text-[#0a0a0a]/40 hover:text-[#0a0a0a]/60'
                   }`}
                 >
-                  <span className={`w-1.5 h-1.5 rounded-full ${roleConfig[role].dot}`} />
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${roleConfig[role].dot}`}
+                  />
                   {roleConfig[role].label}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#0004FF] text-white text-sm font-['inter-semi'] hover:bg-[#0004FF]/90 transition-all"
@@ -189,7 +195,6 @@ export default function AddMemberModal({
           </button>
         </form>
 
-        {/* Footer */}
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-[#0a0a0a]/5">
           <button
             type="button"
