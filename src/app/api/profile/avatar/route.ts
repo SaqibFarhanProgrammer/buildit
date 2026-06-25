@@ -48,7 +48,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-  
     const result = await uploadAvatarToCloudinary({ file, userId });
 
     const updated = await User.findByIdAndUpdate(
@@ -58,8 +57,6 @@ export async function POST(request: NextRequest) {
     )
       .select('name email image createdAt profile')
       .lean();
-
-    
 
     return NextResponse.json({
       message: 'Avatar updated',

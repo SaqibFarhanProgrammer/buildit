@@ -131,7 +131,6 @@ export async function GetProjectTrackingProject(
       createdByUserId: payload.userId,
     }).lean();
 
-
     if (!project) {
       throw new AppError('Project not found', 404);
     }
