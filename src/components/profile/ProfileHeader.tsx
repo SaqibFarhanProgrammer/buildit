@@ -13,7 +13,6 @@ export default function ProfileHeader({ user }: { user: UserDataT }) {
     router.push('/auth/login');
   }
 
-  console.log(user.image);
 
   return (
     <div className="relative bg-[#0a0a0a] text-white">

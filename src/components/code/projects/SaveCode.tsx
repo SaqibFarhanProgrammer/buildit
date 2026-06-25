@@ -11,7 +11,6 @@ export default function SaveCodePopup() {
   const [UiError, setUiError] = useState('');
   const { IsSaveCodeIsOpen, ProjectDetiles, setIsSaveCodeIsOpen, CodeValue } =
     useEditor();
-  console.log(CodeValue);
 
   const handleSave = async () => {
     try {
@@ -21,7 +20,6 @@ export default function SaveCodePopup() {
         projectId: ProjectDetiles?._id,
         userid: ProjectDetiles?.CreatedUserid,
       });
-      console.log(res);
 
       setLoading(false);
       setSaved(true);

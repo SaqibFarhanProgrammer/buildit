@@ -86,9 +86,6 @@ export async function uploadAvatarToCloudinary(args: {
   }
 
   const json = (await res.json()) as CloudinaryUploadResult;
-  console.log('[cloudinary-service] Upload success', {
-    publicId: json.public_id,
-    hasSecureUrl: Boolean(json.secure_url),
-  });
+
   return json;
 }

@@ -12,7 +12,6 @@ export async function GET() {
     });
   }
 
-  console.log(cache.get(cacheKey));
 
   currentLimit++;
   cache.set(cacheKey, currentLimit);

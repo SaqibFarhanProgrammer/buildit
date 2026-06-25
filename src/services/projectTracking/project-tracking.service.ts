@@ -131,7 +131,6 @@ export async function GetProjectTrackingProject(
       createdByUserId: payload.userId,
     }).lean();
 
-    console.log(project?.members);
 
     if (!project) {
       throw new AppError('Project not found', 404);
@@ -328,6 +327,5 @@ export async function GetProjectMembers(request: NextRequest) {
     });
 
     const Memberlistids = project?.members;
-    console.log(Memberlistids);
   } catch (error) {}
 }

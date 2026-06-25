@@ -29,8 +29,6 @@ function VerifyEmailForm() {
       }
       setLoading(true);
 
-      console.log(EncodedEmail);
-
       await axios.post('/api/auth/verify-email', {
         email: EncodedEmail,
         code: fullCode,

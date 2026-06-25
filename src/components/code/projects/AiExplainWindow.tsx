@@ -53,7 +53,6 @@ export default function AIExplainWindow() {
         userid: ProjectDetiles?.CreatedUserid,
       });
 
-      console.log('FULL RESPONSE:', res.data);
 
       const responseData = res.data?.response;
 

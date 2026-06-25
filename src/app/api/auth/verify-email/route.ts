@@ -22,7 +22,6 @@ export async function POST(request: Request) {
     const decoded = VerifyToken(encodedEmail);
 
     const email = decoded.email;
-    console.log(decoded);
 
     if (!email) {
       throw new AppError('Token payload invalid', 400);

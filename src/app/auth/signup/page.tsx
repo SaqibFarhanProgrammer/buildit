@@ -38,13 +38,9 @@ export default function SignupPage() {
 
   const onSubmit = async (data: SignupForm) => {
     try {
-      console.log('chala 1 ');
       const res = await axios.post('/api/auth/register', data);
-      console.log(res.data.encodedEmail);
-      console.log('chala 2');
 
       router.push(`/auth/verify-email?e=${res.data.encodedEmail}`);
-      console.log('chala 4');
     } catch (error) {
       let message = 'Something went wrong';
       if (axios.isAxiosError(error)) {

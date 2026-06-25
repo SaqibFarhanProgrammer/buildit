@@ -58,7 +58,6 @@ export default function EditorToolbar() {
         language,
       });
 
-      console.log(response);
 
       const output = response.data?.output;
       const lines = output
