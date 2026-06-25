@@ -53,7 +53,7 @@ export default function BoardColumn({ column, isAdmin, tasks }: Props) {
       </div>
 
       <div
-        className={`flex-1 rounded-2xl p-3 overflow-y-scroll ${column.color} max-h-[500px]`}
+        className={`flex-1 rounded-2xl border-2 border-${column.color}/50  p-3 overflow-y-scroll hide-scrollBar ${column.color} max-h-[500px]`}
       >
         <div className="space-y-3">
           {tasks

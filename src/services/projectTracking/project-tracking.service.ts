@@ -2,6 +2,7 @@ import { connectDB } from '@/core/db/DbConnection';
 import { AppError } from '@/lib/AppError';
 import { ProjectTracking } from '@/models/project traccking/project-tracking.models';
 import { TaskTracking } from '@/models/project traccking/task-tracking.models';
+import { User } from '@/models/User.model';
 import { ITaskCard } from '@/types/project tracking/types';
 import { GetUseridByToken, IsUserAuthenticate } from '@/utils/AuthRequest';
 import { VerifyToken } from '@/utils/EncodeEmail';
@@ -247,5 +248,70 @@ export async function GetAllTasks(projectId: string) {
     }
 
     throw new AppError('Failed to fetch tasks', 500);
+  }
+}
+
+export async function AddMember(request: NextRequest) {
+  try {
+    const body = await request.json();
+
+    const { projectiD, UserEmail, MemberRole } = body;
+
+    if (!projectiD) {
+      throw new AppError('Project id is required', 400);
+    }
+
+    if (!UserEmail?.trim()) {
+      throw new AppError('User email is required', 400);
+    }
+
+    if (!MemberRole) {
+      throw new AppError('Member role is required', 400);
+    }
+
+    await connectDB();
+
+    const user = await User.findOne({
+      email: UserEmail.trim(),
+    });
+
+    if (!user) {
+      throw new AppError('User not found', 404);
+    }
+
+    const project = await ProjectTracking.findById(projectiD);
+
+    if (!project) {
+      throw new AppError('Project not found', 404);
+    }
+
+    const memberExists = project.members.some(
+      (member) => member.userid.toString() === user._id.toString()
+    );
+
+    if (memberExists) {
+      throw new AppError('User is already a member', 409);
+    }
+
+    project.members.push({
+      userid: user._id,
+      MemberRole,
+    });
+
+    await project.save();
+
+    return {
+      success: true,
+      message: 'Member added successfully',
+      data: project,
+    };
+  } catch (error) {
+    console.error('AddMember Error:', error);
+
+    if (error instanceof AppError) {
+      throw error;
+    }
+
+    throw new AppError('Failed to add member', 500);
   }
 }

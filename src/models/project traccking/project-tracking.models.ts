@@ -1,11 +1,16 @@
 import mongoose, { Document, Schema, Model, model } from 'mongoose';
 
+type MemberType = {
+  userid: string;
+  MemberRole: string;
+};
+
 export interface IProjectTracking extends Document {
   title: string;
   description: string;
   state: 'active' | 'archive';
   createdByUserId: string;
-  members: string[];
+  members: MemberType[];
   isAdmin: boolean;
   createdAt: Date;
   updatedAt: Date;

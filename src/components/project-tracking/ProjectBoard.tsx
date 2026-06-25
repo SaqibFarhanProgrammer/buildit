@@ -41,7 +41,25 @@ export default function ProjectBoard({ tasks }: projectBoardpropsType) {
     <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8 sm:py-12">
       <CreateNewTaskForm />
 
-      <BoardHeader title={currentProject.title} />
+      <BoardHeader
+        members={[
+          {
+            id: '1',
+            name: 'Ali Huzaifa',
+            image:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYkimn9NedRZmEfUH52YESn50t2os4KWUePA&s',
+          },
+          {
+            id: '2',
+            name: 'Saqib Farhan',
+            image:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2k1pKep4frvPzB8_rlNWZsv_xNUIm-KiQ3g&s',
+          },
+          { id: '3', name: 'Muhammad Usman' }, // No image → initials
+          { id: '4', name: 'Umer Farooq' }, // No image → initials
+        ]}
+        title={currentProject.title}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {BOARD_COLUMNS.map((column) => (
