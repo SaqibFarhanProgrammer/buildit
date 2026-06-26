@@ -20,6 +20,7 @@ export default async function ProjectsPage() {
 
   const projects = await GetProjects();
 
+
   return (
     <main className="min-h-screen bg-[#fff]/98">
       <ProjectTrackingShell projectsData={projects} />

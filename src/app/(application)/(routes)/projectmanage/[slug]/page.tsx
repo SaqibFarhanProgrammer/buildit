@@ -1,4 +1,5 @@
 import ProjectBoardShell from '@/components/project-tracking/ProjectBoardShell';
+import { AppError } from '@/lib/AppError';
 import {
   GetAllTasks,
   GetProjectMembers,
@@ -13,6 +14,11 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+
+  if (!slug) {
+    throw new AppError('slug not found in params', 401);
+  }
+
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
 
@@ -22,6 +28,9 @@ export default async function ProjectPage({
 
   const response = await GetProjectTrackingProject(slug, token);
   const tasks = await GetAllTasks(slug);
+  const Members = await GetProjectMembers(slug);
+
+  console.log(Members);
 
   return (
     <div className="min-h-screen bg-white">

@@ -66,14 +66,13 @@ export default function AddMemberModal({
   const selectedRole = watch('role');
 
   async function handleFormSubmit(data: MemberFormData) {
-    setShowSuccess(true);
-
     try {
       const res = await axios.post('/api/projecttracking/addmember', {
         projectiD: projectid,
         UserEmail: data.email,
         MemberRole: data.role,
       });
+      setShowSuccess(true);
     } catch (error) {
       let message = 'Something went wrong';
 
@@ -97,12 +96,9 @@ export default function AddMemberModal({
         onClick={onClose}
       />
 
-      <div className="relative w-full max-w-md bg-white rounded-2xl border border-[#0a0a0a]/5 shadow-2xl shadow-[#0a0a0a]/5 overflow-hidden">
+      <div className="relative w-full max-w-md bg-white rounded-xl border border-[#0a0a0a]/5 shadow-2xl shadow-[#0a0a0a]/5 overflow-hidden">
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#0a0a0a]/5">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0004ff]/10 flex items-center justify-center">
-              <FiUserPlus size={18} className="text-[#0004ff]" />
-            </div>
             <div>
               <h2 className="font-['inter-bold'] text-lg text-[#0a0a0a]">
                 Add Member

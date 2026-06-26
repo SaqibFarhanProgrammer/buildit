@@ -1,5 +1,6 @@
 'use client';
 
+import { AppError } from '@/lib/AppError';
 import { ProjectTrackingT } from '@/types/project tracking/types';
 import { FiFolder, FiUsers, FiCheckCircle } from 'react-icons/fi';
 
@@ -8,9 +9,11 @@ type Props = {
 };
 
 export default function ProjectTrackingStats({ projects }: Props) {
+  if (!projects) {
+    throw new AppError('Project now found in projecttracking state', 400);
+  }
   const activeCount = projects.filter((p) => p.state === 'active').length;
   const myCount = projects.filter((p) => p.isAdmin).length;
-  const totalTasks = projects.reduce((acc, p) => acc + p.tasks.length, 0);
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-10">
@@ -35,18 +38,6 @@ export default function ProjectTrackingStats({ projects }: Props) {
         </div>
         <p className="font-['inter-bold'] text-2xl sm:text-3xl text-[#0a0a0a] tracking-tight">
           {activeCount}
-        </p>
-      </div>
-
-      <div className="group p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-white border border-[#0a0a0a]/5 hover:border-[#0a0a0a]/10 hover:shadow-lg hover:shadow-[#0a0a0a]/3 transition-all duration-300">
-        <div className="flex items-center justify-between mb-3">
-          <span className="font-['inter-light'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider">
-            Total Tasks
-          </span>
-          <FiCheckCircle className="text-[#0a0a0a]/30" size={16} />
-        </div>
-        <p className="font-['inter-bold'] text-2xl sm:text-3xl text-[#0a0a0a] tracking-tight">
-          {totalTasks}
         </p>
       </div>
 

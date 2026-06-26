@@ -41,10 +41,7 @@ export default function ProjectTrackingCard({ project }: Props) {
         </p>
 
         <div className="flex items-center gap-4 pt-3 border-t border-[#0a0a0a]/5">
-          <span className="flex items-center gap-1.5 text-[10px] text-[#0a0a0a]/30 font-['inter-rag']">
-            <FiCheckCircle size={12} />
-            {project.tasks.length} tasks
-          </span>
+        
           <span className="flex items-center gap-1.5 text-[10px] text-[#0a0a0a]/30 font-['inter-rag']">
             <FiUsers size={12} />
             {project.members.length} members

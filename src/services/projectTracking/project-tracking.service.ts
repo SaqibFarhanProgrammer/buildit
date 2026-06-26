@@ -1,6 +1,9 @@
 import { connectDB } from '@/core/db/DbConnection';
 import { AppError } from '@/lib/AppError';
-import { ProjectTracking } from '@/models/project traccking/project-tracking.models';
+import {
+  MemberType,
+  ProjectTracking,
+} from '@/models/project traccking/project-tracking.models';
 import { TaskTracking } from '@/models/project traccking/task-tracking.models';
 import { User } from '@/models/User.model';
 import { ITaskCard } from '@/types/project tracking/types';
@@ -9,6 +12,7 @@ import { VerifyToken } from '@/utils/EncodeEmail';
 import { getUserProfile } from '@/utils/GetProfiledata';
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
+import { email } from 'zod';
 
 export async function GetProjectTrackingProjects(token: string) {
   try {
@@ -130,7 +134,6 @@ export async function GetProjectTrackingProject(
       _id: projectId,
       createdByUserId: payload.userId,
     }).lean();
-
 
     if (!project) {
       throw new AppError('Project not found', 404);
@@ -258,6 +261,8 @@ export async function AddMember(request: NextRequest) {
 
     const { projectiD, UserEmail, MemberRole } = body;
 
+    console.log(MemberRole);
+
     if (!projectiD) {
       throw new AppError('Project id is required', 400);
     }
@@ -286,9 +291,11 @@ export async function AddMember(request: NextRequest) {
       throw new AppError('Project not found', 404);
     }
 
-    const memberExists = project.members.some(
+    const memberExists = project.members.find(
       (member) => member.userid.toString() === user._id.toString()
     );
+
+    console.log(memberExists, 'exitng member');
 
     if (memberExists) {
       throw new AppError('User is already a member', 409);
@@ -296,7 +303,7 @@ export async function AddMember(request: NextRequest) {
 
     project.members.push({
       userid: user._id,
-      MemberRole,
+      MemberRole: MemberRole,
     });
 
     await project.save();
@@ -317,15 +324,46 @@ export async function AddMember(request: NextRequest) {
   }
 }
 
-export async function GetProjectMembers(request: NextRequest) {
+export async function GetProjectMembers(projectid: string) {
   try {
-    const body = await request.json();
-    const { projectid } = body;
-
     const project = await ProjectTracking.findOne({
       _id: projectid,
-    });
+    })
+      .select('members')
+      .lean();
 
-    const Memberlistids = project?.members;
+    const MemberDe = await project?.members;
+
+    if (!MemberDe) {
+      return {
+        message: ' Members not found in  projecct',
+      };
+    }
+
+    const userIds = MemberDe?.map((member) => member.userid);
+
+    const members = await User.find({
+      _id: { $in: userIds },
+    })
+      .select('name email image')
+      .lean();
+
+
+    let finalmember = [];
+    MemberDe.filter((m,i)=>{
+      finalmember.push({
+        name:members[i].name,
+        image:members[i].image,
+        email:members[i].email,
+        role:members[i] = m.MemberRole
+      })
+    })
+
+
+
+    return {
+      message: 'member find succes',
+      MemberDe,
+    };
   } catch (error) {}
 }

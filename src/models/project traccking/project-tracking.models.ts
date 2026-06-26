@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, Model, model } from 'mongoose';
 
-type MemberType = {
+export type MemberType = {
   userid: string;
   MemberRole: string;
 };
@@ -26,7 +26,18 @@ const ProjectTrackingSchema: Schema<IProjectTracking> = new Schema(
       default: 'active',
     },
     createdByUserId: { type: String, required: true },
-    members: [{ type: String }],
+    members: [
+      {
+        userid: {
+          type: String,
+          required: true,
+        },
+        MemberRole: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     isAdmin: { type: Boolean, default: true },
   },
 
