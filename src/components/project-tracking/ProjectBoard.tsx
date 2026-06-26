@@ -11,16 +11,17 @@ import { MemberType } from '@/models/project traccking/project-tracking.models';
 
 type projectBoardpropsType = {
   tasks: TaskT[];
-  members:MemberType[]
+  members: MemberType[];
 };
 
-export default function ProjectBoard({ tasks  ,members}: projectBoardpropsType) {
-  const { currentProject,  openEditTaskModal } =
-    useProjectTrackingContext();
+export default function ProjectBoard({
+  tasks,
+  members,
+}: projectBoardpropsType) {
+  const { currentProject, openEditTaskModal } = useProjectTrackingContext();
 
+  console.log(members);
 
-    console.log(members);
-    
   if (!currentProject) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -30,7 +31,7 @@ export default function ProjectBoard({ tasks  ,members}: projectBoardpropsType) 
       </div>
     );
   }
-  
+
   const handleDeleteTask = async (taskId: string) => {
     try {
       await axios.delete(
@@ -40,7 +41,6 @@ export default function ProjectBoard({ tasks  ,members}: projectBoardpropsType) 
       console.error('DELETE_TASK_ERROR:', error);
     }
   };
-
 
   return (
     <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8 sm:py-12">

@@ -347,7 +347,6 @@ export async function AddMember(request: NextRequest) {
 }
 export async function GetProjectMembers(projectId: string) {
   try {
-    
     const project = await ProjectTracking.findById(projectId)
       .select('members')
       .lean();

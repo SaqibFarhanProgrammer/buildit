@@ -13,7 +13,6 @@ export async function POST(request: NextRequest) {
       message: 'members fethed succes',
       data: result?.MemberDe,
     });
-
   } catch (error) {
     console.error('PROJECT TRACKING ERROR:', error);
 
