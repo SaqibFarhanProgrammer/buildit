@@ -14,6 +14,8 @@ import { CgAdd } from 'react-icons/cg';
 import AddMemberModal from '../AddMemberForm';
 import { useParams } from 'next/navigation';
 import { AppError } from '@/lib/AppError';
+import { MemberType } from '@/models/project traccking/project-tracking.models';
+import { MemberDetailType } from '@/types/project tracking/types';
 
 type Member = {
   id: string;
@@ -24,24 +26,10 @@ type Member = {
 type Props = {
   title: string;
   isAdmin: boolean;
-  members?: Member[];
+  members?: MemberDetailType[];
 };
 
-export default function BoardHeader({
-  title,
-  isAdmin,
-  members = [
-    {
-      id: '1',
-      name: 'Ali Huzaifa',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYkimn9NedRZmEfUH52YESn50t2os4KWUePA&s',
-    },
-    { id: '2', name: 'Saqib Farhan', image: 'https://i.pravatar.cc/150?u=2' },
-    { id: '3', name: 'Muhammad Usman', image: 'https://i.pravatar.cc/150?u=3' },
-    { id: '4', name: 'Umer Farooq', image: 'https://i.pravatar.cc/150?u=4' },
-  ],
-}: Props) {
+export default function BoardHeader({ title, isAdmin, members }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
   const menuRef = useRef<HTMLDivElement>(null);
@@ -58,6 +46,8 @@ export default function BoardHeader({
   const handleImageError = (memberId: string) => {
     setImageErrors((prev) => ({ ...prev, [memberId]: true }));
   };
+
+  console.log(members);
 
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
@@ -84,20 +74,17 @@ export default function BoardHeader({
 
       <div className="flex items-center gap-4">
         <div className="flex items-center -space-x-2">
-          {members.slice(0, 4).map((member) => {
-            const hasError = imageErrors[member.id];
+          {members?.map((member: MemberDetailType, i: number) => {
             return (
               <div
-                key={member.id}
-                className="relative w-9 h-9 rounded-full border-2 border-white overflow-hidden bg-white shadow-sm"
-                title={member.name}
+                key={i}
+                className={`relative w-9 h-9 rounded-full border-2 ${isAdmin === true ? 'border-blue-500' : 'border-white '} overflow-hidden   shadow-sm`}
               >
-                {member.image && !hasError ? (
+                {member.image != '' ? (
                   <img
                     src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover"
-                    onError={() => handleImageError(member.id)}
                   />
                 ) : (
                   <div
@@ -109,11 +96,9 @@ export default function BoardHeader({
               </div>
             );
           })}
-          {members.length > 4 && (
-            <div className="w-9 h-9 rounded-full bg-[#f9fafb] border-2 border-white flex items-center justify-center text-[10px] font-['inter-semi'] text-[#0a0a0a]/40 shadow-sm">
-              +{members.length - 4}
-            </div>
-          )}
+          <div className="w-9 h-9 rounded-full bg-[#f9fafb] border-2 border-white flex items-center justify-center text-[10px] font-['inter-semi'] text-[#0a0a0a]/40 shadow-sm">
+            {members?.length}
+          </div>
         </div>
 
         <div className="relative" ref={menuRef}>
@@ -153,7 +138,7 @@ export default function BoardHeader({
                 <FiTrash2 size={14} />
                 Leave Project
               </button>
-              
+
               <div className="h-px bg-[#0a0a0a]/[0.03] mx-4 my-1" />
               {isAdmin && (
                 <button

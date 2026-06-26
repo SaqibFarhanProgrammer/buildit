@@ -139,7 +139,20 @@ export async function GetProjectTrackingProject(
 
     const project = await ProjectTracking.findOne({
       _id: projectId,
-    }).lean();
+    })
+      .select({
+        _id: 1,
+        title: 1,
+        description: 1,
+        state: 1,
+        createdByUserId: 1,
+        createdByUserName: 1,
+        members: 1,
+        tasks: 1,
+        isAdmin: 1,
+        createdAt: 1,
+      })
+      .lean();
 
     if (!project) {
       throw new AppError('Project not found', 404);
@@ -148,13 +161,15 @@ export async function GetProjectTrackingProject(
     return {
       success: true,
       data: {
-        ...project,
         _id: project._id.toString(),
+        title: project.title,
+        description: project.description,
+        state: project.state,
         createdByUserId: project.createdByUserId?.toString(),
-        members: project.members?.map((member: any) => member.toString()) || [],
+        members: project.members,
         createdAt: project.createdAt?.toISOString(),
         updatedAt: project.updatedAt?.toISOString(),
-        isAdmin: project.createdByUserId === payload.userid ? true : false,
+        isAdmin: project.createdByUserId === payload.userId ? true : false,
       },
     };
   } catch (error) {
@@ -330,46 +345,54 @@ export async function AddMember(request: NextRequest) {
     throw new AppError('Failed to add member', 500);
   }
 }
-
-export async function GetProjectMembers(projectid: string) {
+export async function GetProjectMembers(projectId: string) {
   try {
-    const project = await ProjectTracking.findOne({
-      _id: projectid,
-    })
+    
+    const project = await ProjectTracking.findById(projectId)
       .select('members')
       .lean();
 
-    const MemberDe = await project?.members;
-
-    if (!MemberDe) {
+    if (!project) {
       return {
-        message: ' Members not found in  projecct',
+        success: false,
+        message: 'Project not found',
       };
     }
 
-    const userIds = MemberDe?.map((member) => member.userid);
+    if (!project.members.length) {
+      return {
+        success: false,
+        message: 'No members found',
+      };
+    }
 
-    const members = await User.find({
+    const userIds = project.members.map((member) => member.userid);
+
+    const users = await User.find({
       _id: { $in: userIds },
     })
       .select('name email image')
       .lean();
 
-    console.log(members);
+    const userMap = new Map(users.map((user) => [user._id.toString(), user]));
 
-    let finalmember = [];
-    MemberDe.filter((m, i) => {
-      finalmember.push({
-        Name: members[i].name,
-        image: members[i].image,
-        email: members[i].email,
-        role: (members[i] = m.MemberRole),
-      });
+    const finalMembers = project.members.map((member) => {
+      const user = userMap.get(member.userid.toString());
+
+      return {
+        userId: member.userid,
+        name: user?.name ?? '',
+        email: user?.email ?? '',
+        image: user?.image ?? '',
+        role: member.MemberRole,
+      };
     });
 
     return {
-      message: 'member find succes',
-      MemberDe,
+      success: true,
+      data: finalMembers,
     };
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 }

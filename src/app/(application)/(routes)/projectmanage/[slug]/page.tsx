@@ -30,10 +30,13 @@ export default async function ProjectPage({
   const tasks = await GetAllTasks(slug);
   const Members = await GetProjectMembers(slug);
 
-
   return (
     <div className="min-h-screen bg-white">
-      <ProjectBoardShell tasks={tasks} projectData={response.data} />
+      <ProjectBoardShell
+        Members={Members?.data}
+        tasks={tasks}
+        projectData={response.data}
+      />
     </div>
   );
 }

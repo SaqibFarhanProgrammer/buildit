@@ -7,15 +7,20 @@ import CreateNewTaskForm from './CreateNewTaskForm';
 import BoardHeader from './board/BoardHeader';
 import BoardColumn from './board/BoardColumn';
 import { BOARD_COLUMNS } from './utils';
+import { MemberType } from '@/models/project traccking/project-tracking.models';
 
 type projectBoardpropsType = {
   tasks: TaskT[];
+  members:MemberType[]
 };
 
-export default function ProjectBoard({ tasks }: projectBoardpropsType) {
-  const { currentProject, openCreateTaskModal, openEditTaskModal } =
+export default function ProjectBoard({ tasks  ,members}: projectBoardpropsType) {
+  const { currentProject,  openEditTaskModal } =
     useProjectTrackingContext();
 
+
+    console.log(members);
+    
   if (!currentProject) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -25,7 +30,7 @@ export default function ProjectBoard({ tasks }: projectBoardpropsType) {
       </div>
     );
   }
-
+  
   const handleDeleteTask = async (taskId: string) => {
     try {
       await axios.delete(
@@ -36,28 +41,14 @@ export default function ProjectBoard({ tasks }: projectBoardpropsType) {
     }
   };
 
+
   return (
     <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8 sm:py-12">
       <CreateNewTaskForm />
 
       <BoardHeader
         isAdmin={currentProject.isAdmin}
-        members={[
-          {
-            id: '1',
-            name: 'Ali Huzaifa',
-            image:
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYkimn9NedRZmEfUH52YESn50t2os4KWUePA&s',
-          },
-          {
-            id: '2',
-            name: 'Saqib Farhan',
-            image:
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2k1pKep4frvPzB8_rlNWZsv_xNUIm-KiQ3g&s',
-          },
-          { id: '3', name: 'Muhammad Usman' }, // No image → initials
-          { id: '4', name: 'Umer Farooq' }, // No image → initials
-        ]}
+        members={members}
         title={currentProject.title}
       />
 

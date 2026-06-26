@@ -1,20 +1,16 @@
+import { MemberType } from '@/models/project traccking/project-tracking.models';
 import { TaskState } from '@/models/project traccking/task-tracking.models';
 
 export type TaskT = {
   _id: string;
   title: string;
   summary: string;
-  createdUserid: string;
-  projectid: string;
-  createdByUserName: string;
-  createdByUserImage?: string;
   state: TaskState;
-  assignToMemberId?: string;
-  assignToMemberName?: string;
-  assignToMemberImage?: string;
-  dueDate?: string;
-  taskId: string;
-  createdAt?: string;
+  assignToMemberId: string | null;
+  dueDate: string | null;
+  createdAt: string;
+  createdByUserName: string;
+  createdByUserImage: string;
 };
 
 export type MemberDetailT = {
@@ -29,11 +25,9 @@ export type ProjectTrackingT = {
   description: string;
   state: 'active' | 'archive';
   createdByUserId: string;
-  createdByUserName: string;
-  members: string[];
-  tasks: string[];
+  members: MemberType[];
   isAdmin: boolean;
-  createdAt: Date;
+  createdAt: string;
 };
 
 export interface ITaskCard {
@@ -45,3 +39,11 @@ export interface ITaskCard {
   state: TaskState;
   createdAt: string;
 }
+
+export type MemberDetailType = {
+  vemail: string;
+  image: string;
+  name: string;
+  role: string;
+  userId: string;
+};
