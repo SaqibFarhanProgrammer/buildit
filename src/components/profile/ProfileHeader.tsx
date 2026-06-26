@@ -13,6 +13,7 @@ export default function ProfileHeader({ user }: { user: UserDataT }) {
     router.push('/auth/login');
   }
 
+
   return (
     <div className="relative bg-[#0a0a0a] text-white">
       <div className="max-w-6xl mx-auto px-6 lg:px-8 pt-8 pb-16 sm:pt-12 sm:pb-20">
