@@ -38,7 +38,7 @@ const ProjectTrackingSchema: Schema<IProjectTracking> = new Schema(
         },
       },
     ],
-    isAdmin: { type: Boolean, default: true },
+    isAdmin: { type: Boolean, default: false },
   },
 
   { timestamps: true }

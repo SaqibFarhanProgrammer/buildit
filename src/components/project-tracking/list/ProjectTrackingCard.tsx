@@ -1,7 +1,7 @@
 'use client';
 
 import { ProjectTrackingT } from '@/types/project tracking/types';
-import { FiCheckCircle, FiUsers } from 'react-icons/fi';
+import { FiUsers } from 'react-icons/fi';
 import Link from 'next/link';
 
 type Props = {
@@ -24,10 +24,16 @@ export default function ProjectTrackingCard({ project }: Props) {
           </span>
         </div>
 
-        {project.isAdmin && (
+        {project.isAdmin ? (
           <div className="mb-3">
             <span className="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-['inter-semi'] bg-[#0004ff]/5 text-[#0004ff] border border-[#0004ff]/10">
               Admin
+            </span>
+          </div>
+        ) : (
+          <div className="mb-3">
+            <span className="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-['inter-semi'] bg-[#0004ff]/5 text-[#0004ff] border border-[#0004ff]/10">
+              You Where Added
             </span>
           </div>
         )}
@@ -41,7 +47,6 @@ export default function ProjectTrackingCard({ project }: Props) {
         </p>
 
         <div className="flex items-center gap-4 pt-3 border-t border-[#0a0a0a]/5">
-        
           <span className="flex items-center gap-1.5 text-[10px] text-[#0a0a0a]/30 font-['inter-rag']">
             <FiUsers size={12} />
             {project.members.length} members

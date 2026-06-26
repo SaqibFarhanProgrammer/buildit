@@ -17,11 +17,10 @@ export default function ProjectTrackingList() {
 
   const [activeFilter, setActiveFilter] = useState('active');
 
-  const filteredProjects = projects.filter((p: ProjectTrackingT) => {
+  const filteredProjects = projects?.filter((p: ProjectTrackingT) => {
     const matchesSearch =
       p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.description.toLowerCase().includes(searchQuery.toLowerCase());
-
     if (activeFilter === 'all') return matchesSearch;
     if (activeFilter === 'active') return p.state === 'active' && matchesSearch;
     if (activeFilter === 'archive')
@@ -58,8 +57,6 @@ export default function ProjectTrackingList() {
           New Project
         </button>
       </div>
-
-      <ProjectTrackingStats projects={projects} />
 
       <ProjectTrackingFilters
         projects={projects}

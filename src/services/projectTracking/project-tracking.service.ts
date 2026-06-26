@@ -12,7 +12,6 @@ import { VerifyToken } from '@/utils/EncodeEmail';
 import { getUserProfile } from '@/utils/GetProfiledata';
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
-import { email } from 'zod';
 
 export async function GetProjectTrackingProjects(token: string) {
   try {
@@ -36,6 +35,7 @@ export async function GetProjectTrackingProjects(token: string) {
         },
       ],
     }).lean();
+
     const cleanProjects = projects.map((project) => ({
       ...project,
       _id: project._id?.toString(),
@@ -48,6 +48,7 @@ export async function GetProjectTrackingProjects(token: string) {
       updatedAt: project.createdAt
         ? new Date(project.createdAt).toISOString()
         : null,
+      isAdmin: project.createdByUserId === value.userId ? true : false,
     }));
 
     return cleanProjects;
@@ -138,7 +139,6 @@ export async function GetProjectTrackingProject(
 
     const project = await ProjectTracking.findOne({
       _id: projectId,
-      createdByUserId: payload.userId,
     }).lean();
 
     if (!project) {
