@@ -154,6 +154,7 @@ export async function GetProjectTrackingProject(
         members: project.members?.map((member: any) => member.toString()) || [],
         createdAt: project.createdAt?.toISOString(),
         updatedAt: project.updatedAt?.toISOString(),
+        isAdmin: project.createdByUserId === payload.userid ? true : false,
       },
     };
   } catch (error) {

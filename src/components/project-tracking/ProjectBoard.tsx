@@ -3,7 +3,6 @@
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
 import { TaskT } from '@/types/project tracking/types';
 import axios from 'axios';
-import { useState } from 'react';
 import CreateNewTaskForm from './CreateNewTaskForm';
 import BoardHeader from './board/BoardHeader';
 import BoardColumn from './board/BoardColumn';
@@ -42,6 +41,7 @@ export default function ProjectBoard({ tasks }: projectBoardpropsType) {
       <CreateNewTaskForm />
 
       <BoardHeader
+        isAdmin={currentProject.isAdmin}
         members={[
           {
             id: '1',

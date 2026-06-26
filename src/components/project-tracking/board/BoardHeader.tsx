@@ -23,11 +23,13 @@ type Member = {
 
 type Props = {
   title: string;
+  isAdmin: boolean;
   members?: Member[];
 };
 
 export default function BoardHeader({
   title,
+  isAdmin,
   members = [
     {
       id: '1',
@@ -124,42 +126,45 @@ export default function BoardHeader({
 
           {menuOpen && (
             <div className="absolute right-0 top-11 z-20 bg-white rounded-xl border border-[#0a0a0a]/5 shadow-xl shadow-[#0a0a0a]/5 py-2 min-w-[180px] overflow-hidden">
-              <button
-                onClick={() => setisAddMemberFormIsOpen(true)}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
-              >
-                <CgAdd size={14} className="text-[#0a0a0a]/30" />
-                Add Member
-              </button>
-              <button
-                onClick={() => setMenuOpen(false)}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
-              >
-                <FiEdit2 size={14} className="text-[#0a0a0a]/30" />
-                Edit Project
-              </button>
-              <button
-                onClick={() => setMenuOpen(false)}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
-              >
-                <FiShare2 size={14} className="text-[#0a0a0a]/30" />
-                Share
-              </button>
+              {isAdmin && (
+                <button
+                  onClick={() => setisAddMemberFormIsOpen(true)}
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
+                >
+                  <CgAdd size={14} className="text-[#0a0a0a]/30" />
+                  Add Member
+                </button>
+              )}
+              {isAdmin && (
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
+                >
+                  <FiEdit2 size={14} className="text-[#0a0a0a]/30" />
+                  Edit Project
+                </button>
+              )}
+
               <button
                 onClick={() => setMenuOpen(false)}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
-              >
-                <FiArchive size={14} className="text-[#0a0a0a]/30" />
-                Archive
-              </button>
-              <div className="h-px bg-[#0a0a0a]/[0.03] mx-4 my-1" />
-              <button
-                onClick={() => setMenuOpen(false)}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
+                className="w-full
+              flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
               >
                 <FiTrash2 size={14} />
-                Delete Project
+                Leave Project
               </button>
+              
+              <div className="h-px bg-[#0a0a0a]/[0.03] mx-4 my-1" />
+              {isAdmin && (
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  className="w-full
+              flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
+                >
+                  <FiTrash2 size={14} />
+                  Delete Project
+                </button>
+              )}
             </div>
           )}
         </div>

@@ -30,7 +30,6 @@ export default function CreateNewTaskForm() {
     isTaskModalOpen,
     taskModalMode,
     setIsTaskModalOpen,
-    editingTask,
     taskModalColumn,
     currentProject,
     closeTaskModal,
@@ -192,7 +191,7 @@ export default function CreateNewTaskForm() {
             </div>
           </div>
 
-          {members.length > 0 && (
+          {/* {members.length > 0 && (
             <div>
               <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
                 Assign To
@@ -234,7 +233,7 @@ export default function CreateNewTaskForm() {
                 })}
               </div>
             </div>
-          )}
+          )} */}
 
           <div>
             <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
