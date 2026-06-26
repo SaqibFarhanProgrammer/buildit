@@ -30,7 +30,6 @@ export default async function ProjectPage({
   const tasks = await GetAllTasks(slug);
   const Members = await GetProjectMembers(slug);
 
-  console.log(Members);
 
   return (
     <div className="min-h-screen bg-white">

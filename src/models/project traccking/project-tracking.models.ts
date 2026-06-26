@@ -44,6 +44,14 @@ const ProjectTrackingSchema: Schema<IProjectTracking> = new Schema(
   { timestamps: true }
 );
 
+ProjectTrackingSchema.index({
+  createdByUserId: 1,
+});
+
+ProjectTrackingSchema.index({
+  'members.userid': 1,
+});
+
 export const ProjectTracking: Model<IProjectTracking> =
   mongoose.models.ProjectTracking ||
   model<IProjectTracking>('ProjectTracking', ProjectTrackingSchema);

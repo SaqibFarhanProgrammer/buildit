@@ -27,9 +27,15 @@ export async function GetProjectTrackingProjects(token: string) {
     }
 
     const projects = await ProjectTracking.find({
-      createdByUserId: value.userId,
+      $or: [
+        {
+          createdByUserId: value.userId,
+        },
+        {
+          'members.userid': value.userId,
+        },
+      ],
     }).lean();
-
     const cleanProjects = projects.map((project) => ({
       ...project,
       _id: project._id?.toString(),
@@ -348,18 +354,17 @@ export async function GetProjectMembers(projectid: string) {
       .select('name email image')
       .lean();
 
+    console.log(members);
 
     let finalmember = [];
-    MemberDe.filter((m,i)=>{
+    MemberDe.filter((m, i) => {
       finalmember.push({
-        name:members[i].name,
-        image:members[i].image,
-        email:members[i].email,
-        role:members[i] = m.MemberRole
-      })
-    })
-
-
+        Name: members[i].name,
+        image: members[i].image,
+        email: members[i].email,
+        role: (members[i] = m.MemberRole),
+      });
+    });
 
     return {
       message: 'member find succes',
