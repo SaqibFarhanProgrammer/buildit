@@ -4,8 +4,7 @@ export default function ProjectTrackingHeader() {
   return (
     <div className="mb-8 sm:mb-10">
       <div className="flex items-center gap-3 mb-6 sm:mb-8">
-        <div className="w-6 h-px bg-[#0a0a0a]/20" />
-        <span className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/40 uppercase tracking-[0.2em]">
+        <span className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/40 uppercase  ">
           Project Tracking
         </span>
       </div>
