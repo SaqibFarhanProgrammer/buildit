@@ -6,7 +6,7 @@ import {
 } from '@/models/project traccking/project-tracking.models';
 import { TaskTracking } from '@/models/project traccking/task-tracking.models';
 import { User } from '@/models/User.model';
-import { ITaskCard } from '@/types/project tracking/types';
+import { ITaskCard, MemberDetailType } from '@/types/project tracking/types';
 import { GetUseridByToken, IsUserAuthenticate } from '@/utils/AuthRequest';
 import { VerifyToken } from '@/utils/EncodeEmail';
 import { getUserProfile } from '@/utils/GetProfiledata';
@@ -361,17 +361,9 @@ export async function GetProjectMembers(projectId: string) {
       .lean();
 
     if (!project) {
-      return {
-        success: false,
-        message: 'Project not found',
-      };
-    }
-
-    if (!project.members.length) {
-      return {
-        success: false,
-        message: 'No members found',
-      };
+    throw new AppError(
+       'Project not found',  401
+    )
     }
 
     const userIds = project.members.map((member) => member.userid);
@@ -388,17 +380,14 @@ export async function GetProjectMembers(projectId: string) {
       const user = userMap.get(member.userid.toString());
 
       return {
-        userId: member.userid.toString(),
+        userId: member.userid.toString() ,
         name: user?.name ?? '',
         image: user?.image ?? '',
         role: member.MemberRole,
       };
     });
 
-    return {
-      success: true,
-      data: finalMembers,
-    };
+    return finalMembers;
   } catch (error) {
     throw error;
   }
