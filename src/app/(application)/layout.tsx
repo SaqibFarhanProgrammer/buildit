@@ -7,7 +7,7 @@ export default function ApplicationLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className='bg-[#FDF9F5]'>
       {children}
       <Sidebar />
     </div>

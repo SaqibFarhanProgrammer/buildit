@@ -81,12 +81,6 @@ export default function Features() {
       <div className="relative max-w-6xl mx-auto px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-16 md:mb-20">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-px bg-[#0004ff]" />
-            <span className="text-[11px] font-['inter-semi'] text-[#0004ff] uppercase tracking-[0.2em]">
-              Features
-            </span>
-          </div>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-['inter4-medium'] text-[#0a0a0a] leading-[1.1] tracking-tight max-w-2xl">
             Everything you need to{' '}
             <span className="text-[#0004ff]">build and ship</span> faster.

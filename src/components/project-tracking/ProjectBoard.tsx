@@ -1,7 +1,7 @@
 'use client';
 
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
-import { TaskT } from '@/types/project tracking/types';
+import { MemberDetailT, MemberDetailType, TaskT } from '@/types/project tracking/types';
 import axios from 'axios';
 import CreateNewTaskForm from './CreateNewTaskForm';
 import BoardHeader from './board/BoardHeader';
@@ -11,7 +11,7 @@ import { MemberType } from '@/models/project traccking/project-tracking.models';
 
 type projectBoardpropsType = {
   tasks: TaskT[];
-  members: MemberType[];
+  members: MemberDetailType[];
 };
 
 export default function ProjectBoard({

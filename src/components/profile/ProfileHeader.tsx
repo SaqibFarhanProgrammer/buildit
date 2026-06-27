@@ -28,8 +28,8 @@ export default function ProfileHeader({ user }: { user: UserDataT }) {
             {user.image ? (
               <Image src={user.image} alt={user.name} width={96} height={96} />
             ) : (
-              <span className="font-['inter-bold'] text-3xl sm:text-4xl text-white">
-                {user.image}
+              <span className="font-['inter-bold'] uppercase text-3xl sm:text-4xl text-white">
+                {user.name.charAt(0)}
               </span>
             )}
           </div>

@@ -40,7 +40,7 @@ export default async function ProfilePage() {
   const profileUser = toProfileUser(result.data as UserDataT);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FDF9F5]">
       <ProfileHeader user={profileUser} />
 
       <StatsBar

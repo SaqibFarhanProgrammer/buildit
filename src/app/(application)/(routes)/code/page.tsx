@@ -23,7 +23,7 @@ export default async function CodePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FDF9F5]">
       <ProjectList projectsData={projects} />
     </div>
   );

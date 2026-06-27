@@ -2,13 +2,14 @@ import { connectDB } from '@/core/db/DbConnection';
 import { User } from '@/models/User.model';
 import jwt from 'jsonwebtoken';
 
-const cache = new Map<string, UserDataT>();
+const cache = new Map();
 
-function toPlainUserData(user: Record<string, unknown>): UserDataT {
-  return JSON.parse(JSON.stringify(user)) as UserDataT;
+function toPlainUserData(user: Record<string, unknown>) {
+  return JSON.parse(JSON.stringify(user)) ;
 }
 
 import { CodingLevel, ThemeType, UserRole } from '@/models/User.model';
+import { AppError } from '@/lib/AppError';
 
 export type UserProfileT = {
   codingLevel: CodingLevel;
@@ -19,12 +20,6 @@ export type UserProfileT = {
 };
 
 // 3. Main User Schema type
-export interface UserDataT {
-  email: string;
-  image: string;
-  name: string;
-  profile: UserProfileT;
-}
 
 function getUserIdFromToken(token: string): string | null {
   try {
@@ -48,7 +43,6 @@ export async function getUserProfile(token: string) {
 
   if (cached) {
     return {
-      source: 'cache' as const,
       data: cached,
     };
   }
@@ -59,14 +53,13 @@ export async function getUserProfile(token: string) {
     .select('_id name email image createdAt profile')
     .lean();
 
-  if (!user) return null;
+  if (!user) throw new AppError('user not found in Getuserprofile', 401);
 
   const plainUser = toPlainUserData(user as Record<string, unknown>);
 
   cache.set(cacheKey, plainUser);
 
   return {
-    source: 'db' as const,
     data: plainUser,
   };
 }

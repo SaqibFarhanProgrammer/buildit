@@ -6,8 +6,8 @@ import ChatInput from './ChatInput';
 import ChatHeader from './ChatHeader';
 import type { AiChatResponse, ChatMessage } from '@/types/ai/chat.types';
 import axios from 'axios';
-import { UserDataT } from '@/utils/GetProfiledata';
 import { UserinfoT } from '@/lib/gemini/Ai-Assistent';
+import { UserDataT } from '@/types';
 
 const getWelcomeMessage = (): ChatMessage => ({
   id: 1,

@@ -97,7 +97,7 @@ export default function NewProjectModal({
         onClick={onClose}
       />
 
-      <div className="relative w-full max-w-md bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-md bg-[#0A0A0A] border border-white/10 rounded-xl shadow-2xl overflow-hidden">
         <div className="px-6 py-5 border-b border-white/5">
           <h2 className="font-['inter-bold'] text-xl text-white">
             Create New Project

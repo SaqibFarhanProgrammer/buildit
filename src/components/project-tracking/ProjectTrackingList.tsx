@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { FiSearch, FiPlus } from 'react-icons/fi';
 import CreateProjectForm from './CreateProjectForm';
 import ProjectTrackingHeader from './list/ProjectTrackingHeader';
-import ProjectTrackingStats from './list/ProjectTrackingStats';
 import ProjectTrackingFilters from './list/ProjectTrackingFilters';
 import ProjectTrackingCard from './list/ProjectTrackingCard';
 import ProjectTrackingEmptyState from './list/ProjectTrackingEmptyState';
@@ -28,6 +27,9 @@ export default function ProjectTrackingList() {
     if (activeFilter === 'my') return p.isAdmin && matchesSearch;
     return matchesSearch;
   });
+
+  
+
 
   return (
     <div className="max-w-6xl mx-auto px-6 lg:px-8 py-8 sm:py-12">

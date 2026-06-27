@@ -10,17 +10,9 @@ import {
   FiUsers,
   FiAlignLeft,
   FiCheckCircle,
-  FiPlus,
 } from 'react-icons/fi';
 
 type ErrorState = Record<string, string>;
-
-const members = [
-  { id: 'user_1', name: 'Ali Huzaifa' },
-  { id: 'user_2', name: 'Saqib Farhan' },
-  { id: 'user_3', name: 'Muhammad Usman' },
-  { id: 'user_4', name: 'Umer Farooq' },
-];
 
 export default function CreateProjectForm() {
   const { isCreateModalOpen, closeCreateModal, addProject } =
@@ -35,29 +27,6 @@ export default function CreateProjectForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   if (!isCreateModalOpen) return null;
-
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const getAvatarColor = (name: string) => {
-    const colors = [
-      'bg-[#0004ff]/10 text-[#0004ff]',
-      'bg-emerald-100 text-emerald-600',
-      'bg-amber-100 text-amber-600',
-      'bg-rose-100 text-rose-600',
-    ];
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return colors[Math.abs(hash) % colors.length];
-  };
 
   const resetForm = () => {
     setTitle('');
@@ -92,7 +61,7 @@ export default function CreateProjectForm() {
         title: title.trim(),
         description: description.trim(),
         state,
-        members: selectedMembers,
+        members: {},
       });
 
       if (!res.data.project) {
@@ -195,50 +164,6 @@ export default function CreateProjectForm() {
                 {errors.description}
               </p>
             )}
-          </div>
-
-          <div>
-            <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
-              Add Members
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              {members.map((member) => {
-                const isSelected = selectedMembers.includes(member.id);
-                return (
-                  <button
-                    key={member.id}
-                    type="button"
-                    className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-all text-left ${
-                      isSelected
-                        ? 'bg-[#0004ff]/5 border-[#0004ff]/30'
-                        : 'bg-[#f9fafb] border-[#0a0a0a]/5 hover:border-[#0004ff]/20 hover:bg-white'
-                    }`}
-                  >
-                    <div
-                      className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-['inter-semi'] ${getAvatarColor(member.name)}`}
-                    >
-                      {getInitials(member.name)}
-                    </div>
-                    <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/60 truncate">
-                      {member.name}
-                    </span>
-                    <div
-                      className={`ml-auto w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                        isSelected
-                          ? 'border-[#0004ff] bg-[#0004ff]'
-                          : 'border-[#0a0a0a]/10'
-                      }`}
-                    >
-                      {isSelected ? (
-                        <FiCheckCircle size={10} className="text-white" />
-                      ) : (
-                        <FiPlus size={10} className="text-[#0a0a0a]/20" />
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
           </div>
 
           <div>

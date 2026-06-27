@@ -66,9 +66,15 @@ export async function CreateProjectTracking(request: NextRequest) {
       throw new AppError('Unauthorized', 401);
     }
 
+    const token = request.cookies.get('token')?.value;
+
+    if (!token) {
+      throw new AppError('token is request at create project ', 401);
+    }
+
     const body = await request.json();
 
-    const { title, description, state, members } = body;
+    const { title, description, state } = body;
 
     if (!title || typeof title !== 'string') {
       throw new AppError('Title is required', 400);
@@ -82,18 +88,23 @@ export async function CreateProjectTracking(request: NextRequest) {
       throw new AppError('State is required', 400);
     }
 
-    if (members && !Array.isArray(members)) {
-      throw new AppError('Members must be an array', 400);
-    }
-
     await connectDB();
 
-    const project = await ProjectTracking.create({
+    const profileData = await getUserProfile(token);
+    if (!profileData) {
+      throw new AppError('ProfileData is request at create project ', 401);
+    }
+
+    await ProjectTracking.create({
       title: title.trim(),
       description: description.trim(),
       state: 'active',
-
-      members: members || [],
+      members: [
+        {
+          userid: profileData.data._id,
+          MemberRole: 'admin',
+        },
+      ],
       createdByUserId: userid,
       isAdmin: true,
     });
@@ -101,9 +112,6 @@ export async function CreateProjectTracking(request: NextRequest) {
     return {
       success: true,
       message: 'Project created successfully',
-      data: {
-        id: project._id.toString(),
-      },
     };
   } catch (error: any) {
     console.error('CreateProjectTracking Error:', error);
@@ -166,7 +174,10 @@ export async function GetProjectTrackingProject(
         description: project.description,
         state: project.state,
         createdByUserId: project.createdByUserId?.toString(),
-        members: project.members,
+        members: project.members.map((member) => ({
+          userid: member.userid.toString(),
+          MemberRole: member.MemberRole,
+        })),
         createdAt: project.createdAt?.toISOString(),
         updatedAt: project.updatedAt?.toISOString(),
         isAdmin: project.createdByUserId === payload.userId ? true : false,
@@ -379,13 +390,14 @@ export async function GetProjectMembers(projectId: string) {
       const user = userMap.get(member.userid.toString());
 
       return {
-        userId: member.userid,
+        userId: member.userid.toString(),
         name: user?.name ?? '',
-        email: user?.email ?? '',
         image: user?.image ?? '',
         role: member.MemberRole,
       };
     });
+
+    console.log(finalMembers);
 
     return {
       success: true,

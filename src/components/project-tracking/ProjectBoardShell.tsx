@@ -3,6 +3,8 @@
 import { ProjectTrackingProvider } from '@/context/ProjectTracking.context';
 import {
   ITaskCard,
+  MemberDetailT,
+  MemberDetailType,
   ProjectTrackingT,
   TaskT,
 } from '@/types/project tracking/types';
@@ -12,7 +14,7 @@ import { MemberType } from '@/models/project traccking/project-tracking.models';
 type PropType = {
   projectData: ProjectTrackingT;
   tasks: TaskT[];
-  Members: MemberType[];
+  Members: MemberDetailType[];
 };
 
 export default function ProjectBoardShell({

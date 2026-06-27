@@ -46,25 +46,14 @@ export default function ProjectTrackingCard({ project }: Props) {
           {project.description}
         </p>
 
-        <div className="flex items-center gap-4 pt-3 border-t border-[#0a0a0a]/5">
+        <div className="flex items-center gap-4 pt-4 border-t border-[#0a0a0a]/5">
           <span className="flex items-center gap-1.5 text-[10px] text-[#0a0a0a]/30 font-['inter-rag']">
             <FiUsers size={12} />
             {project.members.length} members
           </span>
         </div>
 
-        <div className="flex items-center gap-2 mt-3">
-          <div className="w-5 h-5 rounded-full bg-[#0004ff]/10 flex items-center justify-center">
-            <span className="text-[8px] font-['inter-semi'] text-[#0004ff]">
-              {project.createdByUserName?.toString().charAt(0).toUpperCase()}
-            </span>
-          </div>
-          <span className="font-['inter-rag'] text-[10px] text-[#0a0a0a]/30">
-            {project.createdByUserName}
-          </span>
-        </div>
-
-        <div className="absolute bottom-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute bottom-3 right-5 opacity-0 group-hover:opacity-100 transition-opacity">
           <span className="text-[#0004ff] text-lg">→</span>
         </div>
       </div>

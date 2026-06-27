@@ -14,9 +14,10 @@ export type TaskT = {
 };
 
 export type MemberDetailT = {
-  id: string;
+  userId: string;
   name: string;
-  image?: string;
+  image: string;
+  role: string;
 };
 
 export type ProjectTrackingT = {

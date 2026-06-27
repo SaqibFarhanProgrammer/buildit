@@ -1,7 +1,11 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
-import CodeEditor from './CodeEditor';
+const CodeEditor = dynamic(() => import('./CodeEditor'), {
+  loading: () => <p>Loading editor...</p>,
+  ssr: false,
+});
 import EditorToolbar from './EditorToolbar';
 import Terminal from './Terminal';
 import EditorProvider, { useEditor } from '@/context/EditorProvider.context';
@@ -30,7 +34,6 @@ function EditorContent() {
 
   return (
     <div className="h-screen flex bg-[#0A0A0A]">
-      {/* Main Editor Area */}
       <div
         className={`flex flex-col transition-all duration-300 ${
           IsAiExplainWindowOpen ? 'hidden md:flex md:w-[60%]' : 'w-full'
@@ -41,12 +44,12 @@ function EditorContent() {
         <div className="flex-1 flex overflow-hidden">
           <div className="flex-1 flex flex-col min-w-0">
             <CodeEditor />
+
             {terminalOpen && <Terminal />}
           </div>
         </div>
       </div>
 
-      {/* AI Explain Sidebar */}
       {IsAiExplainWindowOpen && (
         <div
           className="
@@ -54,7 +57,6 @@ function EditorContent() {
             md:static md:z-auto md:flex md:w-[40%] md:h-full md:border-l md:border-white/[0.06] md:bg-[#0A0A0A] md:backdrop-blur-none
           "
         >
-          {/* Close button for mobi le/tablet */}
           <button
             onClick={() => setIsAiExplainWindowOpen(false)}
             className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-white/[0.08] border border-white/[0.1] flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.12] transition-all md:hidden"
@@ -75,7 +77,6 @@ function EditorContent() {
             </svg>
           </button>
 
-          {/* Modal content — 90% width/height on mobile/tablet */}
           <div className="w-[90%] h-[90%] rounded-2xl overflow-hidden border border-white/[0.08] bg-[#0A0A0A] md:w-full md:h-full md:rounded-none md:border-none">
             <AIExplainWindow />
           </div>

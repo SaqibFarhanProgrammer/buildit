@@ -30,10 +30,16 @@ export default async function ProjectPage({
   const tasks = await GetAllTasks(slug);
   const Members = await GetProjectMembers(slug);
 
+  console.log(response.data);
+
+  if (!Members) {
+    throw new AppError('Members not ofund in page', 401);
+  }
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FDF9F5]">
       <ProjectBoardShell
-        Members={Members?.data}
+        Members={Members.data }
         tasks={tasks}
         projectData={response.data}
       />
