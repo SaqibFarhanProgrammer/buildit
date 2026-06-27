@@ -50,7 +50,7 @@ export default function ProjectBoard({
       <CreateNewTaskForm />
 
       <BoardHeader
-        isAdmin={currentProject.isAdmin}
+        isAdmin={meAsMemberOfProject[0].role}
         members={members}
         title={currentProject.title}
       />

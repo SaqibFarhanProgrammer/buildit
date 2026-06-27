@@ -13,7 +13,6 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { TaskT } from '@/types/project tracking/types';
-import TaskPreview from '../TaskPreview';
 
 export type TaskState = 'not started' | 'in progress' | 'hold' | 'completed';
 
@@ -88,19 +87,17 @@ export default function TaskCard({ task, handletaskpreview }: TaskCardProps) {
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#f9fafb] border border-[#0a0a0a]/5">
             <FiCheckCircle size={10} className="text-[#0004ff]" />
-            <span className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/40">
-              {task.taskId}
-            </span>
           </div>
         </div>
 
         <div className="relative" ref={menuRef}>
+
           <button
             onClick={(e) => {
               e.stopPropagation();
               setMenuOpen(!menuOpen);
             }}
-            className="opacity-0 group-hover:opacity-100 transition-opacity text-[#0a0a0a]/20 hover:text-[#0a0a0a]/40 p-1 rounded-md hover:bg-[#f9fafb]"
+            className=" group-hover:opacity-100 transition-opacity text-[#0a0a0a]/20 hover:text-[#0a0a0a]/40 p-1 rounded-md hover:bg-[#f9fafb]"
           >
             <FiMoreHorizontal size={14} />
           </button>

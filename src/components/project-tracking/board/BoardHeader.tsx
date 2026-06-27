@@ -1,11 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import {
-  FiMoreHorizontal,
-  FiEdit2,
-  FiTrash2,
-} from 'react-icons/fi';
+import { FiMoreHorizontal, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import Link from 'next/link';
 import { getAvatarColor, getInitials } from '../utils';
 import { CgAdd } from 'react-icons/cg';
@@ -13,17 +9,16 @@ import AddMemberModal from '../AddMemberForm';
 import { useParams } from 'next/navigation';
 import { AppError } from '@/lib/AppError';
 import { MemberDetailType } from '@/types/project tracking/types';
-
+import { IoExitOutline } from 'react-icons/io5';
 
 type Props = {
   title: string;
-  isAdmin: boolean;
+  isAdmin: string;
   members?: MemberDetailType[];
 };
 
 export default function BoardHeader({ title, isAdmin, members }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
   const menuRef = useRef<HTMLDivElement>(null);
   const [isAddMemberFormIsOpen, setisAddMemberFormIsOpen] = useState(false);
 
@@ -34,11 +29,6 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
   if (!slug) {
     throw new AppError('slug not found in params', 401);
   }
-
-  
-
- 
-
 
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
@@ -102,7 +92,7 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
 
           {menuOpen && (
             <div className="absolute right-0 top-11 z-20 bg-white rounded-xl border border-[#0a0a0a]/5 shadow-xl shadow-[#0a0a0a]/5 py-2 min-w-[180px] overflow-hidden">
-              {isAdmin && (
+              {isAdmin != 'viewer' && (
                 <button
                   onClick={() => setisAddMemberFormIsOpen(true)}
                   className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
@@ -111,7 +101,7 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
                   Add Member
                 </button>
               )}
-              {isAdmin && (
+              {isAdmin != 'viewer' && (
                 <button
                   onClick={() => setMenuOpen(false)}
                   className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
@@ -121,19 +111,19 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
                 </button>
               )}
 
-              {!isAdmin && (
+              {isAdmin != 'admin' && (
                 <button
                   onClick={() => setMenuOpen(false)}
                   className="w-full
                 flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
                 >
-                  <FiTrash2 size={14} />
+                  <IoExitOutline size={14} />
                   Leave Project
                 </button>
               )}
 
               <div className="h-px bg-[#0a0a0a]/[0.03] mx-4 my-1" />
-              {isAdmin && (
+              {isAdmin === 'admin' && (
                 <button
                   onClick={() => setMenuOpen(false)}
                   className="w-full

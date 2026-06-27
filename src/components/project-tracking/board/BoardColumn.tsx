@@ -67,7 +67,7 @@ export default function BoardColumn({ column, isAdmin, tasks }: Props) {
             ))}
         </div>
 
-        {isAdmin === 'admin' ? (
+        {isAdmin === 'admin' || isAdmin === 'member' ? (
           <button
             onClick={() => {
               openCreateTaskModal(column.id);
