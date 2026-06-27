@@ -1,4 +1,8 @@
-import EditorLayout from '@/components/code/EditorLayout';
+import dynamic from 'next/dynamic';
+import CodeEditorSkeleton from '@/components/Skeliton/CodeEdittorSkeliton';
+const EditorLayout = dynamic(() => import('@/components/code/EditorLayout'), {
+  loading: () => <CodeEditorSkeleton />,
+});
 
 export default async function EditorPage({
   params,

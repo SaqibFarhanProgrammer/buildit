@@ -1,11 +1,7 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
-const CodeEditor = dynamic(() => import('./CodeEditor'), {
-  loading: () => <p>Loading editor...</p>,
-  ssr: false,
-});
+import CodeEditor from './CodeEditor';
 import EditorToolbar from './EditorToolbar';
 import Terminal from './Terminal';
 import EditorProvider, { useEditor } from '@/context/EditorProvider.context';
@@ -43,6 +39,8 @@ function EditorContent() {
         <EditorToolbar />
         <div className="flex-1 flex overflow-hidden">
           <div className="flex-1 flex flex-col min-w-0">
+
+            
             <CodeEditor />
 
             {terminalOpen && <Terminal />}
