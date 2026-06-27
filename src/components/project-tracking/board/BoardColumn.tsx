@@ -61,7 +61,7 @@ export default function BoardColumn({ column, isAdmin, tasks }: Props) {
             .filter((task) => task.state === column.id)
             .map((task, i) => (
               <TaskCard
-              isAdmin={isAdmin}
+                isAdmin={isAdmin}
                 handletaskpreview={HandleTaskPreview}
                 key={i}
                 task={task}

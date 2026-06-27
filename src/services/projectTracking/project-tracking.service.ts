@@ -361,9 +361,7 @@ export async function GetProjectMembers(projectId: string) {
       .lean();
 
     if (!project) {
-    throw new AppError(
-       'Project not found',  401
-    )
+      throw new AppError('Project not found', 401);
     }
 
     const userIds = project.members.map((member) => member.userid);
@@ -380,7 +378,7 @@ export async function GetProjectMembers(projectId: string) {
       const user = userMap.get(member.userid.toString());
 
       return {
-        userId: member.userid.toString() ,
+        userId: member.userid.toString(),
         name: user?.name ?? '',
         image: user?.image ?? '',
         role: member.MemberRole,
