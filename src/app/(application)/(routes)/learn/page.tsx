@@ -18,9 +18,8 @@ export default function LearningPage() {
 
           <div className="max-w-2xl">
             <h1 className="font-['inter-bold'] text-3xl sm:text-4xl lg:text-5xl tracking-tight text-[#0a0a0a]">
-              Learn smarter with a{' '}
-              <span className="text-[#0004ff]">clean</span>, professional
-              interface.
+              Learn smarter with a <span className="text-[#0004ff]">clean</span>
+              , professional interface.
             </h1>
             <p className="mt-4 font-['inter-rag'] text-sm leading-relaxed text-[#0a0a0a]/50 max-w-xl">
               Explore curated learning paths built for developers who want a

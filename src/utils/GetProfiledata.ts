@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 const cache = new Map();
 
 function toPlainUserData(user: Record<string, unknown>) {
-  return JSON.parse(JSON.stringify(user)) ;
+  return JSON.parse(JSON.stringify(user));
 }
 
 import { CodingLevel, ThemeType, UserRole } from '@/models/User.model';

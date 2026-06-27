@@ -1,7 +1,11 @@
 'use client';
 
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
-import { MemberDetailT, MemberDetailType, TaskT } from '@/types/project tracking/types';
+import {
+  MemberDetailT,
+  MemberDetailType,
+  TaskT,
+} from '@/types/project tracking/types';
 import axios from 'axios';
 import CreateNewTaskForm from './CreateNewTaskForm';
 import BoardHeader from './board/BoardHeader';

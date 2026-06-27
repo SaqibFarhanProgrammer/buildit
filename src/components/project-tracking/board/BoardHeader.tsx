@@ -78,7 +78,7 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
             return (
               <div
                 key={i}
-                className={`relative w-9 h-9 rounded-full border-2 ${member.role === "admin" ? 'border-blue-500' : 'border-white '} overflow-hidden   shadow-sm`}
+                className={`relative w-9 h-9 rounded-full border-2 ${member.role === 'admin' ? 'border-blue-500' : 'border-white '} overflow-hidden   shadow-sm`}
               >
                 {member.image != '' ? (
                   <img
@@ -130,19 +130,16 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
                 </button>
               )}
 
-
-
-                {!isAdmin && 
-
-              <button
-              onClick={() => setMenuOpen(false)}
-                className="w-full
+              {!isAdmin && (
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  className="w-full
                 flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
-              >
-                <FiTrash2 size={14} />
-                Leave Project
-              </button>
-                }
+                >
+                  <FiTrash2 size={14} />
+                  Leave Project
+                </button>
+              )}
 
               <div className="h-px bg-[#0a0a0a]/[0.03] mx-4 my-1" />
               {isAdmin && (

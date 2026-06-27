@@ -28,9 +28,6 @@ export default function ProjectTrackingList() {
     return matchesSearch;
   });
 
-  
-
-
   return (
     <div className="max-w-6xl mx-auto px-6 lg:px-8 py-8 sm:py-12">
       <CreateProjectForm />
