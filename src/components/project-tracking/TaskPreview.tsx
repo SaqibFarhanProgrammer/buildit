@@ -18,6 +18,8 @@ import {
 
 interface TaskPreviewProps {
   isOpen: boolean;
+  isAdmin: string;
+
   onClose: () => void;
   task: TaskT | null;
 }
@@ -77,6 +79,7 @@ function getAvatarColor(name?: string) {
 export default function TaskPreview({
   isOpen,
   onClose,
+  isAdmin,
   task,
 }: TaskPreviewProps) {
   if (!isOpen || !task) return null;
@@ -343,10 +346,12 @@ export default function TaskPreview({
           >
             Close
           </button>
-          <button className="px-6 py-2.5 rounded-xl bg-[#0004FF] text-white text-sm font-['inter-semi'] hover:bg-[#0004FF]/90 transition-all flex items-center gap-2">
-            <FiEdit2 size={14} />
-            Edit Task
-          </button>
+          {isAdmin != 'viewer' && (
+            <button className="px-6 py-2.5 rounded-xl bg-[#0004FF] text-white text-sm font-['inter-semi'] hover:bg-[#0004FF]/90 transition-all flex items-center gap-2">
+              <FiEdit2 size={14} />
+              Edit Task
+            </button>
+          )}
         </div>
       </div>
     </div>

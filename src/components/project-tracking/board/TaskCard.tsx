@@ -7,8 +7,6 @@ import {
   FiMoreHorizontal,
   FiEdit2,
   FiTrash2,
-  FiMessageSquare,
-  FiPaperclip,
 } from 'react-icons/fi';
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
@@ -18,17 +16,8 @@ export type TaskState = 'not started' | 'in progress' | 'hold' | 'completed';
 
 interface TaskCardProps {
   task: TaskT;
+  isAdmin: string;
   handletaskpreview: (tasl: TaskT) => void;
-}
-
-function getInitials(name?: string) {
-  if (!name) return '?';
-  return name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2);
 }
 
 function getAvatarColor(name?: string) {
@@ -48,7 +37,11 @@ function getAvatarColor(name?: string) {
   return colors[Math.abs(hash) % colors.length];
 }
 
-export default function TaskCard({ task, handletaskpreview }: TaskCardProps) {
+export default function TaskCard({
+  task,
+  isAdmin,
+  handletaskpreview,
+}: TaskCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -89,43 +82,43 @@ export default function TaskCard({ task, handletaskpreview }: TaskCardProps) {
             <FiCheckCircle size={10} className="text-[#0004ff]" />
           </div>
         </div>
-
-        <div className="relative" ref={menuRef}>
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setMenuOpen(!menuOpen);
-            }}
-            className=" group-hover:opacity-100 transition-opacity text-[#0a0a0a]/20 hover:text-[#0a0a0a]/40 p-1 rounded-md hover:bg-[#f9fafb]"
-          >
-            <FiMoreHorizontal size={14} />
-          </button>
-          {menuOpen && (
-            <div className="absolute right-0 top-7 z-10 bg-white rounded-xl border border-[#0a0a0a]/5 shadow-xl shadow-[#0a0a0a]/5 py-1.5 min-w-[140px] overflow-hidden">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMenuOpen(false);
-                }}
-                className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
-              >
-                <FiEdit2 size={12} className="text-[#0a0a0a]/30" />
-                Edit Task
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMenuOpen(false);
-                }}
-                className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
-              >
-                <FiTrash2 size={12} />
-                Delete
-              </button>
-            </div>
-          )}
-        </div>
+        {isAdmin != 'viewer' && (
+          <div className="relative" ref={menuRef}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setMenuOpen(!menuOpen);
+              }}
+              className=" group-hover:opacity-100 transition-opacity text-[#0a0a0a]/20 hover:text-[#0a0a0a]/40 p-1 rounded-md hover:bg-[#f9fafb]"
+            >
+              <FiMoreHorizontal size={14} />
+            </button>
+            {menuOpen && (
+              <div className="absolute right-0 top-7 z-10 bg-white rounded-xl border border-[#0a0a0a]/5 shadow-xl shadow-[#0a0a0a]/5 py-1.5 min-w-[140px] overflow-hidden">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMenuOpen(false);
+                  }}
+                  className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
+                >
+                  <FiEdit2 size={12} className="text-[#0a0a0a]/30" />
+                  Edit Task
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMenuOpen(false);
+                  }}
+                  className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
+                >
+                  <FiTrash2 size={12} />
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <h4 className="font-['inter-semi'] text-sm text-[#0a0a0a] mb-2 leading-snug group-hover:text-[#0004ff] transition-colors">

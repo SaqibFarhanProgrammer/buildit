@@ -35,6 +35,7 @@ export default function BoardColumn({ column, isAdmin, tasks }: Props) {
           onClose={() => setisTaskPreviewOpen(false)}
           isOpen={isTaskPreviewOpen}
           task={TaskDetiales!}
+          isAdmin={isAdmin}
         />
       )}
 
@@ -60,6 +61,7 @@ export default function BoardColumn({ column, isAdmin, tasks }: Props) {
             .filter((task) => task.state === column.id)
             .map((task, i) => (
               <TaskCard
+              isAdmin={isAdmin}
                 handletaskpreview={HandleTaskPreview}
                 key={i}
                 task={task}
