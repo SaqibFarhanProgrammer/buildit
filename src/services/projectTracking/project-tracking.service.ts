@@ -328,7 +328,6 @@ export async function AddMember(request: NextRequest) {
       (member) => member.userid.toString() === user._id.toString()
     );
 
-    console.log(memberExists, 'exitng member');
 
     if (memberExists) {
       throw new AppError('User is already a member', 409);
@@ -396,8 +395,6 @@ export async function GetProjectMembers(projectId: string) {
         role: member.MemberRole,
       };
     });
-
-    console.log(finalMembers);
 
     return {
       success: true,
