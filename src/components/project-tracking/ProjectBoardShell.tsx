@@ -1,15 +1,12 @@
-'use client';
-
 import { ProjectTrackingProvider } from '@/context/ProjectTracking.context';
 import {
-  ITaskCard,
-  MemberDetailT,
   MemberDetailType,
   ProjectTrackingT,
   TaskT,
 } from '@/types/project tracking/types';
 import ProjectBoard from './ProjectBoard';
-import { MemberType } from '@/models/project traccking/project-tracking.models';
+import { cookies } from 'next/headers';
+import { GetUseridByToken } from '@/utils/AuthRequest';
 
 type PropType = {
   projectData: ProjectTrackingT;
@@ -17,14 +14,16 @@ type PropType = {
   Members: MemberDetailType[];
 };
 
-export default function ProjectBoardShell({
+export default async function ProjectBoardShell({
   projectData,
   Members,
   tasks,
 }: PropType) {
+  const userid = await GetUseridByToken();
+
   return (
     <ProjectTrackingProvider initialProject={projectData}>
-      <ProjectBoard members={Members} tasks={tasks} />
+      <ProjectBoard userid={userid} members={Members} tasks={tasks} />
     </ProjectTrackingProvider>
   );
 }

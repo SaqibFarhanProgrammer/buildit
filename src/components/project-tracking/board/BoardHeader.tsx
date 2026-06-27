@@ -5,8 +5,6 @@ import {
   FiMoreHorizontal,
   FiEdit2,
   FiTrash2,
-  FiArchive,
-  FiShare2,
 } from 'react-icons/fi';
 import Link from 'next/link';
 import { getAvatarColor, getInitials } from '../utils';
@@ -14,14 +12,8 @@ import { CgAdd } from 'react-icons/cg';
 import AddMemberModal from '../AddMemberForm';
 import { useParams } from 'next/navigation';
 import { AppError } from '@/lib/AppError';
-import { MemberType } from '@/models/project traccking/project-tracking.models';
 import { MemberDetailType } from '@/types/project tracking/types';
 
-type Member = {
-  id: string;
-  name: string;
-  image?: string;
-};
 
 type Props = {
   title: string;
@@ -43,11 +35,10 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
     throw new AppError('slug not found in params', 401);
   }
 
-  const handleImageError = (memberId: string) => {
-    setImageErrors((prev) => ({ ...prev, [memberId]: true }));
-  };
+  
 
-  console.log(members);
+ 
+
 
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">

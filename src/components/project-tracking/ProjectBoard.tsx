@@ -1,30 +1,25 @@
 'use client';
 
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
-import {
-  MemberDetailT,
-  MemberDetailType,
-  TaskT,
-} from '@/types/project tracking/types';
+import { MemberDetailType, TaskT } from '@/types/project tracking/types';
 import axios from 'axios';
 import CreateNewTaskForm from './CreateNewTaskForm';
 import BoardHeader from './board/BoardHeader';
 import BoardColumn from './board/BoardColumn';
 import { BOARD_COLUMNS } from './utils';
-import { MemberType } from '@/models/project traccking/project-tracking.models';
 
 type projectBoardpropsType = {
   tasks: TaskT[];
+  userid: string;
   members: MemberDetailType[];
 };
 
 export default function ProjectBoard({
   tasks,
   members,
+  userid,
 }: projectBoardpropsType) {
   const { currentProject, openEditTaskModal } = useProjectTrackingContext();
-
-  console.log(members);
 
   if (!currentProject) {
     return (
@@ -46,6 +41,10 @@ export default function ProjectBoard({
     }
   };
 
+  const meAsMemberOfProject = members.filter((m: MemberDetailType) => {
+    return m.userId.toString() === userid.toString();
+  });
+
   return (
     <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8 sm:py-12">
       <CreateNewTaskForm />
@@ -62,7 +61,7 @@ export default function ProjectBoard({
             key={column.id}
             tasks={tasks}
             column={column}
-            isAdmin={currentProject.isAdmin}
+            isAdmin={meAsMemberOfProject[0].role}
             onEditTask={openEditTaskModal}
             onDeleteTask={handleDeleteTask}
           />

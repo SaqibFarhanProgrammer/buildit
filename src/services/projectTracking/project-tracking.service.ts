@@ -328,7 +328,6 @@ export async function AddMember(request: NextRequest) {
       (member) => member.userid.toString() === user._id.toString()
     );
 
-
     if (memberExists) {
       throw new AppError('User is already a member', 409);
     }

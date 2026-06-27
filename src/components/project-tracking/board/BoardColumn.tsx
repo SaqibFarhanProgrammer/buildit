@@ -13,7 +13,7 @@ type ColumnConfig = (typeof BOARD_COLUMNS)[number];
 type Props = {
   column: ColumnConfig;
   tasks: TaskT[];
-  isAdmin: boolean;
+  isAdmin: string;
   onEditTask: (task: TaskT) => void;
   onDeleteTask: (taskId: string) => void;
 };
@@ -67,20 +67,22 @@ export default function BoardColumn({ column, isAdmin, tasks }: Props) {
             ))}
         </div>
 
-        <button
-          onClick={() => {
-            openCreateTaskModal(column.id);
-          }}
-          className="w-full mt-3 flex items-center gap-2 px-3 py-2.5 rounded-xl bg-white/50 border border-dashed border-[#0a0a0a]/10 hover:border-[#0004ff]/30 hover:bg-white transition-all group"
-        >
-          <FiPlus
-            size={14}
-            className="text-[#0a0a0a]/20 group-hover:text-[#0004ff] transition-colors"
-          />
-          <span className="font-['inter-semi'] text-xs text-[#0a0a0a]/30 group-hover:text-[#0004ff] transition-colors">
-            Create
-          </span>
-        </button>
+        {isAdmin === 'admin' ? (
+          <button
+            onClick={() => {
+              openCreateTaskModal(column.id);
+            }}
+            className="w-full mt-3 flex items-center gap-2 px-3 py-2.5 rounded-xl bg-white/50 border border-dashed border-[#0a0a0a]/10 hover:border-[#0004ff]/30 hover:bg-white transition-all group"
+          >
+            <FiPlus
+              size={14}
+              className="text-[#0a0a0a]/20 group-hover:text-[#0004ff] transition-colors"
+            />
+            <span className="font-['inter-semi'] text-xs text-[#0a0a0a]/30 group-hover:text-[#0004ff] transition-colors">
+              Create
+            </span>
+          </button>
+        ) : null}
       </div>
     </div>
   );
