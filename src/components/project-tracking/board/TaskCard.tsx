@@ -9,23 +9,51 @@ import {
 } from 'react-icons/fi';
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { MemberDetailType, TaskT } from '@/types/project tracking/types';
-import { getAvatarColor } from '../utils';
-
-export type TaskState = 'not started' | 'in progress' | 'hold' | 'completed';
+import { TaskCardData } from '../utils';
 
 interface TaskCardProps {
-  task: TaskT;
-  isAdmin: string;
-  members: MemberDetailType[];
-  handletaskpreview: (tasl: TaskT) => void;
+  task: TaskCardData;
+  canManage: boolean;
+  onPreview: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
+}
+
+function PersonAvatar({
+  person,
+  size = 'sm',
+}: {
+  person: TaskCardData['creator'];
+  size?: 'sm' | 'md';
+}) {
+  const sizeClass = size === 'sm' ? 'w-4 h-4 text-[6px]' : 'w-7 h-7 text-[10px]';
+
+  return (
+    <div
+      className={`${sizeClass} rounded-full flex items-center justify-center font-['inter-semi'] shrink-0 ${person.avatarColor}`}
+      title={person.name}
+    >
+      {person.image ? (
+        <Image
+          src={person.image}
+          alt={person.name}
+          width={size === 'sm' ? 16 : 28}
+          height={size === 'sm' ? 16 : 28}
+          className={`${sizeClass} rounded-full object-cover`}
+        />
+      ) : (
+        <span>{person.initial}</span>
+      )}
+    </div>
+  );
 }
 
 export default function TaskCard({
   task,
-  isAdmin,
-  handletaskpreview,
-  members,
+  canManage,
+  onPreview,
+  onEdit,
+  onDelete,
 }: TaskCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -40,27 +68,9 @@ export default function TaskCard({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const displayDate = task.dueDate
-    ? new Date(task.dueDate).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-      })
-    : task.createdAt
-      ? new Date(task.createdAt).toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric',
-        })
-      : 'No date';
-
-  const isOverdue = task.dueDate && new Date(task.dueDate) < new Date();
-  const assignmember: MemberDetailType[] = members.filter(
-    (m: MemberDetailType) => m.userId === task.assignToMemberId
-  );
   return (
     <div
-      onClick={() => {
-        handletaskpreview(task);
-      }}
+      onClick={onPreview}
       className="group bg-white rounded-xl border border-[#0a0a0a]/5 hover:border-[#0004ff]/20 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03] transition-all duration-200 p-4 cursor-pointer"
     >
       <div className="flex items-center justify-between mb-3">
@@ -69,14 +79,14 @@ export default function TaskCard({
             <FiCheckCircle size={10} className="text-[#0004ff]" />
           </div>
         </div>
-        {isAdmin != 'viewer' && (
+        {canManage && (
           <div className="relative" ref={menuRef}>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setMenuOpen(!menuOpen);
               }}
-              className=" group-hover:opacity-100 transition-opacity text-[#0a0a0a]/20 hover:text-[#0a0a0a]/40 p-1 rounded-md hover:bg-[#f9fafb]"
+              className="opacity-0 group-hover:opacity-100 transition-opacity text-[#0a0a0a]/20 hover:text-[#0a0a0a]/40 p-1 rounded-md hover:bg-[#f9fafb]"
             >
               <FiMoreHorizontal size={14} />
             </button>
@@ -86,6 +96,7 @@ export default function TaskCard({
                   onClick={(e) => {
                     e.stopPropagation();
                     setMenuOpen(false);
+                    onEdit?.();
                   }}
                   className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
                 >
@@ -96,6 +107,7 @@ export default function TaskCard({
                   onClick={(e) => {
                     e.stopPropagation();
                     setMenuOpen(false);
+                    onDelete?.();
                   }}
                   className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
                 >
@@ -120,67 +132,38 @@ export default function TaskCard({
 
       <div className="h-px bg-[#0a0a0a]/[0.03] mb-3" />
 
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div
-            className={`flex items-center gap-1.5 ${
-              isOverdue ? 'text-red-400' : 'text-[#0a0a0a]/25'
+      <div className="flex items-center justify-between gap-2">
+        <div
+          className={`flex items-center gap-1.5 shrink-0 ${
+            task.isOverdue ? 'text-red-400' : 'text-[#0a0a0a]/25'
+          }`}
+        >
+          <FiClock size={10} />
+          <span
+            className={`font-['inter-rag'] text-[9px] ${
+              task.isOverdue ? 'text-red-400 font-medium' : ''
             }`}
           >
-            <FiClock size={10} className={isOverdue ? 'text-red-400' : ''} />
-            <span
-              className={`font-['inter-rag'] text-[9px] ${
-                isOverdue ? 'text-red-400 font-medium' : ''
-              }`}
-            >
-              {displayDate}
-              {isOverdue && ' (overdue)'}
-            </span>
-          </div>
+            {task.displayDate}
+            {task.isOverdue && ' (overdue)'}
+          </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div
-            className="flex items-center gap-1 text-black/40 "
-            title={`Created by ${task.createdByUserName}`}
+        <div className="flex items-center gap-1.5 min-w-0">
+          <span
+            className="font-['inter-rag'] text-[9px] text-[#0a0a0a]/35 truncate max-w-[60px]"
+            title={`Created by ${task.creator.name}`}
           >
-            {task.createdByUserName}
-          </div>
+            {task.creator.name}
+          </span>
+          <PersonAvatar person={task.creator} />
 
-          <div
-            className={`w-4 h-4 rounded-full flex items-center justify-center text-[6px] font-['inter-semi']  ${getAvatarColor(task.createdByUserName)}`}
-          >
-            {task?.createdByUserImage ? (
-              <Image
-                src={task.createdByUserImage}
-                alt={task.createdByUserName}
-                width={10}
-                height={10}
-                className="w-4 h-4 rounded-full object-cover "
-              />
-            ) : (
-              <p>{task.createdByUserName.charAt(0)}</p>
-            )}
-          </div>
-
-          <p className="text-black/60 text-[12px]">Assign To</p>
-          {assignmember[0] ? (
-            <div
-              className={`w-4 h-4 rounded-full flex items-center justify-center text-[6px] font-['inter-semi']  ${getAvatarColor(task.createdByUserName)}`}
-            >
-              {assignmember[0].image != '' ? (
-                <Image
-                  src={assignmember[0].image}
-                  alt={assignmember[0].name}
-                  width={10}
-                  height={10}
-                  className="w-4 h-4 rounded-full object-cover "
-                />
-              ) : (
-                <p>{assignmember[0].name.charAt(0)}</p>
-              )}
-            </div>
-          ) : null}
+          {task.assignee && (
+            <>
+              <span className="text-[#0a0a0a]/20 text-[9px]">→</span>
+              <PersonAvatar person={task.assignee} />
+            </>
+          )}
         </div>
       </div>
     </div>

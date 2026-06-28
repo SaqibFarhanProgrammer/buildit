@@ -5,7 +5,6 @@ import {
   TaskT,
 } from '@/types/project tracking/types';
 import ProjectBoard from './ProjectBoard';
-import { cookies } from 'next/headers';
 import { GetUseridByToken } from '@/utils/AuthRequest';
 
 type PropType = {
@@ -20,10 +19,18 @@ export default async function ProjectBoardShell({
   tasks,
 }: PropType) {
   const userid = await GetUseridByToken();
+  const currentMember = Members.find(
+    (m) => m.userId.toString() === userid?.toString()
+  );
+  const currentUserRole = currentMember?.role ?? 'viewer';
 
   return (
-    <ProjectTrackingProvider initialProject={projectData}>
-      <ProjectBoard userid={userid} members={Members} tasks={tasks} />
+    <ProjectTrackingProvider
+      initialProject={projectData}
+      initialMembers={Members}
+      initialUserRole={currentUserRole}
+    >
+      <ProjectBoard tasks={tasks} />
     </ProjectTrackingProvider>
   );
 }

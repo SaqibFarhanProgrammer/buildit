@@ -1,28 +1,29 @@
 'use client';
 
 import { TaskState } from '@/models/project traccking/task-tracking.models';
-import { MemberDetailType, TaskT } from '@/types/project tracking/types';
+import { TaskT } from '@/types/project tracking/types';
 import {
   FiX,
-  FiCheckCircle,
   FiClock,
   FiUser,
   FiCalendar,
-  FiFlag,
   FiAlignLeft,
-  FiHash,
-  FiLayers,
-  FiActivity,
   FiEdit2,
 } from 'react-icons/fi';
+import {
+  findMemberById,
+  formatTaskDate,
+  getAvatarColor,
+  getInitials,
+  isTaskOverdue,
+} from './utils';
+import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
 
 interface TaskPreviewProps {
   isOpen: boolean;
-  isAdmin: string;
-  members: MemberDetailType[];
-
   onClose: () => void;
-  task: TaskT | null;
+  onEdit: () => void;
+  task: TaskT;
 }
 
 const stateConfig: Record<
@@ -51,40 +52,54 @@ const stateConfig: Record<
   },
 };
 
-function getInitials(name?: string) {
-  if (!name) return '?';
-  return name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2);
-}
-
-function getAvatarColor(name?: string) {
-  if (!name) return 'bg-[#0a0a0a]/5 text-[#0a0a0a]/30';
-  const colors = [
-    'bg-[#0004ff]/10 text-[#0004ff]',
-    'bg-emerald-100 text-emerald-600',
-    'bg-amber-100 text-amber-600',
-    'bg-rose-100 text-rose-600',
-    'bg-purple-100 text-purple-600',
-    'bg-cyan-100 text-cyan-600',
-  ];
-  let hash = 0;
-  for (let i = 0; i < name.length; i++)
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  return colors[Math.abs(hash) % colors.length];
+function PersonBlock({
+  name,
+  image,
+  subtitle,
+}: {
+  name: string;
+  image?: string | null;
+  subtitle?: string;
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      {image ? (
+        <img
+          src={image}
+          alt={name}
+          className="w-7 h-7 rounded-full object-cover"
+        />
+      ) : (
+        <div
+          className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-['inter-semi'] ${getAvatarColor(name)}`}
+        >
+          {getInitials(name)}
+        </div>
+      )}
+      <div>
+        <span className="font-['inter-semi'] text-sm text-[#0a0a0a] block">
+          {name}
+        </span>
+        {subtitle && (
+          <span className="font-['inter-rag'] text-[10px] text-[#0a0a0a]/30">
+            {subtitle}
+          </span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default function TaskPreview({
   isOpen,
   onClose,
-  isAdmin,
-  members,
+  onEdit,
   task,
 }: TaskPreviewProps) {
-  if (!isOpen || !task) return null;
+  const { members, currentUserRole } = useProjectTrackingContext();
+
+  if (!isOpen) return null;
+
   const config = stateConfig[task.state];
   const createdDate = task.createdAt
     ? new Date(task.createdAt).toLocaleDateString('en-US', {
@@ -100,21 +115,19 @@ export default function TaskPreview({
         year: 'numeric',
       })
     : null;
-  const isOverdue = task.dueDate && new Date(task.dueDate) < new Date();
-
-  const assignmember: MemberDetailType[] = members.filter(
-    (m: MemberDetailType) => m.userId === task.assignToMemberId
-  );
+  const overdue = isTaskOverdue(task.dueDate);
+  const assignee = findMemberById(members, task.assignToMemberId);
+  const canManage = currentUserRole !== 'viewer';
 
   return (
-    <div className="fixed  inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
         className="absolute inset-0 bg-[#0a0a0a]/20 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      <div className="relative hide-scrollBar w-[70%] max-w-4xl bg-white rounded-2xl border border-[#0a0a0a]/5 shadow-2xl shadow-[#0a0a0a]/5 overflow-hidden max-h-[90vh] overflow-y-auto">
-        <div className="flex items-start justify-between px-8 py-6 border-b border-[#0a0a0a]/5">
+      <div className="relative hide-scrollBar w-full max-w-4xl bg-white rounded-2xl border border-[#0a0a0a]/5 shadow-2xl shadow-[#0a0a0a]/5 overflow-hidden max-h-[90vh] overflow-y-auto">
+        <div className="flex items-start justify-between px-6 sm:px-8 py-6 border-b border-[#0a0a0a]/5">
           <div className="flex-1 pr-8">
             <div className="flex items-center gap-3 mb-3">
               <span
@@ -138,7 +151,7 @@ export default function TaskPreview({
           </button>
         </div>
 
-        <div className="px-8 py-6">
+        <div className="px-6 sm:px-8 py-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
               <div>
@@ -149,13 +162,13 @@ export default function TaskPreview({
                   </span>
                 </div>
                 <p className="font-['inter-rag'] text-sm text-[#0a0a0a]/60 leading-relaxed">
-                  {task.summary}
+                  {task.summary || 'No summary provided.'}
                 </p>
               </div>
 
               <div className="h-px bg-[#0a0a0a]/[0.03]" />
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-xl bg-[#f9fafb] border border-[#0a0a0a]/5">
                   <div className="flex items-center gap-2 mb-2">
                     <FiUser size={12} className="text-[#0a0a0a]/30" />
@@ -163,24 +176,10 @@ export default function TaskPreview({
                       Created By
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    {task.createdByUserImage ? (
-                      <img
-                        src={task.createdByUserImage}
-                        alt={task.createdByUserName}
-                        className="w-7 h-7 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div
-                        className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-['inter-semi'] ${getAvatarColor(task.createdByUserName)}`}
-                      >
-                        {getInitials(task.createdByUserName)}
-                      </div>
-                    )}
-                    <span className="font-['inter-semi'] text-sm text-[#0a0a0a]">
-                      {task.createdByUserName}
-                    </span>
-                  </div>
+                  <PersonBlock
+                    name={task.createdByUserName}
+                    image={task.createdByUserImage}
+                  />
                 </div>
 
                 <div className="p-4 rounded-xl bg-[#f9fafb] border border-[#0a0a0a]/5">
@@ -190,25 +189,8 @@ export default function TaskPreview({
                       Assigned To
                     </span>
                   </div>
-                  {assignmember ? (
-                    <div className="flex items-center gap-2">
-                      {assignmember[0].image != '' ? (
-                        <img
-                          src={assignmember[0].image}
-                          alt={assignmember[0].name || ''}
-                          className="w-7 h-7 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-['inter-semi'] ${getAvatarColor(task.assignToMemberName || task.assignToMemberId)}`}
-                        >
-                          {getInitials(assignmember[0].name)}
-                        </div>
-                      )}
-                      <span className="font-['inter-semi'] text-sm text-[#0a0a0a]">
-                        {assignmember[0].name}
-                      </span>
-                    </div>
+                  {assignee ? (
+                    <PersonBlock name={assignee.name} image={assignee.image} />
                   ) : (
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-full bg-[#f9fafb] border border-dashed border-[#0a0a0a]/10 flex items-center justify-center">
@@ -237,22 +219,20 @@ export default function TaskPreview({
                   <div className="flex items-center gap-2 mb-2">
                     <FiClock
                       size={12}
-                      className={
-                        isOverdue ? 'text-red-400' : 'text-[#0a0a0a]/30'
-                      }
+                      className={overdue ? 'text-red-400' : 'text-[#0a0a0a]/30'}
                     />
                     <span
-                      className={`font-['inter-semi'] text-[10px] uppercase tracking-wider ${isOverdue ? 'text-red-400' : 'text-[#0a0a0a]/30'}`}
+                      className={`font-['inter-semi'] text-[10px] uppercase tracking-wider ${overdue ? 'text-red-400' : 'text-[#0a0a0a]/30'}`}
                     >
                       Due Date
                     </span>
                   </div>
                   {dueDate ? (
                     <span
-                      className={`font-['inter-semi'] text-sm ${isOverdue ? 'text-red-500' : 'text-[#0a0a0a]'}`}
+                      className={`font-['inter-semi'] text-sm ${overdue ? 'text-red-500' : 'text-[#0a0a0a]'}`}
                     >
                       {dueDate}
-                      {isOverdue && ' (Overdue)'}
+                      {overdue && ' (Overdue)'}
                     </span>
                   ) : (
                     <span className="font-['inter-rag'] text-sm text-[#0a0a0a]/30">
@@ -272,15 +252,6 @@ export default function TaskPreview({
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/40">
-                      Task ID
-                    </span>
-                    <span className="font-['inter-semi'] text-xs text-[#0a0a0a]">
-                      {task._id.split('').slice(0, 10)} {'....'}
-                    </span>
-                  </div>
-                  <div className="h-px bg-[#0a0a0a]/[0.03]" />
-                  <div className="flex items-center justify-between">
-                    <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/40">
                       Status
                     </span>
                     <span
@@ -291,21 +262,21 @@ export default function TaskPreview({
                     </span>
                   </div>
                   <div className="h-px bg-[#0a0a0a]/[0.03]" />
-                  <div className="flex items-center justify-between">
-                    <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/40">
-                      Project ID
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/40 shrink-0">
+                      Short ID
                     </span>
-                    <span className="font-['inter-semi'] text-xs text-[#0a0a0a]/60 font-mono">
-                      {task.projectid}
+                    <span className="font-['inter-semi'] text-xs text-[#0a0a0a] font-mono truncate">
+                      {task._id.slice(0, 10)}...
                     </span>
                   </div>
                   <div className="h-px bg-[#0a0a0a]/[0.03]" />
-                  <div className="flex items-center justify-between">
-                    <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/40">
-                      Task ID
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/40 shrink-0">
+                      Display Date
                     </span>
-                    <span className="font-['inter-semi'] text-xs text-[#0a0a0a]/60 font-mono">
-                      {task._id}
+                    <span className="font-['inter-semi'] text-xs text-[#0a0a0a]/60">
+                      {formatTaskDate(task.dueDate, task.createdAt)}
                     </span>
                   </div>
                 </div>
@@ -315,43 +286,28 @@ export default function TaskPreview({
                 <h3 className="font-['inter-semi'] text-xs text-[#0a0a0a]/40 uppercase tracking-wider mb-3">
                   Created By
                 </h3>
-                <div className="flex items-center gap-3">
-                  {task.createdByUserImage ? (
-                    <img
-                      src={task.createdByUserImage}
-                      alt={task.createdByUserName}
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
-                  ) : (
-                    <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-['inter-semi'] ${getAvatarColor(task.createdByUserName)}`}
-                    >
-                      {getInitials(task.createdByUserName)}
-                    </div>
-                  )}
-                  <div>
-                    <span className="font-['inter-semi'] text-sm text-[#0a0a0a] block">
-                      {task.createdByUserName}
-                    </span>
-                    <span className="font-['inter-rag'] text-[10px] text-[#0a0a0a]/30">
-                      {createdDate}
-                    </span>
-                  </div>
-                </div>
+                <PersonBlock
+                  name={task.createdByUserName}
+                  image={task.createdByUserImage}
+                  subtitle={createdDate}
+                />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-3 px-8 py-5 border-t border-[#0a0a0a]/5">
+        <div className="flex items-center justify-end gap-3 px-6 sm:px-8 py-5 border-t border-[#0a0a0a]/5">
           <button
             onClick={onClose}
             className="px-6 py-2.5 rounded-xl text-sm font-['inter-semi'] text-[#0a0a0a]/50 hover:text-[#0a0a0a] hover:bg-[#f9fafb] transition-all"
           >
             Close
           </button>
-          {isAdmin != 'viewer' && (
-            <button className="px-6 py-2.5 rounded-xl bg-[#0004FF] text-white text-sm font-['inter-semi'] hover:bg-[#0004FF]/90 transition-all flex items-center gap-2">
+          {canManage && (
+            <button
+              onClick={onEdit}
+              className="px-6 py-2.5 rounded-xl bg-[#0004FF] text-white text-sm font-['inter-semi'] hover:bg-[#0004FF]/90 transition-all flex items-center gap-2"
+            >
               <FiEdit2 size={14} />
               Edit Task
             </button>

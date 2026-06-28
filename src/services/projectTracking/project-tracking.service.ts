@@ -4,7 +4,7 @@ import {
   MemberType,
   ProjectTracking,
 } from '@/models/project traccking/project-tracking.models';
-import { TaskTracking } from '@/models/project traccking/task-tracking.models';
+import { TaskTracking, TaskState } from '@/models/project traccking/task-tracking.models';
 import { User } from '@/models/User.model';
 import { ITaskCard, MemberDetailType } from '@/types/project tracking/types';
 import { GetUseridByToken, IsUserAuthenticate } from '@/utils/AuthRequest';
@@ -285,6 +285,173 @@ export async function GetAllTasks(projectId: string) {
     }
 
     throw new AppError('Failed to fetch tasks', 500);
+  }
+}
+
+function formatTaskResponse(task: {
+  _id: { toString(): string };
+  title: string;
+  summary: string;
+  state: TaskState;
+  assignToMemberId?: string;
+  dueDate?: Date;
+  createdAt: Date;
+  createdByUserName: string;
+  createdByUserNameAvatar: string;
+}) {
+  return {
+    _id: task._id.toString(),
+    title: task.title,
+    summary: task.summary,
+    state: task.state,
+    assignToMemberId: task.assignToMemberId || null,
+    dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null,
+    createdAt: new Date(task.createdAt).toISOString(),
+    createdByUserName: task.createdByUserName,
+    createdByUserImage: task.createdByUserNameAvatar,
+  };
+}
+
+async function assertCanManageProjectTasks(userId: string, projectId: string) {
+  await connectDB();
+
+  const project = await ProjectTracking.findById(projectId)
+    .select('members')
+    .lean();
+
+  if (!project) {
+    throw new AppError('Project not found', 404);
+  }
+
+  const member = project.members.find(
+    (m) => m.userid.toString() === userId.toString()
+  );
+
+  if (!member) {
+    throw new AppError('You are not a member of this project', 403);
+  }
+
+  if (member.MemberRole === 'viewer') {
+    throw new AppError('Viewers cannot modify tasks', 403);
+  }
+
+  return project;
+}
+
+export async function UpdateProjectTrackingTask(request: NextRequest) {
+  try {
+    const userId = await IsUserAuthenticate(request);
+
+    if (!userId) {
+      throw new AppError('Unauthorized', 401);
+    }
+
+    const body = await request.json();
+    const {
+      taskId,
+      projectId,
+      title,
+      summary,
+      state,
+      assignToMemberId,
+      dueDate,
+    } = body;
+
+    if (!taskId) {
+      throw new AppError('Task id is required', 400);
+    }
+
+    if (!projectId) {
+      throw new AppError('Project id is required', 400);
+    }
+
+    if (!title?.trim()) {
+      throw new AppError('Title is required', 400);
+    }
+
+    await assertCanManageProjectTasks(userId, projectId);
+
+    const task = await TaskTracking.findOne({
+      _id: taskId,
+      projectid: projectId,
+    });
+
+    if (!task) {
+      throw new AppError('Task not found', 404);
+    }
+
+    task.title = title.trim();
+    task.summary = summary?.trim() ?? '';
+
+    if (state) {
+      task.state = state;
+    }
+
+    if (assignToMemberId !== undefined) {
+      task.assignToMemberId = assignToMemberId || undefined;
+    }
+
+    if (dueDate !== undefined) {
+      task.dueDate = dueDate ? new Date(dueDate) : undefined;
+    }
+
+    await task.save();
+
+    return {
+      success: true,
+      message: 'Task updated successfully',
+      task: formatTaskResponse(task),
+    };
+  } catch (error) {
+    console.error('UpdateProjectTrackingTask Error:', error);
+
+    if (error instanceof AppError) {
+      throw error;
+    }
+
+    throw new AppError('Failed to update task', 500);
+  }
+}
+
+export async function DeleteProjectTrackingTask(request: NextRequest) {
+  try {
+    const userId = await IsUserAuthenticate(request);
+
+    if (!userId) {
+      throw new AppError('Unauthorized', 401);
+    }
+
+    const { searchParams } = new URL(request.url);
+    const taskId = searchParams.get('taskId');
+    const projectId = searchParams.get('projectId');
+
+    if (!taskId || !projectId) {
+      throw new AppError('Task id and project id are required', 400);
+    }
+
+    await assertCanManageProjectTasks(userId, projectId);
+
+    const task = await TaskTracking.findOneAndDelete({
+      _id: taskId,
+      projectid: projectId,
+    });
+
+    if (!task) {
+      throw new AppError('Task not found', 404);
+    }
+
+    return {
+      success: true,
+      message: 'Task deleted successfully',
+    };
+  } catch (error) {
+    console.error('DeleteProjectTrackingTask Error:', error);
+
+    if (error instanceof AppError) {
+      throw error;
+    }
+
+    throw new AppError('Failed to delete task', 500);
   }
 }
 

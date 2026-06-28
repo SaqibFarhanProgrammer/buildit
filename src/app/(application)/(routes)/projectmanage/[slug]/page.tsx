@@ -31,7 +31,7 @@ export default async function ProjectPage({
   const Members = await GetProjectMembers(slug);
 
   if (!Members) {
-    throw new AppError('Members not ofund in page', 401);
+    throw new AppError('Members not found in page', 401);
   }
 
   return (

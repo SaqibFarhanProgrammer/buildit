@@ -1,9 +1,12 @@
+import { connectDB } from '@/core/db/DbConnection';
 import { AppError } from '@/lib/AppError';
 import { UpdateProjectTrackingTask } from '@/services/projectTracking/project-tracking.service';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function PATCH(request: NextRequest) {
   try {
+    await connectDB();
+
     const result = await UpdateProjectTrackingTask(request);
 
     return NextResponse.json({

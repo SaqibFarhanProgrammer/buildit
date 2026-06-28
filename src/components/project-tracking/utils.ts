@@ -1,4 +1,7 @@
-export function getInitials(name: string) {
+import { MemberDetailType, TaskT } from '@/types/project tracking/types';
+
+export function getInitials(name?: string) {
+  if (!name) return '?';
   return name
     .split(' ')
     .map((n) => n[0])
@@ -7,7 +10,8 @@ export function getInitials(name: string) {
     .slice(0, 2);
 }
 
-export function getAvatarColor(name: string) {
+export function getAvatarColor(name?: string) {
+  if (!name) return 'bg-[#0a0a0a]/5 text-[#0a0a0a]/30';
   const colors = [
     'bg-[#0004ff]/10 text-[#0004ff]',
     'bg-emerald-100 text-emerald-600',
@@ -61,3 +65,81 @@ export const BOARD_COLUMNS = [
     borderColor: 'border-emerald-200/50',
   },
 ];
+
+export type TaskPersonDisplay = {
+  name: string;
+  image: string | null;
+  initial: string;
+  avatarColor: string;
+};
+
+export type TaskCardData = {
+  id: string;
+  title: string;
+  summary: string;
+  displayDate: string;
+  isOverdue: boolean;
+  creator: TaskPersonDisplay;
+  assignee: TaskPersonDisplay | null;
+};
+
+export function formatTaskDate(
+  dueDate: string | null,
+  fallbackDate?: string | null
+): string {
+  const dateValue = dueDate ?? fallbackDate;
+  if (!dateValue) return 'No date';
+
+  return new Date(dateValue).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
+export function isTaskOverdue(dueDate: string | null): boolean {
+  if (!dueDate) return false;
+  return new Date(dueDate) < new Date();
+}
+
+export function findMemberById(
+  members: MemberDetailType[],
+  userId: string | null | undefined
+): MemberDetailType | undefined {
+  if (!userId) return undefined;
+  return members.find((m) => m.userId === userId);
+}
+
+function toPersonDisplay(
+  name: string,
+  image?: string | null
+): TaskPersonDisplay {
+  return {
+    name,
+    image: image || null,
+    initial: getInitials(name),
+    avatarColor: getAvatarColor(name),
+  };
+}
+
+export function buildTaskCardData(
+  task: TaskT,
+  members: MemberDetailType[]
+): TaskCardData {
+  const assigneeMember = findMemberById(members, task.assignToMemberId);
+
+  return {
+    id: task._id,
+    title: task.title,
+    summary: task.summary,
+    displayDate: formatTaskDate(task.dueDate, task.createdAt),
+    isOverdue: isTaskOverdue(task.dueDate),
+    creator: toPersonDisplay(task.createdByUserName, task.createdByUserImage),
+    assignee: assigneeMember
+      ? toPersonDisplay(assigneeMember.name, assigneeMember.image)
+      : null,
+  };
+}
+
+export function canManageTasks(role: string): boolean {
+  return role === 'admin' || role === 'member';
+}

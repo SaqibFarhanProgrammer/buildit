@@ -10,31 +10,43 @@ import { useParams } from 'next/navigation';
 import { AppError } from '@/lib/AppError';
 import { MemberDetailType } from '@/types/project tracking/types';
 import { IoExitOutline } from 'react-icons/io5';
+import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
 
 type Props = {
   title: string;
-  isAdmin: string;
-  members?: MemberDetailType[];
 };
 
-export default function BoardHeader({ title, isAdmin, members }: Props) {
+export default function BoardHeader({ title }: Props) {
+  const { members, currentUserRole } = useProjectTrackingContext();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const [isAddMemberFormIsOpen, setisAddMemberFormIsOpen] = useState(false);
 
   const params = useParams();
-
   const { slug } = params;
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   if (!slug) {
     throw new AppError('slug not found in params', 401);
   }
 
+  const canManage = currentUserRole !== 'viewer';
+  const isAdmin = currentUserRole === 'admin';
+
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
       {isAddMemberFormIsOpen && (
         <AddMemberModal
-          projectid={slug?.toString()}
+          projectid={slug.toString()}
           isOpen={isAddMemberFormIsOpen}
           onClose={() => setisAddMemberFormIsOpen(false)}
         />
@@ -55,30 +67,31 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
 
       <div className="flex items-center gap-4">
         <div className="flex items-center -space-x-2">
-          {members?.map((member: MemberDetailType, i: number) => {
-            return (
-              <div
-                key={i}
-                className={`relative w-9 h-9 rounded-full border-2 ${member.role === 'admin' ? 'border-blue-500' : 'border-white '} overflow-hidden   shadow-sm`}
-              >
-                {member.image != '' ? (
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div
-                    className={`w-full h-full flex items-center justify-center text-[10px] font-['inter-semi'] ${getAvatarColor(member.name)}`}
-                  >
-                    {getInitials(member.name)}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          {members.map((member: MemberDetailType) => (
+            <div
+              key={member.userId}
+              className={`relative w-9 h-9 rounded-full border-2 ${
+                member.role === 'admin' ? 'border-blue-500' : 'border-white'
+              } overflow-hidden shadow-sm`}
+              title={`${member.name} (${member.role})`}
+            >
+              {member.image ? (
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div
+                  className={`w-full h-full flex items-center justify-center text-[10px] font-['inter-semi'] ${getAvatarColor(member.name)}`}
+                >
+                  {getInitials(member.name)}
+                </div>
+              )}
+            </div>
+          ))}
           <div className="w-9 h-9 rounded-full bg-[#f9fafb] border-2 border-white flex items-center justify-center text-[10px] font-['inter-semi'] text-[#0a0a0a]/40 shadow-sm">
-            {members?.length}
+            {members.length}
           </div>
         </div>
 
@@ -92,16 +105,19 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
 
           {menuOpen && (
             <div className="absolute right-0 top-11 z-20 bg-white rounded-xl border border-[#0a0a0a]/5 shadow-xl shadow-[#0a0a0a]/5 py-2 min-w-[180px] overflow-hidden">
-              {isAdmin != 'viewer' && (
+              {canManage && (
                 <button
-                  onClick={() => setisAddMemberFormIsOpen(true)}
+                  onClick={() => {
+                    setisAddMemberFormIsOpen(true);
+                    setMenuOpen(false);
+                  }}
                   className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
                 >
                   <CgAdd size={14} className="text-[#0a0a0a]/30" />
                   Add Member
                 </button>
               )}
-              {isAdmin != 'viewer' && (
+              {canManage && (
                 <button
                   onClick={() => setMenuOpen(false)}
                   className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors"
@@ -111,11 +127,10 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
                 </button>
               )}
 
-              {isAdmin != 'admin' && (
+              {!isAdmin && (
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="w-full
-                flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
                 >
                   <IoExitOutline size={14} />
                   Leave Project
@@ -123,11 +138,11 @@ export default function BoardHeader({ title, isAdmin, members }: Props) {
               )}
 
               <div className="h-px bg-[#0a0a0a]/[0.03] mx-4 my-1" />
-              {isAdmin === 'admin' && (
+
+              {isAdmin && (
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="w-full
-              flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-['inter-semi'] text-red-500 hover:bg-red-50 transition-colors"
                 >
                   <FiTrash2 size={14} />
                   Delete Project

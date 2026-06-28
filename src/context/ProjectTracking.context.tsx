@@ -2,7 +2,11 @@
 
 import { AppError } from '@/lib/AppError';
 import { TaskState } from '@/models/project traccking/task-tracking.models';
-import { ProjectTrackingT, TaskT } from '@/types/project tracking/types';
+import {
+  MemberDetailType,
+  ProjectTrackingT,
+  TaskT,
+} from '@/types/project tracking/types';
 import React, { createContext, useContext, useState } from 'react';
 
 type TaskModalMode = 'create' | 'edit';
@@ -17,6 +21,9 @@ type ProjectTrackingContextType = {
   currentProject: ProjectTrackingT | null;
   setCurrentProject: (project: ProjectTrackingT) => void;
 
+  members: MemberDetailType[];
+  currentUserRole: string;
+
   isTaskModalOpen: boolean;
   taskModalMode: TaskModalMode;
   editingTask: TaskT | null;
@@ -24,6 +31,11 @@ type ProjectTrackingContextType = {
   openCreateTaskModal: (columnId?: TaskState) => void;
   openEditTaskModal: (task: TaskT) => void;
   closeTaskModal: () => void;
+
+  previewTask: TaskT | null;
+  isTaskPreviewOpen: boolean;
+  openTaskPreview: (task: TaskT) => void;
+  closeTaskPreview: () => void;
 };
 
 export const ProjectTrackingContext = createContext<ProjectTrackingContextType>(
@@ -35,6 +47,8 @@ export const ProjectTrackingContext = createContext<ProjectTrackingContextType>(
     addProject: () => {},
     currentProject: null,
     setCurrentProject: () => {},
+    members: [],
+    currentUserRole: 'viewer',
     isTaskModalOpen: false,
     taskModalMode: 'create',
     editingTask: null,
@@ -43,6 +57,10 @@ export const ProjectTrackingContext = createContext<ProjectTrackingContextType>(
     openEditTaskModal: () => {},
     closeTaskModal: () => {},
     setIsTaskModalOpen: () => {},
+    previewTask: null,
+    isTaskPreviewOpen: false,
+    openTaskPreview: () => {},
+    closeTaskPreview: () => {},
   }
 );
 
@@ -50,10 +68,14 @@ export const ProjectTrackingProvider = ({
   children,
   initialProjects,
   initialProject,
+  initialMembers,
+  initialUserRole,
 }: {
   children: React.ReactNode;
   initialProjects?: ProjectTrackingT[];
   initialProject?: ProjectTrackingT | null;
+  initialMembers?: MemberDetailType[];
+  initialUserRole?: string;
 }) => {
   const [projects, setProjects] = useState<ProjectTrackingT[]>(
     initialProjects ?? []
@@ -62,12 +84,17 @@ export const ProjectTrackingProvider = ({
 
   const [currentProject, setCurrentProjectState] =
     useState<ProjectTrackingT | null>(initialProject ?? null);
-  ``;
+
+  const [members] = useState<MemberDetailType[]>(initialMembers ?? []);
+  const [currentUserRole] = useState<string>(initialUserRole ?? 'viewer');
 
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [taskModalMode, setTaskModalMode] = useState<TaskModalMode>('create');
   const [editingTask, setEditingTask] = useState<TaskT | null>(null);
   const [taskModalColumn, setTaskModalColumn] = useState<TaskState>('TO DO');
+
+  const [previewTask, setPreviewTask] = useState<TaskT | null>(null);
+  const [isTaskPreviewOpen, setIsTaskPreviewOpen] = useState(false);
 
   function openCreateModal() {
     setIsCreateModalOpen(true);
@@ -107,6 +134,16 @@ export const ProjectTrackingProvider = ({
     setTaskModalMode('create');
   }
 
+  function openTaskPreview(task: TaskT) {
+    setPreviewTask(task);
+    setIsTaskPreviewOpen(true);
+  }
+
+  function closeTaskPreview() {
+    setIsTaskPreviewOpen(false);
+    setPreviewTask(null);
+  }
+
   const value: ProjectTrackingContextType = {
     projects,
     isCreateModalOpen,
@@ -116,6 +153,8 @@ export const ProjectTrackingProvider = ({
     addProject,
     currentProject,
     setCurrentProject,
+    members,
+    currentUserRole,
     isTaskModalOpen,
     taskModalMode,
     editingTask,
@@ -123,6 +162,10 @@ export const ProjectTrackingProvider = ({
     openCreateTaskModal,
     openEditTaskModal,
     closeTaskModal,
+    previewTask,
+    isTaskPreviewOpen,
+    openTaskPreview,
+    closeTaskPreview,
   };
 
   return (

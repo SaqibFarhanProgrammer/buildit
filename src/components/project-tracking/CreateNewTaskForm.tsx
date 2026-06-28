@@ -1,26 +1,23 @@
 'use client';
 
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
-import { MemberDetailType, TaskT } from '@/types/project tracking/types';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FiX, FiCheckCircle, FiCalendar, FiAlignLeft } from 'react-icons/fi';
-import { getAvatarColor } from './utils';
+import { getAvatarColor, getInitials } from './utils';
 
 type ErrorState = Record<string, string>;
 
-type props = {
-  members: MemberDetailType[];
-};
-
-export default function CreateNewTaskForm({ members }: props) {
+export default function CreateNewTaskForm() {
+  const router = useRouter();
   const {
     taskModalMode,
-    setIsTaskModalOpen,
-    isCreateModalOpen,
+    editingTask,
     taskModalColumn,
     currentProject,
     closeTaskModal,
+    members,
   } = useProjectTrackingContext();
 
   const [title, setTitle] = useState('');
@@ -31,6 +28,25 @@ export default function CreateNewTaskForm({ members }: props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const isEdit = taskModalMode === 'edit';
+
+  useEffect(() => {
+    if (isEdit && editingTask) {
+      setTitle(editingTask.title);
+      setSummary(editingTask.summary);
+      setAssignToMemberId(editingTask.assignToMemberId ?? '');
+      setDueDate(
+        editingTask.dueDate
+          ? new Date(editingTask.dueDate).toISOString().split('T')[0]
+          : ''
+      );
+    } else {
+      setTitle('');
+      setSummary('');
+      setAssignToMemberId('');
+      setDueDate('');
+    }
+    setErrors({});
+  }, [isEdit, editingTask]);
 
   const resetForm = () => {
     setTitle('');
@@ -59,18 +75,28 @@ export default function CreateNewTaskForm({ members }: props) {
     setIsLoading(true);
 
     try {
-      const res = await axios.post('/api/projecttracking/create-task', {
-        projectId: currentProject?._id,
-        title: title.trim(),
-        summary: summary.trim(),
-        state: taskModalColumn,
-        assignToMemberId: assignToMemberId || undefined,
-        dueDate: dueDate || undefined,
-      });
+      if (isEdit && editingTask) {
+        await axios.patch('/api/projecttracking/update-task', {
+          taskId: editingTask._id,
+          projectId: currentProject?._id,
+          title: title.trim(),
+          summary: summary.trim(),
+          assignToMemberId: assignToMemberId || undefined,
+          dueDate: dueDate || undefined,
+        });
+      } else {
+        await axios.post('/api/projecttracking/create-task', {
+          projectId: currentProject?._id,
+          title: title.trim(),
+          summary: summary.trim(),
+          state: taskModalColumn,
+          assignToMemberId: assignToMemberId || undefined,
+          dueDate: dueDate || undefined,
+        });
+      }
 
-      setIsTaskModalOpen(false);
-
-      resetForm();
+      handleClose();
+      router.refresh();
     } catch (error) {
       console.error('TASK_FORM_ERROR:', error);
       setErrors({
@@ -82,7 +108,6 @@ export default function CreateNewTaskForm({ members }: props) {
       setIsLoading(false);
     }
   };
-
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -115,7 +140,7 @@ export default function CreateNewTaskForm({ members }: props) {
           </button>
         </div>
 
-        <div className="px-6 py-5 space-y-5">
+        <div className="px-6 py-5 space-y-5 max-h-[70vh] overflow-y-auto">
           <div>
             <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
               Title
@@ -161,7 +186,7 @@ export default function CreateNewTaskForm({ members }: props) {
               <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
                 Assign To
               </label>
-              <div className="flex  gap-2 overflow-x-scroll terminal">
+              <div className="flex flex-wrap gap-2">
                 {members.map((member) => {
                   const isSelected = assignToMemberId === member.userId;
                   return (
@@ -178,7 +203,7 @@ export default function CreateNewTaskForm({ members }: props) {
                       }`}
                     >
                       <div
-                        className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-['inter-semi'] ${getAvatarColor(member.name)}`}
+                        className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-['inter-semi'] overflow-hidden ${getAvatarColor(member.name)}`}
                       >
                         {member.image ? (
                           <img
@@ -187,15 +212,15 @@ export default function CreateNewTaskForm({ members }: props) {
                             className="w-full h-full rounded-full object-cover"
                           />
                         ) : (
-                          getAvatarColor(member.name)
+                          getInitials(member.name)
                         )}
                       </div>
                       <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/60 truncate">
                         {member.name}
                       </span>
-                      <div className="text-black/80 capitalize">
+                      <span className="text-[10px] text-[#0a0a0a]/40 capitalize">
                         {member.role}
-                      </div>
+                      </span>
                     </button>
                   );
                 })}

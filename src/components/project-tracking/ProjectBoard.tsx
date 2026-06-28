@@ -1,26 +1,29 @@
 'use client';
 
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
-import { MemberDetailType, TaskT } from '@/types/project tracking/types';
+import { TaskT } from '@/types/project tracking/types';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import CreateNewTaskForm from './CreateNewTaskForm';
 import BoardHeader from './board/BoardHeader';
 import BoardColumn from './board/BoardColumn';
+import TaskPreview from './TaskPreview';
 import { BOARD_COLUMNS } from './utils';
 
-type projectBoardpropsType = {
+type ProjectBoardProps = {
   tasks: TaskT[];
-  userid: string;
-  members: MemberDetailType[];
 };
 
-export default function ProjectBoard({
-  tasks,
-  members,
-  userid,
-}: projectBoardpropsType) {
-  const { currentProject, isCreateModalOpen, openEditTaskModal } =
-    useProjectTrackingContext();
+export default function ProjectBoard({ tasks }: ProjectBoardProps) {
+  const router = useRouter();
+  const {
+    currentProject,
+    isTaskModalOpen,
+    openEditTaskModal,
+    isTaskPreviewOpen,
+    previewTask,
+    closeTaskPreview,
+  } = useProjectTrackingContext();
 
   if (!currentProject) {
     return (
@@ -37,24 +40,29 @@ export default function ProjectBoard({
       await axios.delete(
         `/api/projecttracking/delete-task?taskId=${taskId}&projectId=${currentProject._id}`
       );
+      router.refresh();
     } catch (error) {
       console.error('DELETE_TASK_ERROR:', error);
     }
   };
 
-  const meAsMemberOfProject = members.filter((m: MemberDetailType) => {
-    return m.userId.toString() === userid.toString();
-  });
-
   return (
     <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8 sm:py-12">
-      {isCreateModalOpen && <CreateNewTaskForm members={members} />}
+      {isTaskModalOpen && <CreateNewTaskForm />}
 
-      <BoardHeader
-        isAdmin={meAsMemberOfProject[0].role}
-        members={members}
-        title={currentProject.title}
-      />
+      {isTaskPreviewOpen && previewTask && (
+        <TaskPreview
+          isOpen={isTaskPreviewOpen}
+          task={previewTask}
+          onClose={closeTaskPreview}
+          onEdit={() => {
+            closeTaskPreview();
+            openEditTaskModal(previewTask);
+          }}
+        />
+      )}
+
+      <BoardHeader title={currentProject.title} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {BOARD_COLUMNS.map((column) => (
@@ -62,8 +70,6 @@ export default function ProjectBoard({
             key={column.id}
             tasks={tasks}
             column={column}
-            members={members}
-            isAdmin={meAsMemberOfProject[0].role}
             onEditTask={openEditTaskModal}
             onDeleteTask={handleDeleteTask}
           />
