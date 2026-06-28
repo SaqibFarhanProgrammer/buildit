@@ -3,7 +3,6 @@
 import {
   FiCheckCircle,
   FiClock,
-  FiUser,
   FiMoreHorizontal,
   FiEdit2,
   FiTrash2,
@@ -11,6 +10,7 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { MemberDetailType, TaskT } from '@/types/project tracking/types';
+import { getAvatarColor } from '../utils';
 
 export type TaskState = 'not started' | 'in progress' | 'hold' | 'completed';
 
@@ -19,23 +19,6 @@ interface TaskCardProps {
   isAdmin: string;
   members: MemberDetailType[];
   handletaskpreview: (tasl: TaskT) => void;
-}
-
-function getAvatarColor(name?: string) {
-  if (!name) return 'bg-[#0a0a0a]/5 text-[#0a0a0a]/30';
-  const colors = [
-    'bg-[#0004ff]/10 text-[#0004ff]',
-    'bg-emerald-100 text-emerald-600',
-    'bg-amber-100 text-amber-600',
-    'bg-rose-100 text-rose-600',
-    'bg-purple-100 text-purple-600',
-    'bg-cyan-100 text-cyan-600',
-  ];
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return colors[Math.abs(hash) % colors.length];
 }
 
 export default function TaskCard({
