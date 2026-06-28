@@ -1,6 +1,6 @@
 'use client';
 
-import { TaskT } from '@/types/project tracking/types';
+import { MemberDetailType, TaskT } from '@/types/project tracking/types';
 import { FiPlus } from 'react-icons/fi';
 import { BOARD_COLUMNS } from '../utils';
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
@@ -13,12 +13,13 @@ type ColumnConfig = (typeof BOARD_COLUMNS)[number];
 type Props = {
   column: ColumnConfig;
   tasks: TaskT[];
+  members:MemberDetailType[]
   isAdmin: string;
   onEditTask: (task: TaskT) => void;
   onDeleteTask: (taskId: string) => void;
 };
 
-export default function BoardColumn({ column, isAdmin, tasks }: Props) {
+export default function BoardColumn({  members,column, isAdmin, tasks }: Props) {
   const { openCreateTaskModal } = useProjectTrackingContext();
   const [isTaskPreviewOpen, setisTaskPreviewOpen] = useState(false);
   const [TaskDetiales, setTaskDetiales] = useState<TaskT>();
@@ -35,6 +36,7 @@ export default function BoardColumn({ column, isAdmin, tasks }: Props) {
           onClose={() => setisTaskPreviewOpen(false)}
           isOpen={isTaskPreviewOpen}
           task={TaskDetiales!}
+          members={members}
           isAdmin={isAdmin}
         />
       )}
@@ -62,6 +64,7 @@ export default function BoardColumn({ column, isAdmin, tasks }: Props) {
             .map((task, i) => (
               <TaskCard
                 isAdmin={isAdmin}
+                members={members}
                 handletaskpreview={HandleTaskPreview}
                 key={i}
                 task={task}

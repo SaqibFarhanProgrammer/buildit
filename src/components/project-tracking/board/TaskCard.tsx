@@ -10,13 +10,14 @@ import {
 } from 'react-icons/fi';
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { TaskT } from '@/types/project tracking/types';
+import { MemberDetailType, TaskT } from '@/types/project tracking/types';
 
 export type TaskState = 'not started' | 'in progress' | 'hold' | 'completed';
 
 interface TaskCardProps {
   task: TaskT;
   isAdmin: string;
+  members: MemberDetailType[];
   handletaskpreview: (tasl: TaskT) => void;
 }
 
@@ -41,6 +42,7 @@ export default function TaskCard({
   task,
   isAdmin,
   handletaskpreview,
+  members,
 }: TaskCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -68,7 +70,9 @@ export default function TaskCard({
       : 'No date';
 
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date();
-
+  const assignmember: MemberDetailType[] = members.filter(
+    (m: MemberDetailType) => m.userId === task.assignToMemberId
+  );
   return (
     <div
       onClick={() => {
@@ -175,9 +179,26 @@ export default function TaskCard({
               <p>{task.createdByUserName.charAt(0)}</p>
             )}
           </div>
-        </div>
 
-        {task.assignToMemberId ? <div></div> : null}
+          <p className="text-black/60 text-[12px]">Assign To</p>
+          {assignmember[0] ? (
+            <div
+              className={`w-4 h-4 rounded-full flex items-center justify-center text-[6px] font-['inter-semi']  ${getAvatarColor(task.createdByUserName)}`}
+            >
+              {assignmember[0].image != '' ? (
+                <Image
+                  src={assignmember[0].image}
+                  alt={assignmember[0].name}
+                  width={10}
+                  height={10}
+                  className="w-4 h-4 rounded-full object-cover "
+                />
+              ) : (
+                <p>{assignmember[0].name.charAt(0)}</p>
+              )}
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );

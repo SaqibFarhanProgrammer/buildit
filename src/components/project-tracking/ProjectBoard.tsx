@@ -19,7 +19,8 @@ export default function ProjectBoard({
   members,
   userid,
 }: projectBoardpropsType) {
-  const { currentProject, openEditTaskModal } = useProjectTrackingContext();
+  const { currentProject, isCreateModalOpen, openEditTaskModal } =
+    useProjectTrackingContext();
 
   if (!currentProject) {
     return (
@@ -47,7 +48,7 @@ export default function ProjectBoard({
 
   return (
     <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8 sm:py-12">
-      <CreateNewTaskForm />
+      {isCreateModalOpen && <CreateNewTaskForm members={members} />}
 
       <BoardHeader
         isAdmin={meAsMemberOfProject[0].role}
@@ -61,6 +62,7 @@ export default function ProjectBoard({
             key={column.id}
             tasks={tasks}
             column={column}
+            members={members}
             isAdmin={meAsMemberOfProject[0].role}
             onEditTask={openEditTaskModal}
             onDeleteTask={handleDeleteTask}

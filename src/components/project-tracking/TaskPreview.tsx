@@ -1,7 +1,7 @@
 'use client';
 
 import { TaskState } from '@/models/project traccking/task-tracking.models';
-import { TaskT } from '@/types/project tracking/types';
+import { MemberDetailType, TaskT } from '@/types/project tracking/types';
 import {
   FiX,
   FiCheckCircle,
@@ -19,6 +19,7 @@ import {
 interface TaskPreviewProps {
   isOpen: boolean;
   isAdmin: string;
+  members: MemberDetailType[];
 
   onClose: () => void;
   task: TaskT | null;
@@ -80,6 +81,7 @@ export default function TaskPreview({
   isOpen,
   onClose,
   isAdmin,
+  members,
   task,
 }: TaskPreviewProps) {
   if (!isOpen || !task) return null;
@@ -99,6 +101,10 @@ export default function TaskPreview({
       })
     : null;
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date();
+
+  const assignmember: MemberDetailType[] = members.filter(
+    (m: MemberDetailType) => m.userId === task.assignToMemberId
+  );
 
   return (
     <div className="fixed  inset-0 z-50 flex items-center justify-center p-4">
@@ -184,25 +190,23 @@ export default function TaskPreview({
                       Assigned To
                     </span>
                   </div>
-                  {task.assignToMemberId ? (
+                  {assignmember ? (
                     <div className="flex items-center gap-2">
-                      {task.assignToMemberImage ? (
+                      {assignmember[0].image != '' ? (
                         <img
-                          src={task.assignToMemberImage}
-                          alt={task.assignToMemberName || ''}
+                          src={assignmember[0].image}
+                          alt={assignmember[0].name || ''}
                           className="w-7 h-7 rounded-full object-cover"
                         />
                       ) : (
                         <div
                           className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-['inter-semi'] ${getAvatarColor(task.assignToMemberName || task.assignToMemberId)}`}
                         >
-                          {getInitials(
-                            task.assignToMemberName || task.assignToMemberId
-                          )}
+                          {getInitials(assignmember[0].name)}
                         </div>
                       )}
                       <span className="font-['inter-semi'] text-sm text-[#0a0a0a]">
-                        {task.assignToMemberName || task.assignToMemberId}
+                        {assignmember[0].name}
                       </span>
                     </div>
                   ) : (

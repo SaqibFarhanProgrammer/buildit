@@ -1,35 +1,23 @@
 'use client';
 
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
-import { TaskState, TaskT } from '@/types/project tracking/types';
+import { MemberDetailType, TaskT } from '@/types/project tracking/types';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FiX, FiCheckCircle, FiCalendar, FiAlignLeft } from 'react-icons/fi';
-import { getAvatarColor, getInitials } from './utils';
-
-const columnLabels: Record<string, string> = {
-  'not started': 'TO DO',
-  'in progress': 'IN PROGRESS',
-  hold: 'HOLD',
-  completed: 'DONE',
-};
-
-const columnColors: Record<string, string> = {
-  'not started': 'bg-[#0a0a0a]/5 text-[#0a0a0a]/50',
-  'in progress': 'bg-[#0004ff]/5 text-[#0004ff]',
-  hold: 'bg-amber-50 text-amber-600',
-  completed: 'bg-emerald-50 text-emerald-600',
-};
-
-const STATES: TaskState[] = ['not started', 'in progress', 'hold', 'completed'];
+import { getAvatarColor } from './utils';
 
 type ErrorState = Record<string, string>;
 
-export default function CreateNewTaskForm() {
+type props = {
+  members: MemberDetailType[];
+};
+
+export default function CreateNewTaskForm({ members }: props) {
   const {
-    isTaskModalOpen,
     taskModalMode,
     setIsTaskModalOpen,
+    isCreateModalOpen,
     taskModalColumn,
     currentProject,
     closeTaskModal,
@@ -42,10 +30,7 @@ export default function CreateNewTaskForm() {
   const [errors, setErrors] = useState<ErrorState>({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const members = currentProject?.members ?? [];
   const isEdit = taskModalMode === 'edit';
-
-  if (!isTaskModalOpen || !currentProject) return null;
 
   const resetForm = () => {
     setTitle('');
@@ -75,7 +60,7 @@ export default function CreateNewTaskForm() {
 
     try {
       const res = await axios.post('/api/projecttracking/create-task', {
-        projectId: currentProject._id,
+        projectId: currentProject?._id,
         title: title.trim(),
         summary: summary.trim(),
         state: taskModalColumn,
@@ -97,6 +82,7 @@ export default function CreateNewTaskForm() {
       setIsLoading(false);
     }
   };
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -170,41 +156,20 @@ export default function CreateNewTaskForm() {
             </div>
           </div>
 
-          <div>
-            <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
-              Status
-            </label>
-            <div className="flex flex-wrap items-center gap-2">
-              {/* {STATES.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  className={`inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-['inter-semi'] border transition-all ${
-                    state === s
-                      ? columnColors[s]
-                      : 'bg-[#0a0a0a]/5 text-[#0a0a0a]/30 border-[#0a0a0a]/5'
-                  }`}
-                >
-                  {columnLabels[s]}
-                </button>
-              ))} */}
-            </div>
-          </div>
-
-          {/* {members.length > 0 && (
+          {members.length > 0 && (
             <div>
               <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
                 Assign To
               </label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="flex  gap-2 overflow-x-scroll terminal">
                 {members.map((member) => {
-                  const isSelected = assignToMemberId === member.id;
+                  const isSelected = assignToMemberId === member.userId;
                   return (
                     <button
-                      key={member.id}
+                      key={member.userId}
                       type="button"
                       onClick={() =>
-                        setAssignToMemberId(isSelected ? '' : member.id)
+                        setAssignToMemberId(isSelected ? '' : member.userId)
                       }
                       className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-all text-left ${
                         isSelected
@@ -222,18 +187,21 @@ export default function CreateNewTaskForm() {
                             className="w-full h-full rounded-full object-cover"
                           />
                         ) : (
-                          getInitials(member.name)
+                          getAvatarColor(member.name)
                         )}
                       </div>
                       <span className="font-['inter-rag'] text-xs text-[#0a0a0a]/60 truncate">
                         {member.name}
                       </span>
+                      <div className="text-black/80 capitalize">
+                        {member.role}
+                      </div>
                     </button>
                   );
                 })}
               </div>
             </div>
-          )} */}
+          )}
 
           <div>
             <label className="font-['inter-semi'] text-[10px] text-[#0a0a0a]/30 uppercase tracking-wider mb-2 block">
