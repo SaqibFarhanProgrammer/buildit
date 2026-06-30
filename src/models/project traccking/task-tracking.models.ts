@@ -21,7 +21,11 @@ const TaskTrackingSchema: Schema<ITaskTracking> = new Schema(
     title: { type: String, required: true },
     summary: { type: String, default: '' },
     createdUserid: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    projectid: { type: Schema.Types.ObjectId, ref: 'ProjectTracking', required: true },
+    projectid: {
+      type: Schema.Types.ObjectId,
+      ref: 'ProjectTracking',
+      required: true,
+    },
     state: {
       type: String,
       enum: ['TO DO', 'IN PROGRESS', 'HOLD', 'DONE'],

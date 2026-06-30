@@ -26,12 +26,8 @@ export default function BoardColumn({
   onDeleteTask,
   onMoveTask,
 }: Props) {
-  const {
-    openCreateTaskModal,
-    openTaskPreview,
-    members,
-    currentUserRole,
-  } = useProjectTrackingContext();
+  const { openCreateTaskModal, openTaskPreview, members, currentUserRole } =
+    useProjectTrackingContext();
 
   const columnTasks = tasks.filter((task) => task.state === column.id);
   const canManage = canManageTasks(currentUserRole);

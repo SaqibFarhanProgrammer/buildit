@@ -25,7 +25,11 @@ const ProjectTrackingSchema: Schema<IProjectTracking> = new Schema(
       enum: ['active', 'archive'],
       default: 'active',
     },
-    createdByUserId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    createdByUserId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     members: [
       {
         userid: {

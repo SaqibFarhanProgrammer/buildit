@@ -69,7 +69,9 @@ export default function MoveTaskMenu({
                 disabled={!!movingTo}
                 className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-['inter-semi'] text-[#0a0a0a]/70 hover:bg-[#f9fafb] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${col.dotColor} shrink-0`} />
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${col.dotColor} shrink-0`}
+                />
                 {col.label}
                 {isMovingThis && (
                   <FiLoader

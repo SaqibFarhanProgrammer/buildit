@@ -4,7 +4,10 @@ import {
   MemberType,
   ProjectTracking,
 } from '@/models/project traccking/project-tracking.models';
-import { TaskTracking, TaskState } from '@/models/project traccking/task-tracking.models';
+import {
+  TaskTracking,
+  TaskState,
+} from '@/models/project traccking/task-tracking.models';
 import { User } from '@/models/User.model';
 import { ITaskCard, MemberDetailType } from '@/types/project tracking/types';
 import { GetUseridByToken, IsUserAuthenticate } from '@/utils/AuthRequest';
@@ -52,7 +55,8 @@ export async function GetProjectTrackingProjects(token: string) {
       updatedAt: project.updatedAt
         ? new Date(project.updatedAt).toISOString()
         : new Date().toISOString(),
-      isAdmin: project.createdByUserId?.toString() === value.userId ? true : false,
+      isAdmin:
+        project.createdByUserId?.toString() === value.userId ? true : false,
     }));
 
     return cleanProjects;
@@ -165,8 +169,6 @@ export async function GetProjectTrackingProject(
         createdAt: 1,
       })
       .lean();
-
-
 
     if (!project) {
       throw new AppError('Project not found', 404);

@@ -64,7 +64,9 @@ type ProjectBoardProps = {
   tasks: TaskT[];
 };
 
-export default function ProjectBoard({ tasks: initialTasks }: ProjectBoardProps) {
+export default function ProjectBoard({
+  tasks: initialTasks,
+}: ProjectBoardProps) {
   const {
     currentProject,
     isTaskModalOpen,
@@ -77,7 +79,9 @@ export default function ProjectBoard({ tasks: initialTasks }: ProjectBoardProps)
   const [tasks, setTasks] = useState<TaskT[]>(initialTasks);
   const [movingTaskId, setMovingTaskId] = useState<string | null>(null);
   const [toasts, setToasts] = useState<ToastData[]>([]);
-  const toastTimers = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map());
+  const toastTimers = useRef<Map<number, ReturnType<typeof setTimeout>>>(
+    new Map()
+  );
 
   // Keep local task list in sync when parent refreshes (e.g. after create/edit)
   useEffect(() => {
