@@ -10,13 +10,18 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { TaskCardData } from '../utils';
+import { TaskState } from '@/models/project traccking/task-tracking.models';
+import MoveTaskMenu from './MoveTaskMenu';
 
 interface TaskCardProps {
   task: TaskCardData;
+  currentState: TaskState;
   canManage: boolean;
+  isMoving: boolean;
   onPreview: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
+  onMove?: (newState: TaskState) => Promise<void>;
 }
 
 function PersonAvatar({
@@ -50,10 +55,13 @@ function PersonAvatar({
 
 export default function TaskCard({
   task,
+  currentState,
   canManage,
+  isMoving,
   onPreview,
   onEdit,
   onDelete,
+  onMove,
 }: TaskCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -71,7 +79,7 @@ export default function TaskCard({
   return (
     <div
       onClick={onPreview}
-      className="group bg-white rounded-xl border border-[#0a0a0a]/5 hover:border-[#0004ff]/20 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03] transition-all duration-200 p-4 cursor-pointer"
+      className={`group bg-white rounded-xl border border-[#0a0a0a]/5 hover:border-[#0004ff]/20 hover:shadow-lg hover:shadow-[#0a0a0a]/[0.03] transition-all duration-200 p-4 cursor-pointer ${isMoving ? 'opacity-60 pointer-events-none' : ''}`}
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
@@ -91,7 +99,7 @@ export default function TaskCard({
               <FiMoreHorizontal size={14} />
             </button>
             {menuOpen && (
-              <div className="absolute right-0 top-7 z-10 bg-white rounded-xl border border-[#0a0a0a]/5 shadow-xl shadow-[#0a0a0a]/5 py-1.5 min-w-[140px] overflow-hidden">
+              <div className="absolute right-0 top-7 z-10 bg-white rounded-xl border border-[#0a0a0a]/5 shadow-xl shadow-[#0a0a0a]/5 py-1.5 min-w-[140px] overflow-visible">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -103,6 +111,20 @@ export default function TaskCard({
                   <FiEdit2 size={12} className="text-[#0a0a0a]/30" />
                   Edit Task
                 </button>
+
+                {onMove && (
+                  <MoveTaskMenu
+                    currentState={currentState}
+                    isDisabled={isMoving}
+                    onMove={async (newState) => {
+                      setMenuOpen(false);
+                      await onMove(newState);
+                    }}
+                  />
+                )}
+
+                <div className="h-px bg-[#0a0a0a]/[0.03] my-1" />
+
                 <button
                   onClick={(e) => {
                     e.stopPropagation();

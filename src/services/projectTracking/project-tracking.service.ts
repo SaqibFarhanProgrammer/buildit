@@ -10,6 +10,7 @@ import { ITaskCard, MemberDetailType } from '@/types/project tracking/types';
 import { GetUseridByToken, IsUserAuthenticate } from '@/utils/AuthRequest';
 import { VerifyToken } from '@/utils/EncodeEmail';
 import { getUserProfile } from '@/utils/GetProfiledata';
+import mongoose from 'mongoose';
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 
@@ -41,14 +42,17 @@ export async function GetProjectTrackingProjects(token: string) {
       _id: project._id?.toString(),
       createdByUserId: project.createdByUserId?.toString(),
       members:
-        project.members?.map((memberId: any) => memberId.toString()) || [],
+        project.members?.map((m: any) => ({
+          userid: m.userid?.toString(),
+          MemberRole: m.MemberRole,
+        })) || [],
       createdAt: project.createdAt
         ? new Date(project.createdAt).toISOString()
-        : null,
-      updatedAt: project.createdAt
-        ? new Date(project.createdAt).toISOString()
-        : null,
-      isAdmin: project.createdByUserId === value.userId ? true : false,
+        : new Date().toISOString(),
+      updatedAt: project.updatedAt
+        ? new Date(project.updatedAt).toISOString()
+        : new Date().toISOString(),
+      isAdmin: project.createdByUserId?.toString() === value.userId ? true : false,
     }));
 
     return cleanProjects;
@@ -273,7 +277,7 @@ export async function GetAllTasks(projectId: string) {
       title: task.title,
       summary: task.summary,
       state: task.state,
-      assignToMemberId: task.assignToMemberId || null,
+      assignToMemberId: task.assignToMemberId?.toString() || null,
       dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null,
       createdAt: task.createdAt.toString(),
       createdByUserName: task.createdByUserName,
@@ -295,7 +299,7 @@ function formatTaskResponse(task: {
   title: string;
   summary: string;
   state: TaskState;
-  assignToMemberId?: string;
+  assignToMemberId?: mongoose.Types.ObjectId | string;
   dueDate?: Date;
   createdAt: Date;
   createdByUserName: string;
@@ -306,7 +310,7 @@ function formatTaskResponse(task: {
     title: task.title,
     summary: task.summary,
     state: task.state,
-    assignToMemberId: task.assignToMemberId || null,
+    assignToMemberId: task.assignToMemberId?.toString() || null,
     dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null,
     createdAt: new Date(task.createdAt).toISOString(),
     createdByUserName: task.createdByUserName,

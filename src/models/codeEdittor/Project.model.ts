@@ -6,7 +6,7 @@ export interface IProject extends Document {
   description?: string;
   content?: string;
   state: 'active' | 'Finished';
-  CreatedUserid?: string;
+  CreatedUserid?: mongoose.Types.ObjectId | string;
   createdAt: Date;
 }
 
@@ -16,7 +16,7 @@ const ProjectSchema: Schema<IProject> = new Schema(
     language: { type: String, required: true },
     description: { type: String, default: '' },
     content: { type: String, default: '' },
-    CreatedUserid: { type: String, default: '' },
+    CreatedUserid: { type: Schema.Types.ObjectId, ref: 'User', default: null },
     state: { type: String, enum: ['active', 'Finished'], default: 'active' },
     createdAt: { type: Date, default: Date.now },
   },

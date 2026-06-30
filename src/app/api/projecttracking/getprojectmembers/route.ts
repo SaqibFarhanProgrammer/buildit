@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       message: 'members fethed succes',
-      data: result?.MemberDe,
+      data: result,
     });
   } catch (error) {
     console.error('PROJECT TRACKING ERROR:', error);

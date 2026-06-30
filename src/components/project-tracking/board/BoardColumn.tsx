@@ -5,21 +5,26 @@ import { FiPlus } from 'react-icons/fi';
 import { BOARD_COLUMNS, buildTaskCardData, canManageTasks } from '../utils';
 import { useProjectTrackingContext } from '@/context/ProjectTracking.context';
 import TaskCard from './TaskCard';
+import { TaskState } from '@/models/project traccking/task-tracking.models';
 
 type ColumnConfig = (typeof BOARD_COLUMNS)[number];
 
 type Props = {
   column: ColumnConfig;
   tasks: TaskT[];
+  movingTaskId: string | null;
   onEditTask: (task: TaskT) => void;
   onDeleteTask: (taskId: string) => void;
+  onMoveTask: (task: TaskT, newState: TaskState) => Promise<void>;
 };
 
 export default function BoardColumn({
   column,
   tasks,
+  movingTaskId,
   onEditTask,
   onDeleteTask,
+  onMoveTask,
 }: Props) {
   const {
     openCreateTaskModal,
@@ -58,10 +63,13 @@ export default function BoardColumn({
               <TaskCard
                 key={task._id}
                 task={cardData}
+                currentState={task.state}
                 canManage={canManage}
+                isMoving={movingTaskId === task._id}
                 onPreview={() => openTaskPreview(task)}
                 onEdit={() => onEditTask(task)}
                 onDelete={() => onDeleteTask(task._id)}
+                onMove={(newState) => onMoveTask(task, newState)}
               />
             );
           })}

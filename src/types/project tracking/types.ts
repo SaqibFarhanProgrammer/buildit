@@ -13,13 +13,6 @@ export type TaskT = {
   createdByUserImage: string;
 };
 
-export type MemberDetailT = {
-  userId: string;
-  name: string;
-  image: string;
-  role: string;
-};
-
 export type ProjectTrackingT = {
   _id?: string;
   title: string;
@@ -29,6 +22,7 @@ export type ProjectTrackingT = {
   members: MemberType[];
   isAdmin: boolean;
   createdAt: string;
+  updatedAt?: string;
 };
 
 export interface ITaskCard {
@@ -42,7 +36,6 @@ export interface ITaskCard {
 }
 
 export type MemberDetailType = {
-  vemail: string;
   image: string;
   name: string;
   role: string;

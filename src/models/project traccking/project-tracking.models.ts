@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema, Model, model } from 'mongoose';
 
 export type MemberType = {
-  userid: string;
+  userid: mongoose.Types.ObjectId | string;
   MemberRole: string;
 };
 
@@ -9,7 +9,7 @@ export interface IProjectTracking extends Document {
   title: string;
   description: string;
   state: 'active' | 'archive';
-  createdByUserId: string;
+  createdByUserId: mongoose.Types.ObjectId | string;
   members: MemberType[];
   isAdmin: boolean;
   createdAt: Date;
@@ -25,11 +25,12 @@ const ProjectTrackingSchema: Schema<IProjectTracking> = new Schema(
       enum: ['active', 'archive'],
       default: 'active',
     },
-    createdByUserId: { type: String, required: true },
+    createdByUserId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     members: [
       {
         userid: {
-          type: String,
+          type: Schema.Types.ObjectId,
+          ref: 'User',
           required: true,
         },
         MemberRole: {

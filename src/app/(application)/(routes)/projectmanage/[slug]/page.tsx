@@ -1,10 +1,10 @@
 import ProjectBoardShell from '@/components/project-tracking/ProjectBoardShell';
-import { AppError } from '@/lib/AppError';
 import {
   GetAllTasks,
   GetProjectMembers,
   GetProjectTrackingProject,
 } from '@/services/projectTracking/project-tracking.service';
+import { TaskT, MemberDetailType } from '@/types/project tracking/types';
 import { cookies } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
@@ -16,7 +16,7 @@ export default async function ProjectPage({
   const { slug } = await params;
 
   if (!slug) {
-    throw new AppError('slug not found in params', 401);
+    notFound();
   }
 
   const cookieStore = await cookies();
@@ -26,19 +26,37 @@ export default async function ProjectPage({
     redirect('/auth/login');
   }
 
-  const response = await GetProjectTrackingProject(slug, token);
-  const tasks = await GetAllTasks(slug);
-  const Members = await GetProjectMembers(slug);
+  let response;
+  let tasks: TaskT[] = [];
+  let members: MemberDetailType[] = [];
 
-  if (!Members) {
-    throw new AppError('Members not found in page', 401);
+  try {
+    response = await GetProjectTrackingProject(slug, token);
+  } catch {
+    notFound();
+  }
+
+  try {
+    tasks = await GetAllTasks(slug);
+  } catch {
+    tasks = [];
+  }
+
+  try {
+    members = await GetProjectMembers(slug);
+  } catch {
+    members = [];
+  }
+
+  if (!response?.data) {
+    notFound();
   }
 
   return (
     <div className="min-h-screen bg-[#FDF9F5]">
       <ProjectBoardShell
-        Members={Members || []}
-        tasks={tasks}
+        Members={members ?? []}
+        tasks={tasks ?? []}
         projectData={response.data}
       />
     </div>

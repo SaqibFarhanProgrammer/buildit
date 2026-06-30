@@ -22,7 +22,7 @@ export default function ProjectTrackingFilters({
 }: Props) {
   const activeCount = projects.filter((p) => p.state === 'active').length;
   const archiveCount = projects.filter((p) => p.state === 'archive').length;
-  const myCount = projects.filter((p) => p.YourhwereAdded).length;
+  const myCount = projects.filter((p) => p.isAdmin).length;
 
   const counts: Record<string, number> = {
     all: projects.length,

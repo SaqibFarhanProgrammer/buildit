@@ -5,10 +5,10 @@ import { ProjectTrackingT } from '@/types/project tracking/types';
 import ProjectTrackingList from './ProjectTrackingList';
 
 type PropType = {
-  projectsData: ProjectTrackingT[];
+  projectsData?: ProjectTrackingT[];
 };
 
-export default function ProjectTrackingShell({ projectsData }: PropType) {
+export default function ProjectTrackingShell({ projectsData = [] }: PropType) {
   return (
     <ProjectTrackingProvider initialProjects={projectsData}>
       <ProjectTrackingList />
