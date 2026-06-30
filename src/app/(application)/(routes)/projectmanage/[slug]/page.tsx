@@ -34,6 +34,8 @@ export default async function ProjectPage({
     throw new AppError('Members not found in page', 401);
   }
 
+  console.log(tasks);
+
   return (
     <div className="min-h-screen bg-[#FDF9F5]">
       <ProjectBoardShell

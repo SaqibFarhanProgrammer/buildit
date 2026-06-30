@@ -26,7 +26,8 @@ function PersonAvatar({
   person: TaskCardData['creator'];
   size?: 'sm' | 'md';
 }) {
-  const sizeClass = size === 'sm' ? 'w-4 h-4 text-[6px]' : 'w-7 h-7 text-[10px]';
+  const sizeClass =
+    size === 'sm' ? 'w-4 h-4 text-[6px]' : 'w-7 h-7 text-[10px]';
 
   return (
     <div
